@@ -1,0 +1,10 @@
+{
+  "name": "goblin",
+  "description": "goblin cms framework",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "cradle" : "latest",
+    "mu2" : "latest"
+  }
+}
