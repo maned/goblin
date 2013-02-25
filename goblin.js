@@ -25,7 +25,7 @@ app.get('/admin', function(req, res) {
     });
 });
 
-app.post('/ajax-save.json', function(req, res) {
+app.post('/admin-save.json', function(req, res) {
     db.merge('f038f1e46efe868af2a612d4ea0012c8', {
       page_title: req.body.page_title,
       page_content: req.body.page_content
@@ -35,5 +35,8 @@ app.post('/ajax-save.json', function(req, res) {
   res.contentType('json');
   res.send({ some: JSON.stringify({response:'json'}) });
 })
+
+//Set up Static File for Components
+ app.use(express.static(__dirname + '/components'));
 
 app.listen(8000);
