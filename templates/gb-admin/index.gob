@@ -25,24 +25,33 @@
         <!-- Add your site or application content here -->
         <div id="wrapper"><!-- Start Wrapper -->
             <div id="main_container"><!-- Start Main Container -->
-                <header>
+
+                <div id="admin_left">
                     <article id="logo">
                         <h1>goblin admin</h1>
                     </article>
-                </header>
-                <section id="admin_content">
-                    <div id="admin_left" style="width:20%; float:left;">
-                        <p>Hello</p>
-                    </div>
-                    <div id="admin_right" style="width:80%;">
-                        <h2>Insert Stuff - Home Page</h2>
-                        <input type="hidden" id="guid" value="{{page_id}}">
-                        <input type="text" id="page_title" value="{{page_title}}">
-                        <textarea id="page_content" value="{{page_content}}" style="width:100%; height:500px;"></textarea>
-                        <button id="submit" type="button">Submit</button>
-                    </div>
-                    
-                </section>
+                   <ul>
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Meta and SEO</a></li>
+                        <li>Pages</li>
+                        <ul>
+                            {{#pages}}
+                                <li><a href="{{page_url}}">{{page_name}}</a></li>
+                            {{/pages}}
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Add a New Page, Man</a></li>
+                        </ul>
+                        <li><a href="#">Configuration</a></li>
+                   </ul>
+                </div>
+                <div id="admin_right">
+                    <h2>Insert Stuff - Home Page</h2>
+                    <input type="hidden" id="guid" value="{{page_id}}">
+                    <input type="text" id="page_title" value="{{page_title}}">
+                    <textarea id="page_content" value="{{page_content}}" style="width:100%; height:500px;"></textarea>
+                    <button id="submit" type="button">Submit</button>
+                </div>
+
                 <footer>
                 </footer>
              </div><!-- End Main Container -->
