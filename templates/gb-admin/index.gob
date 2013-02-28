@@ -46,7 +46,7 @@
                 </div>
                 <div id="admin_right">
                     <h2>Insert Stuff - Home Page</h2>
-                    <input type="hidden" id="guid" value="{{page_id}}">
+                    <input type="hidden" id="page_id" value="index">
                     <input type="text" id="page_title" value="{{page_title}}">
                     <textarea id="page_content" value="{{page_content}}" style="width:100%; height:500px;"></textarea>
                     <button id="submit" type="button">Submit</button>

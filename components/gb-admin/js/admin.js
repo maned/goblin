@@ -4,7 +4,7 @@ $('#submit').click(function() {
         type : "POST",
         dataType: "json",
         data: {
-            id: $('#guid').val(),
+            page_id: $('#page_id').val(),
             page_title: $('#page_title').val(),
             page_content: $('#page_content').val()
         },
@@ -15,7 +15,7 @@ $('#submit').click(function() {
 
         success: function(data) {
           console.log(data);
-          console.log('process sucess');
+          console.log('process success');
        },
 
         error: function() {
