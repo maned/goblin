@@ -52,6 +52,14 @@ app.get('/gb-admin', function(req, res) {
     });
 });
 
+app.get('/gb-admin/new-page.html', function(req, res) {
+  db.get('admin', function (err, doc) {
+      var stream = mu.compileAndRender('gb-admin/index.gob', doc);
+      util.pump(stream, res);
+    });
+});
+
+//Ajax Calls and Responses
 app.post('/admin-save.json', function(req, res) {
     db.merge(req.body.page_id, {
       page_title: req.body.page_title,
@@ -62,6 +70,13 @@ app.post('/admin-save.json', function(req, res) {
   res.contentType('json');
   res.send({ some: JSON.stringify({response:'json'}) });
 });
+
+app.post('/page-edit.json', function(req, res) {
+    db.get(req.body.page_id, function (err, doc) {
+      res.contentType('json');
+      res.send(doc);
+    });
+ });
 
 //Set up Static File for Components
 app.use(express.static(__dirname + '/components'));
