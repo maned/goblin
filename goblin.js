@@ -72,7 +72,15 @@ app.post('/admin-save.json', function(req, res) {
 });
 
 app.post('/page-edit.json', function(req, res) {
+    console.log(req.body.page_id)
     db.get(req.body.page_id, function (err, doc) {
+      res.contentType('json');
+      res.send(doc);
+    });
+ });
+
+app.post('/get-pages.json', function(req, res) {
+    db.get('pages_info', function (err, doc) {
       res.contentType('json');
       res.send(doc);
     });

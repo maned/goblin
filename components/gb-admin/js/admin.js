@@ -26,43 +26,35 @@ function setSubmitEvent() {
   });
 }
 
+function getAllPages() {
+  $.ajax({
+      url: "/get-pages.json",
+      type : "POST",
+      dataType: "json",
+      async: false,
+      complete: function() {
+        //called when complete
+        console.log('process complete');
+      },
+
+      success: function(data) {
+        var page_selection_options = ich.page_options(data);
+        $('#page_to_edit').append(page_selection_options);
+     },
+
+      error: function() {
+        console.log('process error');
+      },
+    });
+}
+
+
 //The Ready
 $(document).ready(function () {
   //For Save of Page Information
 
-  var dataX = {
-   "_id": "pages_info",
-   "_rev": "1-c0f9ea18e67631024f346de9257781e4",
-   "pages": [
-       {
-           "name": "Home",
-           "page-id": "index",
-           "page-url": "index.html"
-       },
-       {
-           "name": "About",
-           "page-id": "about",
-           "page-url": "about.html"
-       },
-       {
-           "name": "How It Works",
-           "page-id": "how_it_works",
-           "page-url": "how_it_works.html"
-       },
-       {
-           "name": "Contribute",
-           "page-id": "contribute",
-           "page-url": "contribute.html"
-       },
-       {
-           "name": "Contact",
-           "page-id": "contact",
-           "page-url": "contact.html"
-       }
-   ]
-}
-  var page_selection_options = ich.page_options(dataX)
-  $('#page_to_edit').append(page_selection_options);
+  //Get all pages information
+  getAllPages();
 
   //Set up Change Event
   $('#page_to_edit').change(function() {
@@ -88,6 +80,7 @@ $(document).ready(function () {
         },
       });
   });
+
   //Initiate it By Default
   $('#page_to_edit').change();
 });
