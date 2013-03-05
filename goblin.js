@@ -63,7 +63,9 @@ app.get('/gb-admin/new-page.html', function(req, res) {
 app.post('/admin-save.json', function(req, res) {
     db.merge(req.body.page_id, {
       page_title: req.body.page_title,
-      page_content: req.body.page_content
+      page_content: req.body.page_content,
+      meta_description: req.body.meta_description,
+      meta_keywords: req.body.meta_keywords
     }, function (err, res) {
       console.log(' ajax post successful')
   });

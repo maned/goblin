@@ -15,7 +15,9 @@ function setSubmitEvent() {
           data: {
               page_id: $('#page_id').val(),
               page_title: $('#page_title').val(),
-              page_content: $('#page_content').val()
+              page_content: $('#page_content').val(),
+              meta_description: $('#meta_description').val(),
+              meta_keywords: $('#meta_keywords').val()
           },
           complete: function() {
             //called when complete
