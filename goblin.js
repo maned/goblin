@@ -45,6 +45,7 @@ app.get('/', function(req, res) {
 });
 
 //Admin Parts Start Here
+/*
 app.get('/gb-admin', function(req, res) {
   db.get('admin', function (err, doc) {
       var stream = mu.compileAndRender('gb-admin/index.gob', doc);
@@ -58,6 +59,7 @@ app.get('/gb-admin/new-page.html', function(req, res) {
       util.pump(stream, res);
     });
 });
+*/
 
 //Ajax Calls and Responses
 app.post('/admin-save.json', function(req, res) {
