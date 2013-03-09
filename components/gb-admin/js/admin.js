@@ -8,6 +8,12 @@ function b64_to_utf8( str ) {
 
 function setSubmitEvent() {
   $('#submit').click(function() {
+    //Automatically make page_id to be 100% sure for existing and for new ones!
+    $('#page_id').val(utf8_to_b64($('#page_title').val()));
+
+    //Check to Make sure it's not blank
+    if ($('#page_id').val() !== "") {
+      //Go on with Ajax!
       $.ajax({
           url: "/admin-save.json",
           type : "POST",
@@ -15,6 +21,7 @@ function setSubmitEvent() {
           data: {
               page_id: $('#page_id').val(),
               page_title: $('#page_title').val(),
+              page_title: $('#page_url').val(),
               page_content: $('#page_content').val(),
               meta_description: $('#meta_description').val(),
               meta_keywords: $('#meta_keywords').val()
@@ -32,6 +39,10 @@ function setSubmitEvent() {
             console.log('process error');
           },
         });
+    } else {
+      alert('Please enter information before page creation.');
+    }
+    
   });
 }
 
@@ -47,6 +58,22 @@ function getAllPages() {
       },
 
       success: function(data) {
+        console.log(data)
+          for (key in data) {
+            //Create a Closure because Javascript is strange, dude!
+            (function(key1) {
+              //In the looping, make sure you don't take the ID or Revision Number from the DB
+              if (key1 !== "_id" && key1 !== "_rev") {
+                //Set route for value
+                console.log(key1)
+
+                $('#page_to_edit').append('<option value="' + key1 + '">' + b64_to_utf8(key1) + '</option>')
+
+              }
+             }
+            )(key)
+          }
+
         var page_selection_options = ich.page_options(data);
         $('#page_to_edit').append(page_selection_options);
      },
