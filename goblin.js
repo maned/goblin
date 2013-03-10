@@ -79,7 +79,7 @@ app.post('/admin-save.json', function(req, res) {
             // Handle response
         });
 
-        //Reset Routes (will work when added to page_routes)
+        //Reset Routes (as of now, does not work until server restart).
         setRoutes();
       } else {
         //It exists, so just merge the new info
