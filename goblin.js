@@ -59,12 +59,15 @@ app.post('/admin-save.json', function(req, res) {
       if (doc === undefined) {
         //The document doesn't exist.
 
+        var newPage = {};
+        newPage[req.body.page_id] = req.body.page_url;
+        console.log(newPage);
         //Add it to the page_routes
-        /*db.merge('pages_routes', {
-            req.body.page_id: req.body.page_url
-          }, function (err, res) {
-            console.log('added to pages routes')
-        });*/
+        db.merge('pages_routes', 
+            newPage
+          , function (err, res) {
+              console.log('added to pages routes')
+        });
         //Then make a document and add the new info, bro.
         db.save(req.body.page_id, {
             page_title: req.body.page_title,
@@ -77,7 +80,7 @@ app.post('/admin-save.json', function(req, res) {
         });
 
         //Reset Routes (will work when added to page_routes)
-        //setRoutes();
+        setRoutes();
       } else {
         //It exists, so just merge the new info
          db.merge(req.body.page_id, {

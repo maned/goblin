@@ -21,7 +21,7 @@ function setSubmitEvent() {
           data: {
               page_id: $('#page_id').val(),
               page_title: $('#page_title').val(),
-              page_title: $('#page_url').val(),
+              page_url: $('#page_url').val(),
               page_content: $('#page_content').val(),
               meta_description: $('#meta_description').val(),
               meta_keywords: $('#meta_keywords').val()
