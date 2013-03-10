@@ -59,9 +59,10 @@ app.post('/admin-save.json', function(req, res) {
       if (doc === undefined) {
         //The document doesn't exist.
 
+        //Create object and enter in parameters so that the new key-value pair is easily updateable.
         var newPage = {};
         newPage[req.body.page_id] = req.body.page_url;
-        console.log(newPage);
+
         //Add it to the page_routes
         db.merge('pages_routes', 
             newPage
@@ -76,11 +77,21 @@ app.post('/admin-save.json', function(req, res) {
             meta_description: req.body.meta_description,
             meta_keywords: req.body.meta_keywords
         }, function (err, res) {
-            // Handle response
+
+            //Create variables to be able to pass them nicely.
+            var new_page_url = req.body.page_url;
+            var new_page_id = req.body.page_id;
+
+            //Add new route!
+            app.get('/' + new_page_url, function(req, res) {
+              db.get(new_page_id, function (err, doc) {
+                  var stream = mu.compileAndRender('page.gob', doc);
+                  util.pump(stream, res);
+                });
+            });
         });
 
-        //Reset Routes (as of now, does not work until server restart).
-        setRoutes();
+        
       } else {
         //It exists, so just merge the new info
          db.merge(req.body.page_id, {

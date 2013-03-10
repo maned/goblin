@@ -26,14 +26,10 @@ function setSubmitEvent() {
               meta_description: $('#meta_description').val(),
               meta_keywords: $('#meta_keywords').val()
           },
-          complete: function() {
-            //called when complete
-            console.log('process complete');
-          },
 
           success: function(data) {
             console.log('process success');
-         },
+          },
 
           error: function() {
             console.log('process error');
@@ -47,26 +43,23 @@ function setSubmitEvent() {
 }
 
 function getAllPages() {
+  //First, empty out any existing dropdowns
+  $('#page_to_edit').empty();
+  
+  //Then make an AJAX Call to get the new ones.
   $.ajax({
       url: "/get-pages.json",
       type : "POST",
       dataType: "json",
       async: false,
-      complete: function() {
-        //called when complete
-        console.log('process complete');
-      },
 
       success: function(data) {
-        console.log(data)
           for (key in data) {
             //Create a Closure because Javascript is strange, dude!
             (function(key1) {
               //In the looping, make sure you don't take the ID or Revision Number from the DB
               if (key1 !== "_id" && key1 !== "_rev") {
-                //Set route for value
-                console.log(key1)
-
+                //Add option to dropdown
                 $('#page_to_edit').append('<option value="' + key1 + '">' + b64_to_utf8(key1) + '</option>')
 
               }
@@ -94,17 +87,6 @@ $(document).ready(function () {
 
   //Set up Change Event
   $('#page_to_edit').change(function() {
-      /*if ($(this).val() !== "new_page") {
-        
-      } else {
-        $('#admin-area').empty();
-            //Rebuild the template with the new data
-            var adminHTML = ich.page_admin_new();
-            //Append it
-            $('#admin-area').append(adminHTML);
-            //Set Submit Event
-            setSubmitEvent();
-      }*/
       
       $.ajax({
           url: "/page-edit.json",
