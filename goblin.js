@@ -125,6 +125,33 @@ app.post('/get-pages.json', function(req, res) {
     });
  });
 
+app.post('/admin-delete.json', function(req, res) {
+    var page_id = req.body.page_id;
+    var page_url = req.body.page_url;
+
+    //Remove the Document itself
+    /*db.remove(req.body.page_id, function (err, res) {
+      console.log('document removed')
+    }); */
+  
+    //Remove reference to it in Page Routes
+    db.get('pages_routes', function (err, doc) {
+      var page_routes_data = doc;
+      
+      delete page_routes_data[page_id];
+      console.log(page_routes_data);
+
+      /*db.save('luke', '1-94B6F82', {
+        force: 'dark', name: 'Luke'
+      }, function (err, res) {
+          // Handle response
+      }); */
+    });
+    
+    //Delete Route to that Page from Express
+    //console.log(app.routes);
+ });
+
 //Set up Static File for Components
 app.use(express.static(__dirname + '/components'));
 

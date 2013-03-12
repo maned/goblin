@@ -6,43 +6,8 @@ function b64_to_utf8( str ) {
     return decodeURIComponent(escape(window.atob( str )));
 }
 
-function setSubmitEvent() {
-  $('#submit').click(function() {
-    //Automatically make page_id to be 100% sure for existing and for new ones!
-    $('#page_id').val(utf8_to_b64($('#page_title').val()));
-
-    //Check to Make sure it's not blank
-    if ($('#page_id').val() !== "") {
-      //Go on with Ajax!
-      $.ajax({
-          url: "/admin-save.json",
-          type : "POST",
-          dataType: "json",
-          data: {
-              page_id: $('#page_id').val(),
-              page_title: $('#page_title').val(),
-              page_url: $('#page_url').val(),
-              page_content: $('#page_content').val(),
-              meta_description: $('#meta_description').val(),
-              meta_keywords: $('#meta_keywords').val()
-          },
-
-          success: function(data) {
-            console.log('process success');
-          },
-
-          error: function() {
-            console.log('process error');
-          },
-        });
-    } else {
-      alert('Please enter information before page creation.');
-    }
-    
-  });
-}
-
 function getAllPages() {
+
   //First, empty out any existing dropdowns
   $('#page_to_edit').empty();
   
@@ -77,10 +42,77 @@ function getAllPages() {
     });
 }
 
+function setSubmitEvent() {
+  $('#submit').click(function() {
+    //Get Beginning Id
+    var begin_id = $('#page_id').val();
+
+    //Automatically make page_id to be 100% sure for existing and for new ones!
+    $('#page_id').val(utf8_to_b64($('#page_title').val()));
+
+    //Check to Make sure it's not blank
+    if ($('#page_id').val() !== "") {
+      //Go on with Ajax!
+      $.ajax({
+          url: "/admin-save.json",
+          type : "POST",
+          dataType: "json",
+          data: {
+              page_id: $('#page_id').val(),
+              page_title: $('#page_title').val(),
+              page_url: $('#page_url').val(),
+              page_content: $('#page_content').val(),
+              meta_description: $('#meta_description').val(),
+              meta_keywords: $('#meta_keywords').val()
+          },
+
+          success: function(data) {
+
+            if (begin_id === "") {
+              getAllPages();
+            }
+
+            console.log('process success');
+          },
+
+          error: function() {
+            console.log('process error');
+          },
+        });
+    } else {
+      alert('Please enter information before page creation.');
+    }
+    
+  });
+}
+
+function setDeleteEvent() {
+  $('#delete').click(function() {
+    $.ajax({
+          url: "/admin-delete.json",
+          type : "POST",
+          dataType: "json",
+          data: {
+              page_id: $('#page_id').val(),
+              page_url: $('#page_url').val()
+          },
+
+          success: function(data) {
+            console.log('process success');
+
+            //Re-get all pages.
+            getAllPages();
+          },
+
+          error: function() {
+            console.log('process error');
+          },
+    });
+  });
+}
 
 //The Ready
 $(document).ready(function () {
-  //For Save of Page Information
 
   //Get all pages information
   getAllPages();
@@ -104,6 +136,8 @@ $(document).ready(function () {
             $('#admin-area').append(adminHTML);
             //Set Submit Event
             setSubmitEvent();
+            //Set up Delete Event
+            setDeleteEvent();
          },
           error: function() {
             console.log('process error');
