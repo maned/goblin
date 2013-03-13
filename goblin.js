@@ -37,7 +37,7 @@ function routesGetandSet(data) {
 
 function setRoutes () {
   db.get('pages_routes', function (err, doc) {
-      routesGetandSet(doc);
+      routesGetandSet(doc.pure_routes);
   });
 }
 
@@ -59,16 +59,20 @@ app.post('/admin-save.json', function(req, res) {
       if (doc === undefined) {
         //The document doesn't exist.
 
-        //Create object and enter in parameters so that the new key-value pair is easily updateable.
-        var newPage = {};
-        newPage[req.body.page_id] = req.body.page_url;
-
         //Add it to the page_routes
-        db.merge('pages_routes', 
-            newPage
-          , function (err, res) {
-              console.log('added to pages routes')
+        db.get('pages_routes', function (err, doc) {
+          var page_routes_data = doc.pure_routes;
+          
+          page_routes_data[req.body.page_id] = req.body.page_url;
+
+          db.merge("pages_routes", {
+                pure_routes: page_routes_data
+              }, function (err, res) {
+                console.log('New Page Routes Saved')
+            });
+
         });
+
         //Then make a document and add the new info, bro.
         db.save(req.body.page_id, {
             page_title: req.body.page_title,
@@ -121,7 +125,7 @@ app.post('/page-edit.json', function(req, res) {
 app.post('/get-pages.json', function(req, res) {
     db.get('pages_routes', function (err, doc) {
       res.contentType('json');
-      res.send(doc);
+      res.send(doc.pure_routes);
     });
  });
 
@@ -129,27 +133,34 @@ app.post('/admin-delete.json', function(req, res) {
     var page_id = req.body.page_id;
     var page_url = req.body.page_url;
 
-    //Remove the Document itself
-    /*db.remove(req.body.page_id, function (err, res) {
-      console.log('document removed')
-    }); */
-  
     //Remove reference to it in Page Routes
     db.get('pages_routes', function (err, doc) {
-      var page_routes_data = doc;
+      var page_routes_data = doc.pure_routes;
       
       delete page_routes_data[page_id];
-      console.log(page_routes_data);
 
-      /*db.save('luke', '1-94B6F82', {
-        force: 'dark', name: 'Luke'
-      }, function (err, res) {
-          // Handle response
-      }); */
+      db.merge("pages_routes", {
+            pure_routes: page_routes_data
+          }, function (err, res) {
+            console.log('New Page Routes Saved')
+        });
+
+    });
+
+    //Get the Database revision number so we can properly remove it
+    db.get(req.body.page_id, function (err, doc) {
+      //Remove the document, man!
+      db.remove(req.body.page_id, doc._rev, function (err, res) {
+        console.log('document removed')
+      });
+
     });
     
     //Delete Route to that Page from Express
-    //console.log(app.routes);
+    console.log(app.routes.get[req.body.page_url]);
+
+    res.contentType('json');
+    res.send({ some: JSON.stringify({response:'json'}) });
  });
 
 //Set up Static File for Components
