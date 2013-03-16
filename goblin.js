@@ -14,7 +14,6 @@ app.configure(function(){
 });
 
 mu.root = __dirname + '/templates';
-
 function routesGetandSet(data) {
   for (key in data) {
     //Create a Closure because Javascript is strange, dude!
@@ -41,9 +40,25 @@ function setRoutes () {
   });
 }
 
+function deleteRoute(url) {
+  
+  /*
+   This seems to delete all of the static folders (like the admin, and the stylesheets) along with
+   the targeted page. I can't seem to get this one figured out.
+  */
+  
+  for (var i = app.routes.get.length - 1; i >= 0; i--) {
+    if (app.routes.get[i].path === "/" + url) {
+      console.log(app.routes.get[i]);
+      delete app.routes.get[i];
+      console.log(app.routes.get)
+    }
+  }
+}
+
 //Run the Loop and Set Up all Pages
 setRoutes();
-  
+
 //Set up the Index Page, by Default.
 app.get('/', function(req, res) {
   db.get('index', function (err, doc) {
@@ -51,6 +66,9 @@ app.get('/', function(req, res) {
       util.pump(stream, res);
     });
 });
+
+//Set up Static File for Components
+app.use(express.static(__dirname + '/components'));
 
 //Ajax Calls and Responses
 app.post('/admin-save.json', function(req, res) {
@@ -157,13 +175,10 @@ app.post('/admin-delete.json', function(req, res) {
     });
     
     //Delete Route to that Page from Express
-    console.log(app.routes.get[req.body.page_url]);
+    //deleteRoute(page_url);
 
     res.contentType('json');
     res.send({ some: JSON.stringify({response:'json'}) });
  });
-
-//Set up Static File for Components
-app.use(express.static(__dirname + '/components'));
 
 app.listen(8000);
