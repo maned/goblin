@@ -14,7 +14,12 @@ app.configure(function(){
 });
 
 mu.root = __dirname + '/templates';
+
 function routesGetandSet(data) {
+  /*
+   This loops through a key value set and builds routes to all needed pages
+  */
+
   for (key in data) {
     //Create a Closure because Javascript is strange, dude!
     (function(key1) {
@@ -34,34 +39,27 @@ function routesGetandSet(data) {
   }
 }
 
-function setRoutes () {
-  db.get('pages_routes', function (err, doc) {
-      routesGetandSet(doc.pure_routes);
-  });
-}
-
 function deleteRoute(url) {
-  
+
   /*
-   This seems to delete all of the static folders (like the admin, and the stylesheets) along with
-   the targeted page. I can't seem to get this one figured out.
+   This deletes a specific route from express route mapping.
   */
-  
+
   for (var i = app.routes.get.length - 1; i >= 0; i--) {
     if (app.routes.get[i].path === "/" + url) {
-      console.log(app.routes.get[i]);
-      delete app.routes.get[i];
-      console.log(app.routes.get)
+      app.routes.get.splice(i, 1);
     }
   }
 }
 
 //Run the Loop and Set Up all Pages
-setRoutes();
+db.get('pages_routes', function (err, doc) {
+      routesGetandSet(doc.pure_routes);
+  });;
 
 //Set up the Index Page, by Default.
 app.get('/', function(req, res) {
-  db.get('index', function (err, doc) {
+  db.get('SG9tZQ==', function (err, doc) {
       var stream = mu.compileAndRender('page.gob', doc);
       util.pump(stream, res);
     });
@@ -174,8 +172,9 @@ app.post('/admin-delete.json', function(req, res) {
 
     });
     
+    console.log(page_url)
     //Delete Route to that Page from Express
-    //deleteRoute(page_url);
+    deleteRoute(page_url);
 
     res.contentType('json');
     res.send({ some: JSON.stringify({response:'json'}) });
