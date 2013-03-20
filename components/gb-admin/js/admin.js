@@ -111,6 +111,12 @@ function setDeleteEvent() {
   });
 }
 
+function setAdminArea() {
+  $('#page_content').wysiwyg({
+    controls:"bold,italic,|,undo,redo,image"
+  });
+}
+
 //The Ready
 $(document).ready(function () {
 
@@ -136,8 +142,13 @@ $(document).ready(function () {
             $('#admin-area').append(adminHTML);
             //Set Submit Event
             setSubmitEvent();
+
             //Set up Delete Event
             setDeleteEvent();
+
+            //Initate Admin Area
+            setAdminArea();
+
          },
           error: function() {
             console.log('process error');
