@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-  	"express" : "latest",
+    "express" : "latest",
     "cradle" : "latest",
     "mu2" : "latest"
   }
