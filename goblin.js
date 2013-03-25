@@ -52,6 +52,29 @@ function deleteRoute(url) {
   }
 }
 
+function saveToAllPages(field, data) {
+    /*
+     This function saves a field with data to all page documents.
+    */
+      db.get('pages_routes', function (err, doc) {
+          for (key in doc.pure_routes) {
+            //Create a Closure because Javascript is strange, dude!
+            (function(key1) {
+              console.log(key1)
+                //Go into the DB and get that information, man!
+                console.log(field);
+                console.log(data);
+                var dataObj = {};
+                dataObj[field]=data;
+                 db.merge(key1, dataObj, function (err, res) {
+                    console.log('Google Info Saved');
+                });
+             }
+            )(key)
+          }
+    });
+}
+
 //Run the Loop and Set Up all Pages
 db.get('pages_routes', function (err, doc) {
       routesGetandSet(doc.pure_routes);
@@ -188,27 +211,6 @@ app.post('/config-page.json', function(req, res) {
     });
  });
 
-//Save to all Pages
-function saveToAllPages(field, data) {
-      db.get('pages_routes', function (err, doc) {
-          for (key in doc.pure_routes) {
-            //Create a Closure because Javascript is strange, dude!
-            (function(key1) {
-              console.log(key1)
-                //Go into the DB and get that information, man!
-                console.log(field);
-                console.log(data);
-                 db.merge(key1, {
-                  field : data
-                }, function (err, res) {
-                    console.log('Google Info Saved');
-                });
-             }
-            )(key)
-          }
-    });
-}
-
 //Config Save
 app.post('/config-save.json', function(req, res) {
 
@@ -217,10 +219,10 @@ app.post('/config-save.json', function(req, res) {
     db.merge('admin_config', {
         ga_id: ga_id_req
       }, function (err, res) {
-        console.log('Google Info Saved');
     });
 
-    //saveToAllPages('ga_id', ga_id_req)
+    //Save the fields to all pages
+    saveToAllPages('ga_id', ga_id_req)
 
     //Send Response
     res.contentType('json');

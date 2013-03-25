@@ -25,7 +25,6 @@ function paintConfig() {
 
 function setSubmitEvent() { 
 	$('#submit').click(function() {
-		//UA-XXXXX-X
 		$.ajax({
           url: "/config-save.json",
           type : "POST",
