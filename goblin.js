@@ -156,10 +156,10 @@ app.post('/admin-delete.json', function(req, res) {
       delete page_routes_data[page_id];
 
       db.merge("pages_routes", {
-            pure_routes: page_routes_data
-          }, function (err, res) {
-            console.log('New Page Routes Saved')
-        });
+          pure_routes: page_routes_data
+        }, function (err, res) {
+          console.log('New Page Routes Saved')
+      });
 
     });
 
@@ -176,6 +176,53 @@ app.post('/admin-delete.json', function(req, res) {
     //Delete Route to that Page from Express
     deleteRoute(page_url);
 
+    res.contentType('json');
+    res.send({ some: JSON.stringify({response:'json'}) });
+ });
+
+//Config Page
+app.post('/config-page.json', function(req, res) {
+    db.get("admin_config", function (err, doc) {
+      res.contentType('json');
+      res.send(doc);
+    });
+ });
+
+//Save to all Pages
+function saveToAllPages(field, data) {
+      db.get('pages_routes', function (err, doc) {
+          for (key in doc.pure_routes) {
+            //Create a Closure because Javascript is strange, dude!
+            (function(key1) {
+              console.log(key1)
+                //Go into the DB and get that information, man!
+                console.log(field);
+                console.log(data);
+                 db.merge(key1, {
+                  field : data
+                }, function (err, res) {
+                    console.log('Google Info Saved');
+                });
+             }
+            )(key)
+          }
+    });
+}
+
+//Config Save
+app.post('/config-save.json', function(req, res) {
+
+    var ga_id_req = req.body.ga_id;
+
+    db.merge('admin_config', {
+        ga_id: ga_id_req
+      }, function (err, res) {
+        console.log('Google Info Saved');
+    });
+
+    //saveToAllPages('ga_id', ga_id_req)
+
+    //Send Response
     res.contentType('json');
     res.send({ some: JSON.stringify({response:'json'}) });
  });

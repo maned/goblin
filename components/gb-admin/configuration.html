@@ -14,6 +14,12 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+
+        <!-- Plugins -->
+        <link rel="stylesheet" href="css/wisywig/jquery.wysiwyg.css">
+        <link rel="stylesheet" href="css/wisywig/default.css">
+
+        <!-- Custom -->
         <link rel="stylesheet" href="css/style.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
@@ -33,17 +39,24 @@
                    <ul>
                         <li><a href="index.html">Dashboard</a></li>
                         <li><a href="edit_pages.html">Manage Pages</a></li>
-                        <li><a href="configuration.html">Configuration</a></i>
+                        <li><a href="configuration.html">Configuration</a></li>
                    </ul>
                 </div>
                 <div id="admin_right">
                     
-                    <div id="select_a_page">
-                        <h2>Dashboard</h2>
-                    </div>
                     <div id="admin-area">
-                        <h3>Welcome to goblin</h3>
-                        <p>Goblin is awesome.</p>
+                        <article id="navigation_list">
+                            <script id="config_page" type="text/html">
+                                <ul id="sortable">
+                                    <li id="1" class="ui-state-default">Item 1</li>
+                                    <li id="2" class="ui-state-default">Item 2</li>
+                                    <li id="4" class="ui-state-default">Item 4</li>
+                                    <li id="5" class="ui-state-default">Item 5</li>
+                                </ul>
+                                <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">
+                                <button id="submit" type="button">Submit</button>
+                            </script>
+                        </article>
                     </div>
                 </div>
 
@@ -54,8 +67,14 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="gb-admin/js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
         <script src="js/vendor/icanhaz.min.js"></script>
+
+        <!-- Plugins -->
+
+        <!--Custom -->
+        <script src="js/configuration.js"></script> 
     </body>
 </html>
