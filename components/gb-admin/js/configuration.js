@@ -35,7 +35,7 @@ function paintConfig() {
                 stop: function( event, ui ) {
                     var idsInOrder = $(this).sortable("toArray");
 
-                    var x = JSON.stringify(
+                    var nav_info = JSON.stringify(
                         idsInOrder.map(
                             function (e) {
                                 return {
@@ -47,7 +47,7 @@ function paintConfig() {
                         ),
                     0, 4);
 
-                    alert(x)
+                    alert(nav_info)
                 }
             });
 
