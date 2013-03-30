@@ -194,8 +194,7 @@ app.post('/admin-delete.json', function(req, res) {
       });
 
     });
-    
-    console.log(page_url)
+
     //Delete Route to that Page from Express
     deleteRoute(page_url);
 

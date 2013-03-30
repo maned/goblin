@@ -47,11 +47,10 @@
                     <div id="admin-area">
                         <article id="navigation_list">
                             <script id="config_page" type="text/html">
-                                <ul id="sortable">
-                                    <li id="1" class="ui-state-default">Item 1</li>
-                                    <li id="2" class="ui-state-default">Item 2</li>
-                                    <li id="4" class="ui-state-default">Item 4</li>
-                                    <li id="5" class="ui-state-default">Item 5</li>
+                                <ul id="nav_conf">
+                                    {{#nav}}
+                                        <li id="{{id}}" data-url="{{url}}" class="ui-state-default nav_item_count">{{item_name}}</li>
+                                    {{/nav}}
                                 </ul>
                                 <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">
                                 <button id="submit" type="button">Submit</button>
