@@ -215,6 +215,8 @@ app.post('/config-save.json', function(req, res) {
 
     var ga_id_req = req.body.ga_id;
 
+    //var nav_req = unescape(req.body.nav);
+
     db.merge('admin_config', {
         ga_id: ga_id_req
       }, function (err, res) {

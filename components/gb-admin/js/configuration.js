@@ -31,24 +31,7 @@ function paintConfig() {
             }
             
             $("#nav_conf").sortable({
-                revert: false,
-                stop: function( event, ui ) {
-                    var idsInOrder = $(this).sortable("toArray");
-
-                    var nav_info = JSON.stringify(
-                        idsInOrder.map(
-                            function (e) {
-                                return {
-                                        'id': e,
-                                        'url': atob(e).toLowerCase().replace(/\s/g, '_') + '.html',
-                                        'item_name' : atob(e)
-                                       }; // I converted the string to URL as I expect you wanted
-                            }
-                        ),
-                    0, 4);
-
-                    alert(nav_info)
-                }
+                revert: false
             });
 
             $( "ul, li" ).disableSelection();
@@ -57,6 +40,24 @@ function paintConfig() {
             console.log('process error');
           }
      });
+}
+
+function createNavJSON() {
+   var idsInOrder = $('#nav_conf').sortable("toArray");
+
+  var nav_info = JSON.stringify(
+      idsInOrder.map(
+          function (e) {
+              return {
+                      'id': e,
+                      'url': atob(e).toLowerCase().replace(/\s/g, '_') + '.html',
+                      'item_name' : atob(e)
+                     };
+          }
+      ),
+  0, 4);
+
+  return nav_info;
 }
 
 function getPages() {
@@ -94,7 +95,8 @@ function setSubmitEvent() {
           type : "POST",
           dataType: "json",
           data: {
-          	ga_id: $('#ga_id').val()
+          	ga_id: $('#ga_id').val(),
+            nav : createNavJSON()
           },
           success: function(data) {
           	console.log(data)
