@@ -49,15 +49,15 @@ function createNavJSON() {
       idsInOrder.map(
           function (e) {
               return {
-                      'id': e,
-                      'url': atob(e).toLowerCase().replace(/\s/g, '_') + '.html',
-                      'item_name' : atob(e)
-                     };
+                'id': e,
+                'url': atob(e).toLowerCase().replace(/\s/g, '_') + '.html',
+                'item_name' : atob(e)
+              }
           }
       ),
   0, 4);
 
-  return nav_info;
+  return $.parseJSON(nav_info);
 }
 
 function getPages() {

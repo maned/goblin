@@ -215,15 +215,16 @@ app.post('/config-save.json', function(req, res) {
 
     var ga_id_req = req.body.ga_id;
 
-    //var nav_req = unescape(req.body.nav);
+    var nav_req = req.body.nav;
 
     db.merge('admin_config', {
-        ga_id: ga_id_req
+        ga_id: ga_id_req,
+        nav: nav_req
       }, function (err, res) {
     });
 
     //Save the fields to all pages
-    saveToAllPages('ga_id', ga_id_req)
+    saveToAllPages('ga_id', ga_id_req);
 
     //Send Response
     res.contentType('json');
