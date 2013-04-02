@@ -62,12 +62,10 @@ function saveToAllPages(field, data) {
             (function(key1) {
               console.log(key1)
                 //Go into the DB and get that information, man!
-                console.log(field);
-                console.log(data);
                 var dataObj = {};
                 dataObj[field]=data;
                  db.merge(key1, dataObj, function (err, res) {
-                    console.log('Google Info Saved');
+                    //console.log('Google Info Saved');
                 });
              }
             )(key)
@@ -214,18 +212,23 @@ app.post('/config-page.json', function(req, res) {
 app.post('/config-save.json', function(req, res) {
 
     var ga_id_req = req.body.ga_id;
-
     var nav_req = req.body.nav;
+    var site_title_req = req.body.site_title;
+    var site_description_req = req.body.site_description;
 
     db.merge('admin_config', {
         ga_id: ga_id_req,
-        nav: nav_req
+        nav: nav_req,
+        site_title : site_title_req,
+        site_description : site_description_req
       }, function (err, res) {
     });
 
     //Save the fields to all pages
     saveToAllPages('ga_id', ga_id_req);
     saveToAllPages('nav', nav_req);
+    //saveToAllPages('site_title', site_title_req);
+    //saveToAllPages('site_description', site_description_req);
 
     //Send Response
     res.contentType('json');

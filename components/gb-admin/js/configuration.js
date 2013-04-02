@@ -43,14 +43,17 @@ function paintConfig() {
 }
 
 function createNavJSON() {
-   var idsInOrder = $('#nav_conf').sortable("toArray");
+
+  var idsInOrder = $('#nav_conf').sortable("toArray");
 
   var nav_info = JSON.stringify(
       idsInOrder.map(
           function (e) {
+            var esc_e = e.replace(/[=]/g, "\\=");
+              var id = '#' + esc_e;
               return {
                 'id': e,
-                'url': atob(e).toLowerCase().replace(/\s/g, '_') + '.html',
+                'url': $(id).attr('data-url'),
                 'item_name' : atob(e)
               }
           }
@@ -97,6 +100,8 @@ function setSubmitEvent() {
           data: {
           	ga_id: $('#ga_id').val(),
             nav : createNavJSON()
+            //site_title : $('#site_title').val(),
+           // site_description : $('#site_description').val()
           },
           success: function(data) {
           	console.log(data)
