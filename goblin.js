@@ -225,6 +225,7 @@ app.post('/config-save.json', function(req, res) {
 
     //Save the fields to all pages
     saveToAllPages('ga_id', ga_id_req);
+    saveToAllPages('nav', nav_req);
 
     //Send Response
     res.contentType('json');
