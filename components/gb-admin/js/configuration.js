@@ -97,11 +97,12 @@ function setSubmitEvent() {
           url: "/config-save.json",
           type : "POST",
           dataType: "json",
+          async: false,
           data: {
           	ga_id: $('#ga_id').val(),
-            nav : createNavJSON()
-            //site_title : $('#site_title').val(),
-           // site_description : $('#site_description').val()
+            nav : createNavJSON(),
+            site_title : $('#site_title').val(),
+            site_description : $('#site_description').val()
           },
           success: function(data) {
           	console.log(data)
