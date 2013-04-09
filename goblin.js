@@ -186,6 +186,10 @@ app.get('/', function(req, res) {
 //Set up Static File for Components
 app.use(express.static(__dirname + '/components'));
 
+app.use("/public", express.static(__dirname + "/public"));
+
+app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
+
 /*
 app.get('/gb-admin/login.html', function(req, res){
   
