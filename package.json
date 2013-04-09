@@ -5,6 +5,8 @@
   "private": true,
   "dependencies": {
     "express" : "latest",
+    "passport" : "latest",
+    "passport-local" : "latest",
     "cradle" : "latest",
     "mu2" : "latest"
   }
