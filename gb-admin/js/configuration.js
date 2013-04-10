@@ -14,7 +14,7 @@ function paintConfig() {
           dataType: "json",
           data: {},
           success: function(data) {
-          	console.log(data)
+          	
             //Empty the admin area
             $('#admin-area').empty();
             //Rebuild the template with the new data
