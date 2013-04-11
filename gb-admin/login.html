@@ -6,16 +6,38 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <!-- Le styles -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+
+      /* Import font for logo */
+      @import url(http://fonts.googleapis.com/css?family=Cabin+Sketch);
+
       /* Override some defaults */
       html, body {
         background-color: #eee;
+        /* IE10 Consumer Preview */ 
+background-image: -ms-radial-gradient(center, circle farthest-corner, #44ED1A 0%, #1D6902 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-radial-gradient(center, circle farthest-corner, #44ED1A 0%, #1D6902 100%);
+
+/* Opera */ 
+background-image: -o-radial-gradient(center, circle farthest-corner, #44ED1A 0%, #1D6902 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(radial, center center, 0, center center, 505, color-stop(0, #44ED1A), color-stop(1, #1D6902));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-radial-gradient(center, circle farthest-corner, #44ED1A 0%, #1D6902 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: radial-gradient(circle farthest-corner at center, #44ED1A 0%, #1D6902 100%);
       }
       body {
-        padding-top: 40px; 
+        padding-top: 40px;
       }
+
       .container {
         width: 300px;
       }
@@ -43,6 +65,12 @@
 	  	color: #404040;
 	  }
 
+    h1, h2 {
+      font-size:70px;
+      font-family:'Cabin Sketch',cursive;
+      margin-bottom:40px;
+    }
+
     </style>
 
 </head>
@@ -51,8 +79,8 @@
     <div class="content">
       <div class="row">
         <div class="login-form">
-          <h2>Login</h2>
-          <form action="/login" method="post">
+          <h2>goblin</h2>
+          <form action="/login.json" method="post">
             <fieldset>
               <div class="clearfix">
                 <input type="text" placeholder="Username" name="username">

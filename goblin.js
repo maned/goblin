@@ -14,7 +14,7 @@ console.log('Goblin Lives.')
 app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.bodyParser());
-  app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(express.session({ secret: 'goblin_session' }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
@@ -27,7 +27,7 @@ mu.root = __dirname + '/templates';
 */
 
 var users = [
-    { id: 1, username: 'gb-admin', password: 'admin', email: 'bob@example.com' }
+    { id: 1, username: 'gb-admin', password: 'admin', email: 'nick@example.com' }
 ];
 
 function findById(id, fn) {
@@ -89,31 +89,12 @@ passport.use(new LocalStrategy(
   }
 ));
 
-// POST /login
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/gb-admin/login.html' }),
-  function(req, res) {
-    res.redirect('/gb-admin/index.html');
-  });
-
-app.get('/gb-admin/logout.html', function(req, res){
-  req.logout();
-  res.redirect('/gb-admin/login.html');
-});
-
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
+  if (req.path === '/gb-admin/login.html' || req.isAuthenticated()) {
+    return next();
+  }
   res.redirect('/gb-admin/login.html')
 }
-
-/* 
-* Continue onwards....
-*/ 
 
 function routesGetandSet(data) {
   /*
@@ -186,17 +167,26 @@ app.get('/', function(req, res) {
 //Set up Static File for Components
 app.use(express.static(__dirname + '/components'));
 
+//Set up Login Post
+app.post('/login.json', 
+  passport.authenticate('local', { failureRedirect: '/gb-admin/login.html' }),
+  function(req, res) {
+    res.redirect('/gb-admin/index.html');
+  });
+
+//Set up Logout call
+app.get('/gb-admin/logout.html', function(req, res){
+  req.logout();
+  res.redirect('/gb-admin/login.html');
+});
+
+//Ensure authentication for all admin visiting
+app.get('/gb-admin/*', ensureAuthenticated, function(req, res, next) {
+  next();
+});
+
+//Set up gb-admin folder.
 app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
-
-/*
-app.get('/gb-admin/login.html', function(req, res){
-  
-});
-
-app.get('/gb-admin/*', ensureAuthenticated, function(req, res){
-
-});
-*/
 
 //Ajax Calls and Responses
 app.post('/admin-save.json', function(req, res) {
