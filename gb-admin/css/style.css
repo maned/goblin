@@ -1,3 +1,17 @@
+@import url(http://fonts.googleapis.com/css?family=Cabin+Sketch);
+
+body {
+	background:url("../img/linen_bg.png") repeat scroll center top rgba(207, 254, 192, .75);
+}
+
+h1, h2, h3 {
+	font-family: 'Cabin Sketch', cursive;
+}
+
+h1 {
+	font-size:4em;
+}
+
 #wrapper {
 	width:100%;
 	margin:0;
@@ -18,9 +32,10 @@
 }
 
 #admin_right {
-	width:80%;
+	width:70%;
 	height:100%;
 	float:left;
+	padding:50px 0 0 80px;
 }
 
 #select_a_page {
