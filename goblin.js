@@ -309,6 +309,28 @@ app.post('/admin-delete.json', function(req, res) {
 
     });
 
+    db.get('admin_config', function (err, doc) {
+      var navigation = doc.nav;
+
+      for (var i =0; i < navigation.length; i++) {
+        if (navigation[i].id === page_id) {
+            navigation.splice(i,1);
+         }
+      }
+
+      db.merge("admin_config", {
+          nav: navigation
+        }, function (err, res) {
+          console.log('Deleted from admin_config')
+      });
+
+      //Save to All Pages so there's no dead links!
+      saveToAllPages({
+        nav: navigation
+      });
+
+    });
+
     //Get the Database revision number so we can properly remove it
     db.get(req.body.page_id, function (err, doc) {
       //Remove the document, man!
