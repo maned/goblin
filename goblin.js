@@ -231,6 +231,32 @@ app.post('/admin-save.json', function(req, res) {
             });
         });
 
+        //And add it to the admin_config to play around with!
+
+        db.get('admin_config', function(err, doc) {
+          var navigation = doc.nav;
+
+          //Make Object to Push into array
+          var objToPush = {};
+
+          //Push items into object
+          objToPush.id = req.body.page_id;
+          objToPush.url = req.body.page_url;
+          objToPush.item_name = req.body.page_title;
+
+          //Push that object into navigation
+          navigation.push(objToPush);
+
+          db.merge('admin_config', {
+              nav: navigation
+            }, function (err, res) {
+              console.log('saved to admin_config!')
+          });
+
+        });
+
+
+
         
       } else {
         //It exists, so just merge the new info
@@ -317,11 +343,11 @@ app.post('/config-save.json', function(req, res) {
 
     //Go ahead and save it to all the pages!
     saveToAllPages({
-        ga_id: ga_id_req,
-        nav: nav_req,
-        site_title : site_title_req,
-        site_description : site_description_req
-      });
+      ga_id: ga_id_req,
+      nav: nav_req,
+      site_title : site_title_req,
+      site_description : site_description_req
+    });
 
     //The merge it into the reference document, so we can load it easily later!
     db.merge('admin_config', {
