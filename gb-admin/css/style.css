@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Cabin+Sketch);
 
 body {
-	background:url("../img/linen_bg.png") repeat scroll center top rgba(207, 254, 192, .75);
+	background:url("../img/linen_bg.png") repeat scroll center top rgba(207, 254, 192, 0.26);
 }
 
 h1, h2, h3 {

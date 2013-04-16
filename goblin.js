@@ -11,7 +11,7 @@ var http = require('http')
 console.log('Goblin Lives.')
 
 //Configure Body Parser
-app.configure(function(){
+app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.session({ secret: 'goblin_session' }));
@@ -153,15 +153,15 @@ function saveToAllPages(data) {
 
 //Run the Loop and Set Up all Pages
 db.get('pages_routes', function (err, doc) {
-      routesGetandSet(doc.pure_routes);
-  });;
+  routesGetandSet(doc.pure_routes);
+});
 
 //Set up the Index Page, by Default.
 app.get('/', function(req, res) {
   db.get('SG9tZQ==', function (err, doc) {
       var stream = mu.compileAndRender('page.gob', doc);
       util.pump(stream, res);
-    });
+  });
 });
 
 //Set up Static File for Components
@@ -172,7 +172,7 @@ app.post('/login.json',
   passport.authenticate('local', { failureRedirect: '/gb-admin/login.html' }),
   function(req, res) {
     res.redirect('/gb-admin/index.html');
-  });
+});
 
 //Set up Logout call
 app.get('/gb-admin/logout.html', function(req, res){
@@ -193,9 +193,7 @@ app.post('/admin-save.json', function(req, res) {
 
   db.get(req.body.page_id, function (err, doc) {
       if (doc === undefined) {
-        //The document doesn't exist.
-
-        //Add it to the page_routes
+        //The document doesn't exist, so add it to the page_routes
         db.get('pages_routes', function (err, doc) {
           var page_routes_data = doc.pure_routes;
           
@@ -232,7 +230,6 @@ app.post('/admin-save.json', function(req, res) {
         });
 
         //And add it to the admin_config to play around with!
-
         db.get('admin_config', function(err, doc) {
           var navigation = doc.nav;
 
@@ -254,9 +251,6 @@ app.post('/admin-save.json', function(req, res) {
           });
 
         });
-
-
-
         
       } else {
         //It exists, so just merge the new info
@@ -285,11 +279,11 @@ app.post('/page-edit.json', function(req, res) {
  });
 
 app.post('/get-pages.json', function(req, res) {
-    db.get('pages_routes', function (err, doc) {
-      res.contentType('json');
-      res.send(doc.pure_routes);
-    });
- });
+  db.get('pages_routes', function (err, doc) {
+    res.contentType('json');
+    res.send(doc.pure_routes);
+  });
+});
 
 app.post('/admin-delete.json', function(req, res) {
     var page_id = req.body.page_id;
@@ -311,7 +305,7 @@ app.post('/admin-delete.json', function(req, res) {
 
     db.get('admin_config', function (err, doc) {
       var navigation = doc.nav;
-
+      //Loop through array and remove route.
       for (var i =0; i < navigation.length; i++) {
         if (navigation[i].id === page_id) {
             navigation.splice(i,1);
@@ -349,11 +343,11 @@ app.post('/admin-delete.json', function(req, res) {
 
 //Config Page
 app.post('/config-page.json', function(req, res) {
-    db.get("admin_config", function (err, doc) {
-      res.contentType('json');
-      res.send(doc);
-    });
- });
+  db.get("admin_config", function (err, doc) {
+    res.contentType('json');
+    res.send(doc);
+  });
+});
 
 //Config Save
 app.post('/config-save.json', function(req, res) {
