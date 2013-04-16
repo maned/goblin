@@ -60,11 +60,15 @@
                     <div id="admin-area">
                         <script id="page_admin" type="text/html">
                             <input type="hidden" id="page_id" value="{{_id}}" placeholder="Page Id" disabled="true">
+                            <label>Page Title:</label>
                             <input type="text" id="page_title" value="{{page_title}}" placeholder="Page Title">
+                            <label>Page Url:</label>
                             <input type="text" id="page_url" value="{{page_url}}" placeholder="Page Url">
                             <textarea id="page_content" style="width:100%; height:500px;" placeholder="Page Content">{{page_content}}</textarea>
                             <h3>Meta and SEO</h3>
+                            <label>Description:</label>
                             <input type="text" id="meta_description" value="{{meta_description}}" placeholder="Page Description">
+                            <label>Keywords:</label>
                             <input type="text" id="meta_keywords" value="{{meta_keywords}}" placeholder="Page Keywords">
                             <br>
                             <button id="submit" type="button">Submit</button><button id="delete" type="button">Delete</button>

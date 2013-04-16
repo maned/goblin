@@ -142,21 +142,21 @@ function deleteRoute(url) {
 }
 
 function saveToAllPages(data) {
-    // This function saves a field with data to all page documents.
-      db.get('pages_routes', function (err, doc) {
-          for (key in doc.pure_routes) {
-            //Create a Closure because Javascript is strange, dude!
-            (function(key1) {
-              console.log(key1)
-                //Go into the DB and get that information, man!
-                 db.merge(key1, data, function (err, res) {
-                    console.log(data);
-                    console.log('saved to ' + key1)
-                });
-             }
-            )(key)
-          }
-    });
+  // This function saves a field with data to all page documents.
+  db.get('pages_routes', function (err, doc) {
+      for (key in doc.pure_routes) {
+        //Create a Closure because Javascript is strange, dude!
+        (function(key1) {
+          console.log(key1)
+            //Go into the DB and get that information, man!
+             db.merge(key1, data, function (err, res) {
+                console.log(data);
+                console.log('saved to ' + key1)
+            });
+         }
+        )(key)
+      }
+  });
 }
 
 //Run the Loop and Set Up all Pages

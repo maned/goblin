@@ -164,6 +164,12 @@ $(document).ready(function () {
             //Initate Admin Area
             setAdminArea();
 
+            console.log($('#page_to_edit').val())
+            if ($('#page_to_edit').val() !== "new_page") {
+              $('#page_title').prop('disabled', true);
+              $('#page_url').prop('disabled', true);
+            }
+
          },
           error: function() {
             console.log('Admin creation has failed. Please try again.');
