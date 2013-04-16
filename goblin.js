@@ -244,11 +244,27 @@ app.post('/admin-save.json', function(req, res) {
           //Push that object into navigation
           navigation.push(objToPush);
 
+          //Save to admin_config
           db.merge('admin_config', {
               nav: navigation
             }, function (err, res) {
-              console.log('saved to admin_config!')
+              console.log('saved to admin_config!');
           });
+
+          //Save the universal fields to the page document
+          db.merge(req.body.page_id, {
+              ga_id: doc.ga_id,
+              nav: navigation,
+              site_title : doc.site_title,
+              site_description : doc.site_description
+            }, function (err, res) {
+              console.log(' ajax post successful')
+          });
+
+          saveToAllPages({
+            nav: navigation
+          });
+          
 
         });
         
