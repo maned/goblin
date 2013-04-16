@@ -118,6 +118,14 @@ function routesGetandSet(data) {
      }
     )(key)
   }
+
+  //Set up the Index Page, by Default.
+  app.get('/', function(req, res) {
+    db.get('SG9tZQ==', function (err, doc) {
+        var stream = mu.compileAndRender('page.gob', doc);
+        util.pump(stream, res);
+    });
+  });
 }
 
 function deleteRoute(url) {
@@ -154,14 +162,6 @@ function saveToAllPages(data) {
 //Run the Loop and Set Up all Pages
 db.get('pages_routes', function (err, doc) {
   routesGetandSet(doc.pure_routes);
-});
-
-//Set up the Index Page, by Default.
-app.get('/', function(req, res) {
-  db.get('SG9tZQ==', function (err, doc) {
-      var stream = mu.compileAndRender('page.gob', doc);
-      util.pump(stream, res);
-  });
 });
 
 //Set up Static File for Components
@@ -261,10 +261,10 @@ app.post('/admin-save.json', function(req, res) {
               console.log(' ajax post successful')
           });
 
+          //Save the new navigation to all pages.
           saveToAllPages({
             nav: navigation
           });
-          
 
         });
         
@@ -284,7 +284,7 @@ app.post('/admin-save.json', function(req, res) {
 
    
   res.contentType('json');
-  res.send({ some: JSON.stringify({response:'json'}) });
+  res.send({ some: JSON.stringify({response:'success'}) });
 });
 
 app.post('/page-edit.json', function(req, res) {
@@ -302,8 +302,8 @@ app.post('/get-pages.json', function(req, res) {
 });
 
 app.post('/admin-delete.json', function(req, res) {
-    var page_id = req.body.page_id;
-    var page_url = req.body.page_url;
+    var page_id = req.body.page_id,
+        page_url = req.body.page_url;
 
     //Remove reference to it in Page Routes
     db.get('pages_routes', function (err, doc) {
@@ -320,7 +320,9 @@ app.post('/admin-delete.json', function(req, res) {
     });
 
     db.get('admin_config', function (err, doc) {
+
       var navigation = doc.nav;
+
       //Loop through array and remove route.
       for (var i =0; i < navigation.length; i++) {
         if (navigation[i].id === page_id) {
@@ -354,7 +356,7 @@ app.post('/admin-delete.json', function(req, res) {
     deleteRoute(page_url);
 
     res.contentType('json');
-    res.send({ some: JSON.stringify({response:'json'}) });
+    res.send({ some: JSON.stringify({response:'success'}) });
  });
 
 //Config Page
@@ -368,10 +370,10 @@ app.post('/config-page.json', function(req, res) {
 //Config Save
 app.post('/config-save.json', function(req, res) {
 
-    var ga_id_req = req.body.ga_id;
-    var nav_req = req.body.nav;
-    var site_title_req = req.body.site_title;
-    var site_description_req = req.body.site_description;
+    var ga_id_req = req.body.ga_id,
+        nav_req = req.body.nav,
+        site_title_req = req.body.site_title,
+        site_description_req = req.body.site_description;
 
     //Go ahead and save it to all the pages!
     saveToAllPages({
@@ -393,7 +395,7 @@ app.post('/config-save.json', function(req, res) {
 
     //Send Response
     res.contentType('json');
-    res.send({ some: JSON.stringify({response:'json'}) });
+    res.send({ some: JSON.stringify({response:'success'}) });
  });
 
 

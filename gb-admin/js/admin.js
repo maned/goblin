@@ -50,6 +50,8 @@ function setSubmitEvent() {
     //Automatically make page_id to be 100% sure for existing and for new ones!
     $('#page_id').val(utf8_to_b64($('#page_title').val()));
 
+    var page_id_to_save = $('#page_id').val();
+
     //Check to Make sure it's not blank
     if ($('#page_id').val() !== "") {
       //Go on with Ajax!
@@ -58,7 +60,7 @@ function setSubmitEvent() {
           type : "POST",
           dataType: "json",
           data: {
-              page_id: $('#page_id').val(),
+              page_id: page_id_to_save,
               page_title: $('#page_title').val(),
               page_url: $('#page_url').val(),
               page_content: $('#page_content').val(),
@@ -69,14 +71,24 @@ function setSubmitEvent() {
           success: function(data) {
 
             if (begin_id === "") {
+
+              //Reload the pages
               getAllPages();
+
+              //Correct the select field and launch change (TODO: Fix this.)
+              //$('#page_to_edit').val(page_id_to_save);
+              $('#page_to_edit').change();
+
+              console.log('Page has been created.');
+
+            } else {
+              console.log('Page has been updated.');
             }
 
-            console.log('process success');
           },
 
           error: function() {
-            console.log('process error');
+            console.log('Page update/creation has failed. Please try again.');
           },
         });
     } else {
@@ -98,14 +110,17 @@ function setDeleteEvent() {
           },
 
           success: function(data) {
-            console.log('process success');
+            console.log('Page has been deleted');
 
             //Re-get all pages.
             getAllPages();
+            
+            //Initiate change event to get a new admin.
+            $('#page_to_edit').change();
           },
 
           error: function() {
-            console.log('process error');
+            console.log('Page deletion has failed. Please try again.');
           },
     });
   });
@@ -151,7 +166,7 @@ $(document).ready(function () {
 
          },
           error: function() {
-            console.log('process error');
+            console.log('Admin creation has failed. Please try again.');
           },
         });
   });
