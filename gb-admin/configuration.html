@@ -31,6 +31,7 @@
                 <div id="admin_left">
                     <article id="logo">
                         <h1>goblin</h1>
+                        <!--<span class="admin_tagline"><h3>alpha 0.0.1</h3></span>-->
                     </article>
                    <ul>
                         <li><a href="index.html">Dashboard</a></li>
@@ -45,14 +46,26 @@
                     <div id="admin-area">
                         <article id="navigation_list">
                             <script id="config_page" type="text/html">
+                                
+                                <label>Site Title :</label>
+                                <input type="text" id="site_title" value="{{site_title}}" placeholder="Site Title">
+                                <div class="clear"></div>
+                                <label>Site Description :</label>
+                                <input type="text" id="site_description" value="{{site_description}}" placeholder="Site Description">
+                                <div class="clear"></div>
+
+                                <label> Navigation (shift to order) :</label>
                                 <ul id="nav_conf">
                                     {{#nav}}
                                         <li id="{{id}}" data-url="{{url}}" class="ui-state-default nav_item_count">{{item_name}}</li>
                                     {{/nav}}
                                 </ul>
+
+                                <div class="clear"></div>
+                                <label>Google Analytics Id :</label>
                                 <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">
-                                <input type="text" id="site_title" value="{{site_title}}" placeholder="Site Title">
-                                <input type="text" id="site_description" value="{{site_description}}" placeholder="Site Description">
+                                <div class="clear"></div>
+
                                 <button id="submit" type="button">Submit</button>
                             </script>
                         </article>
