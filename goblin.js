@@ -150,7 +150,6 @@ function saveToAllPages(data) {
           console.log(key1)
             //Go into the DB and get that information, man!
              db.merge(key1, data, function (err, res) {
-                console.log(data);
                 console.log('saved to ' + key1)
             });
          }
@@ -203,7 +202,7 @@ app.post('/admin-save.json', function(req, res) {
                 pure_routes: page_routes_data
               }, function (err, res) {
                 console.log('New Page Routes Saved')
-            });
+          });
 
         });
 
@@ -217,8 +216,8 @@ app.post('/admin-save.json', function(req, res) {
         }, function (err, res) {
 
             //Create variables to be able to pass them nicely.
-            var new_page_url = req.body.page_url;
-            var new_page_id = req.body.page_id;
+            var new_page_url = req.body.page_url,
+                new_page_id = req.body.page_id;
 
             //Add new route!
             app.get('/' + new_page_url, function(req, res) {
@@ -231,10 +230,8 @@ app.post('/admin-save.json', function(req, res) {
 
         //And add it to the admin_config to play around with!
         db.get('admin_config', function(err, doc) {
-          var navigation = doc.nav;
-
-          //Make Object to Push into array
-          var objToPush = {};
+          var navigation = doc.nav,
+              objToPush = {};
 
           //Push items into object
           objToPush.id = req.body.page_id;
@@ -282,7 +279,6 @@ app.post('/admin-save.json', function(req, res) {
       }
   });
 
-   
   res.contentType('json');
   res.send({ some: JSON.stringify({response:'success'}) });
 });
@@ -349,7 +345,6 @@ app.post('/admin-delete.json', function(req, res) {
       db.remove(req.body.page_id, doc._rev, function (err, res) {
         console.log('document removed')
       });
-
     });
 
     //Delete Route to that Page from Express

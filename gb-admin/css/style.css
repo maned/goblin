@@ -45,3 +45,20 @@ h1 {
 #select_a_page h2 {
 	display:inline-block;
 }
+
+/* Overall Admin Styles */
+
+#admin_right label {
+	font-weight:bold;
+}
+/* Config Styles */
+#nav_conf {
+	width:50%;
+	list-style:none;
+}
+#nav_conf li {
+	cursor: pointer;
+	padding:5px;
+	margin:5px 0;
+	border:1px solid black;
+}
