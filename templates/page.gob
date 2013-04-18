@@ -32,15 +32,18 @@
                         <h2>{{site_description}}</h2>
                     </article>
                     <article id="download">
+                        <div id="download_button"><a href="https://github.com/streetlight/goblin" target="_blank">download goblin now</a></div>
                     </article>
-                    <nav id="top">
+                    
+                </header>
+                <div class="clear"></div>
+                <nav id="top">
                         <ul>
                             {{#nav}}
                                 <li><a href="{{url}}">{{item_name}}</a></li>
                             {{/nav}}
                         </ul>       
                     </nav>
-                </header>
                 <section id="content">
                     <h2>{{page_title}}</h2>
                     {{{page_content}}}          

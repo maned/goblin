@@ -68,8 +68,6 @@ function getPages() {
       url: "/get-pages.json",
       type : "POST",
       dataType: "json",
-      async: false,
-
       success: function(data) {
         console.log(data)
           for (key in data) {
@@ -97,7 +95,6 @@ function setSubmitEvent() {
           url: "/config-save.json",
           type : "POST",
           dataType: "json",
-          async: false,
           data: {
           	ga_id: $('#ga_id').val(),
             nav : createNavJSON(),
@@ -105,7 +102,6 @@ function setSubmitEvent() {
             site_description : $('#site_description').val()
           },
           success: function(data) {
-          	console.log(data)
           	paintConfig();
          },
           error: function() {

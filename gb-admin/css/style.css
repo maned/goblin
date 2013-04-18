@@ -46,7 +46,11 @@ h1 {
 	display:inline-block;
 }
 
-/* Overall Admin Styles */
+/* Overall Admin Styles */ 
+
+div.wysiwyg {
+	margin-top:10px;
+}
 
 #admin_right label {
 	font-weight:bold;

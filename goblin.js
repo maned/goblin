@@ -8,7 +8,7 @@ var http = require('http')
   , app = express();
 
 //Let the nice System Admin know the server is running.
-console.log('Goblin Lives.')
+console.log('Goblin Lives.');
 
 //Configure Body Parser
 app.configure(function() {
