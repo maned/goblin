@@ -40,8 +40,11 @@ function findById(id, fn) {
 }
 
 function findByUsername(username, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
+  var i    = null,
+      user = null;
+
+  for (i = 0, len = users.length; i < len; i++) {
+    user = users[i];
     if (user.username === username) {
       return fn(null, user);
     }
@@ -82,9 +85,9 @@ passport.use(new LocalStrategy(
       findByUsername(username, function(err, user) {
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+        if (user.password !== password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
-      })
+      });
     });
   }
 ));
@@ -93,7 +96,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.path === '/gb-admin/login.html' || req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/gb-admin/login.html')
+  res.redirect('/gb-admin/login.html');
 }
 
 function routesGetandSet(data) {
@@ -116,7 +119,7 @@ function routesGetandSet(data) {
         });
       }
      }
-    )(key)
+    )(key);
   }
 
   //Set up the Index Page, by Default.
@@ -134,7 +137,9 @@ function deleteRoute(url) {
    This deletes a specific route from express route mapping.
   */
 
-  for (var i = app.routes.get.length - 1; i >= 0; i--) {
+  var i = null;
+
+  for (i = app.routes.get.length - 1; i >= 0; i--) {
     if (app.routes.get[i].path === "/" + url) {
       app.routes.get.splice(i, 1);
     }
@@ -147,13 +152,12 @@ function saveToAllPages(data) {
       for (key in doc.pure_routes) {
         //Create a Closure because Javascript is strange, dude!
         (function(key1) {
-          console.log(key1)
             //Go into the DB and get that information, man!
              db.merge(key1, data, function (err, res) {
-                console.log('saved to ' + key1)
+                console.log('saved to ' + key1);
             });
          }
-        )(key)
+        )(key);
       }
   });
 }
@@ -201,7 +205,7 @@ app.post('/admin-save.json', function(req, res) {
           db.merge("pages_routes", {
                 pure_routes: page_routes_data
               }, function (err, res) {
-                console.log('New Page Routes Saved')
+                console.log('New Page Routes Saved');
           });
 
         });
@@ -255,12 +259,11 @@ app.post('/admin-save.json', function(req, res) {
               site_title : doc.site_title,
               site_description : doc.site_description
             }, function (err, res) {
-              console.log(' ajax post successful')
-          });
-
-          //Save the new navigation to all pages.
-          saveToAllPages({
-            nav: navigation
+              console.log(' ajax post successful');
+              //Save the new navigation to all pages.
+              saveToAllPages({
+                nav: navigation
+              });
           });
 
         });
@@ -274,7 +277,7 @@ app.post('/admin-save.json', function(req, res) {
             meta_description: req.body.meta_description,
             meta_keywords: req.body.meta_keywords
           }, function (err, res) {
-            console.log(' ajax post successful')
+            console.log(' ajax post successful');
         });
       }
   });
@@ -310,17 +313,18 @@ app.post('/admin-delete.json', function(req, res) {
       db.merge("pages_routes", {
           pure_routes: page_routes_data
         }, function (err, res) {
-          console.log('New Page Routes Saved')
+          console.log('New Page Routes Saved');
       });
 
     });
 
     db.get('admin_config', function (err, doc) {
 
-      var navigation = doc.nav;
+      var navigation = doc.nav,
+          i          = null;
 
       //Loop through array and remove route.
-      for (var i =0; i < navigation.length; i++) {
+      for (i = 0; i < navigation.length; i++) {
         if (navigation[i].id === page_id) {
             navigation.splice(i,1);
          }
@@ -329,7 +333,7 @@ app.post('/admin-delete.json', function(req, res) {
       db.merge("admin_config", {
           nav: navigation
         }, function (err, res) {
-          console.log('Deleted from admin_config')
+          console.log('Deleted from admin_config');
       });
 
       //Save to All Pages so there's no dead links!
@@ -343,7 +347,7 @@ app.post('/admin-delete.json', function(req, res) {
     db.get(req.body.page_id, function (err, doc) {
       //Remove the document, man!
       db.remove(req.body.page_id, doc._rev, function (err, res) {
-        console.log('document removed')
+        console.log('document removed');
       });
     });
 
@@ -385,7 +389,7 @@ app.post('/config-save.json', function(req, res) {
         site_title : site_title_req,
         site_description : site_description_req
       }, function (err, res) {
-        console.log('saved to admin_config')
+        console.log('saved to admin_config');
     });
 
     //Send Response
