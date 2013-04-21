@@ -1,3 +1,6 @@
+# goblin!
+## a pure content management system
+
 **What is goblin?**
 
 Goblin in a Javascript-based Content Management System, built on Node.js and utilizing CouchDB as it's data store.
