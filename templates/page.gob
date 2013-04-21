@@ -32,7 +32,7 @@
                         <h2>{{site_description}}</h2>
                     </article>
                     <article id="download">
-                        <div id="download_button"><a href="https://github.com/streetlight/goblin" target="_blank">download goblin now</a></div>
+                        <div id="download_button"><a href="https://github.com/streetlight/goblin" target="_blank">download goblin! now</a></div>
                     </article>
                     
                 </header>
