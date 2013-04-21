@@ -5,7 +5,7 @@ goblin! in a Javascript-based Content Management System, built on Node.js and ut
 It's focus is to be as easily templateable as possible, so that front-end developers can just hop in and do what
 they do best.
 
-** What makes goblin! so special? **
+**What makes goblin! so special?**
 
 goblin! is designed to be as flexible and easy-to-use as possible. More details to come.
 
