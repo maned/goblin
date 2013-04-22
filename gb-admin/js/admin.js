@@ -119,6 +119,9 @@ function setDeleteEvent() {
             
             //Initiate change event to get a new admin.
             $('#page_to_edit').change();
+
+            //Temp fix TODO: Fix this more cleanly.
+            window.location.reload();
           },
 
           error: function() {
