@@ -103,6 +103,8 @@ function setSubmitEvent() {
           },
           success: function(data) {
           	paintConfig();
+
+            window.location.reload();
          },
           error: function() {
             console.log('process error');
