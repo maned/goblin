@@ -141,7 +141,7 @@ function setSubmitEvent() {
 
 function setDeleteEvent() {
   $('#delete').click(function() {
-    if ($('#page_to_edit').val() !== "new_page" || $('#page_to_edit').val() === "SG9tZQ==") {
+    if ($('#page_to_edit').val() !== "new_page" && $('#page_to_edit').val() !== "SG9tZQ==") {
       $.ajax({
           url: "/admin-delete.json",
           type : "POST",
