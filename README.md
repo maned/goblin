@@ -23,9 +23,10 @@ It just is!
 ### How to Install goblin
 
 Installing goblin is easy. First you must have these two dependencies installed:
--Node.js
--Node Package Manager (npm)
--CouchDB
+
+1. Node.js
+2. Node Package Manager (npm)
+3. CouchDB
 
 Then, here are the steps:
 
