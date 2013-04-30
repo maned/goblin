@@ -63,6 +63,9 @@ After you are done, change the extension from .html to .gob, and place it in the
 Place all of your customized CSS and JS files into components > custom. All the files will render in the /custom/
 directory in the browser, so make sure you point to them using '/custom/' path in your .gob file.
 
+goblin adopts mustache's great templating language (https://github.com/janl/mustache.js/), so anything you can
+do with mustache you can use here (this information will come in handy when creating themes with custom variables).
+
 As of right now, goblin only supports one .gob file at a time (call it page.gob, to make it easy to implement
 out of the box). However, multiple .gob file support is forthcoming and will soon be implemented!
 
