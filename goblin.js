@@ -22,54 +22,6 @@ app.configure(function() {
 
 mu.root = __dirname + '/templates';
 
-//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
-db.get('admin_config', function (err, doc) {
-    if (doc === undefined) {
-         db.save('admin_config', {
-            ga_id: "UA-XXXXX-X",
-            nav: [
-               {
-                   "id": "SG9tZQ==",
-                   "url": "index.html",
-                   "item_name": "Home"
-               }],
-            site_title : "site title",
-            site_description : "site description"
-        }, function (err, res) {
-            console.log('admin_config document created.');
-        });
-    }
-});
-
-db.get('pages_routes', function (err, doc) {
-
-    if (doc === undefined) {
-        db.save("pages_routes", {
-            pure_routes: {
-               "SG9tZQ==": "index.html"
-            }
-        }, function (err, res) {
-            console.log('Default Routes Document Created');
-        }); 
-    }
-   
-});
-
-db.get("SG9tZQ==", function(err, doc) {
-
-    if (doc === undefined) {
-        db.save("SG9tZQ==", {
-            page_title: "Home",
-            page_content: "Initial Home Content",
-            page_url: "index.html",
-            meta_description: "Default goblin page",
-            meta_keywords: "goblin, CMS, javascript"
-        }, function (err, res) {
-            console.log('Default')
-        });
-    }
-});
-
 /*
 * Configure Authentication
 */
@@ -211,9 +163,68 @@ function saveToAllPages(data) {
     });
 }
 
-//Run the Loop and Set Up all Pages
+//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
+db.get('admin_config', function (err, doc) {
+    if (doc === undefined) {
+         db.save('admin_config', {
+            ga_id: "UA-XXXXX-X",
+            nav: [
+               {
+                   "id": "SG9tZQ==",
+                   "url": "index.html",
+                   "item_name": "Home"
+               }],
+            site_title : "site title",
+            site_description : "site description"
+        }, function (err, res) {
+            console.log('admin_config document created.');
+        });
+    }
+
+});
+
 db.get('pages_routes', function (err, doc) {
-    routesGetandSet(doc.pure_routes);
+
+    var routes_to_save = {
+       "SG9tZQ==": "index.html"
+    };
+
+    if (doc === undefined) {
+        db.save("pages_routes", {
+            pure_routes: routes_to_save
+        }, function (err, res) {
+
+            db.get("SG9tZQ==", function(err, doc) {
+
+                if (doc === undefined) {
+                    db.save("SG9tZQ==", {
+                        page_title: "Home",
+                        page_content: "Initial Home Content",
+                        page_url: "index.html",
+                        meta_description: "Default goblin page",
+                        meta_keywords: "goblin, CMS, javascript",
+                        ga_id: "UA-XXXXX-X",
+                        nav: [
+                           {
+                               "id": "SG9tZQ==",
+                               "url": "index.html",
+                               "item_name": "Home"
+                           }
+                        ],
+                        site_title : "site title",
+                        site_description : "site description"
+                    }, function (err, res) {
+                        routesGetandSet(routes_to_save);
+                        console.log('Default Routes Document Created and routes set.');
+                    });
+                }
+            });
+            
+        }); 
+    } else {
+       routesGetandSet(doc.pure_routes); 
+    }
+   
 });
 
 //Set up Static File for Components
