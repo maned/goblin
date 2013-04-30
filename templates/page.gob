@@ -13,10 +13,10 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="custom/css/normalize.css">
-        <link rel="stylesheet" href="custom/css/main.css">
-        <link rel="stylesheet" href="custom/css/style.css">
-        <script src="custom/js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="/custom/css/normalize.css">
+        <link rel="stylesheet" href="/custom/css/main.css">
+        <link rel="stylesheet" href="/custom/css/style.css">
+        <script src="/custom/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -40,7 +40,7 @@
                 <nav id="top">
                         <ul>
                             {{#nav}}
-                                <li><a href="{{url}}">{{item_name}}</a></li>
+                                <li><a href="/{{url}}">{{item_name}}</a></li>
                             {{/nav}}
                         </ul>       
                     </nav>
@@ -66,9 +66,9 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="custom/js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-        <script src="custom/js/vendor/icanhaz.min.js"></script>
-        <script src="custom/js/plugins.js"></script>
-        <script src="custom/js/main.js"></script>
+        <script src="/custom/js/vendor/icanhaz.min.js"></script>
+        <script src="/custom/js/plugins.js"></script>
+        <script src="/custom/js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
