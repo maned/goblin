@@ -22,6 +22,8 @@ app.configure(function() {
 
 mu.root = __dirname + '/templates';
 
+var DEFAULT_GOB_THEME = 'page.gob';
+
 /*
 * Configure Authentication
 */
@@ -116,7 +118,7 @@ function routesGetandSet(data) {
                 app.get('/' + data[key1], function(req, res) {
                     //Go into the DB and get that information, man!
                     db.get(key1, function (err, doc) {
-                        var stream = mu.compileAndRender('page.gob', doc);
+                        var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
                         util.pump(stream, res);
                     });
                 });
@@ -127,7 +129,7 @@ function routesGetandSet(data) {
     //Set up the Index Page, by Default.
     app.get('/', function(req, res) {
         db.get('SG9tZQ==', function (err, doc) {
-            var stream = mu.compileAndRender('page.gob', doc);
+            var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
             util.pump(stream, res);
         });
     });
@@ -285,7 +287,7 @@ app.post('/admin-save.json', function(req, res) {
                 //Add new route!
                 app.get('/' + new_page_url, function(req, res) {
                     db.get(new_page_id, function (err, doc) {
-                        var stream = mu.compileAndRender('page.gob', doc);
+                        var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
                         util.pump(stream, res);
                     });
                 });
