@@ -5,18 +5,19 @@ goblin in a Javascript-based Content Management System, built on Node.js and uti
 It's focus is to be as easily templateable as possible, so that front-end developers can just hop in and do what
 they do best.
 
-**What makes goblin! so special?**
+**What makes goblin so special?**
 
-goblin is designed to be as flexible and easy-to-use as possible. More details to come.
+goblin is lightweight, nimble, fast and incredibly easy-to-theme. It's written entirely in javascript, making it
+super friendly for front-end developers (you know, the ones that will be themeing!) to customize and understand.
 
 **Why Javascript?**
 
-It's a great, and very versitile language. It's also the lingua franca of the web, and is one that front-end dev's are more
-comfortable with.
+It's a great, and very versitile language. It's also the lingua franca of the web, and is one that front-end
+developers are more likely to be comfortable with.
 
 **Why is Goblin so great?**
 
-It just is!
+It just is! Let's get on to the details...
 
 ---
 
