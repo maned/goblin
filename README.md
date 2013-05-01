@@ -71,6 +71,8 @@ out of the box). However, multiple .gob file support is forthcoming and will soo
 
 ---
 
+###So go get started, amigo!
+
 goblin is built to be as flexible as possible, so a lot of customization can be built into this, and documentation
 on this will come soon! In the meantime, please use, run, theme and explore goblin, and please report any issues
 you run into (no matter how small) and submit improvements if you can!
