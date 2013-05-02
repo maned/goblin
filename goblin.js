@@ -1,3 +1,14 @@
+/*
+ * Welcome to goblin!
+ *
+ * goblin is a lightweight CMS designed to serve static pages. It is written
+ * entirely in javascript, using Node.js and CouchDB for the server and DB, respectively.
+ *
+ * Written and Developed by Nick Weingartner
+ * Property of MEI (http://www.maned.com/)
+ *
+ */
+
 var http = require('http')
   , util = require('util')
   , mu   = require('mu2')
