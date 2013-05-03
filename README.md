@@ -32,7 +32,7 @@ Installing goblin is easy. First you must have these two dependencies installed:
 Then, here are the steps:
 
 1. Download goblin and place it in a directory
-2. Create a database in CouchDB. Write down the name of it, as well as CouchDB's url, port and credientials.
+2. Create a database in CouchDB. Write down the name of it, as well as CouchDB's url, port and credientials (You will have to create a default user for your database; goblin now looks for 'admin', 'admin').
 3. Take this information, and place it in the appropriate fields in 'db.js'.
 4. Change the default username and password in 'goblin.js' (by default, it is gb-admin and admin, respectively).
 5. Navigate to the directory in the command line, and run the 'goblin.js' file with node. ('nodejs goblin.js' in linux, 'node goblin.js' in OS X/Unix).
