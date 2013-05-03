@@ -33,7 +33,7 @@ app.configure(function() {
 
 mu.root = __dirname + '/templates';
 
-var DEFAULT_GOB_THEME = 'page.gob';
+var DEFAULT_GOB_THEME = 'superhero.gob';
 
 /*
 * Configure Authentication
@@ -258,6 +258,11 @@ app.get('/gb-admin/logout.html', function(req, res){
 
 //Ensure authentication for all admin visiting
 app.get('/gb-admin/*', ensureAuthenticated, function(req, res, next) {
+    next();
+});
+
+//Apply the same rules for hitting it without the slash.
+app.get('/gb-admin', ensureAuthenticated, function(req, res, next) {
     next();
 });
 
