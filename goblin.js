@@ -130,7 +130,7 @@ function routesGetandSet(data) {
                     //Go into the DB and get that information, man!
                     db.get(key1, function (err, doc) {
                         var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
-                        util.pump(stream, res);
+                        stream.pipe(res);
                     });
                 });
             }
@@ -141,7 +141,7 @@ function routesGetandSet(data) {
     app.get('/', function(req, res) {
         db.get('SG9tZQ==', function (err, doc) {
             var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
-            util.pump(stream, res);
+            stream.pipe(res);
         });
     });
 }
@@ -304,7 +304,7 @@ app.post('/admin-save.json', function(req, res) {
                 app.get('/' + new_page_url, function(req, res) {
                     db.get(new_page_id, function (err, doc) {
                         var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
-                        util.pump(stream, res);
+                        stream.pipe(res);
                     });
                 });
             });
