@@ -33,7 +33,7 @@ app.configure(function() {
 
 mu.root = __dirname + '/templates';
 
-var DEFAULT_GOB_THEME = 'superhero.gob';
+var DEFAULT_GOB_THEME = 'page.gob';
 
 /*
 * Configure Authentication
