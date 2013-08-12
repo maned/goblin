@@ -1,13 +1,28 @@
 {
-  "name": "goblin",
-  "description": "goblin cms framework",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "express" : "latest",
-    "passport" : "latest",
-    "passport-local" : "latest",
-    "cradle" : "latest",
-    "mu2" : "latest"
-  }
+    "name": "goblin",
+    "version": "0.0.1",
+    "description": "Pure javascript content management system designed to serve static pages in the cloud.",
+    "keywords": ["CMS", "Javascript CMS", "CouchDB", "static page"],
+    "homepage": "https://github.com/maned/goblin",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/maned/goblin.git"
+    },
+    "bugs": {
+        "url": "https://github.com/maned/goblin/issues"
+    },
+    "author": {
+        name: "Nick Weingartner - Managing Editor Inc",
+        "email": "nweingartner@maned.com",
+        "url": "http://www.maned.com"
+    },
+    "readmeFilename": "README.md",
+    "license": "GPLv3",
+    "dependencies": {
+        "express": "latest",
+        "passport": "latest",
+        "passport-local": "latest",
+        "cradle": "latest",
+        "mu2": "latest"
+    }
 }
