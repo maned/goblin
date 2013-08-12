@@ -38,6 +38,10 @@ Then, here are the steps:
 5. Navigate to the directory in the command line, and run the 'goblin.js' file with node. ('nodejs goblin.js' in linux, 'node goblin.js' in OS X/Unix).
 6. Go to 'localhost:8000/' in your browser, and 'localhost:8000/gb-admin', and you'll see goblin run!
 
+In addition, you can feel free to use an already hosted CouchDB instance -- like signing up for one for free at IrisCouch (http://iriscouch.com) if you don't want to install couch locally. 
+
+If you have any issues installing, please provide feedback on where these instructions are not illumintating enough! You can report an issue on GitHub for this to be fixed, or even email me directly (see: Feedback).
+
 ---
 
 ### Themeing goblin
