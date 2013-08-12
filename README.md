@@ -78,3 +78,18 @@ goblin is built to be as flexible as possible, so a lot of customization can be 
 on this will come soon! In the meantime, please use, run, theme and explore goblin, and please report any issues
 you run into (no matter how small) and submit improvements if you can!
 
+---
+
+###License
+
+Copyright (C) 2013  Managing Editor Inc (http://www.maned.com/)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
