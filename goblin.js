@@ -4,7 +4,8 @@
  * goblin is a lightweight CMS designed to serve static pages. It is written
  * entirely in javascript, using Node.js and CouchDB for the server and DB, respectively.
  *
- * Written and Developed by Nick Weingartner
+ * Written and Developed by Nick Weingartner (nweingartner@gmail.com)
+ *
  * Copyright 2013, Managing Editor Inc (http://www.maned.com/), and released under the GPLv3 (see: README for more details)
  *
  */
