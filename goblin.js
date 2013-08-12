@@ -5,27 +5,29 @@
  * entirely in javascript, using Node.js and CouchDB for the server and DB, respectively.
  *
  * Written and Developed by Nick Weingartner
- * Property of MEI (http://www.maned.com/)
+ * Copyright 2013, Managing Editor Inc (http://www.maned.com/), and released under the GPLv3 (see: README for more details)
  *
  */
 
-var http = require('http')
-  , util = require('util')
-  , mu   = require('mu2')
-  , db = require('./db')
-  , express = require('express')
-  , passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy
-  , app = express();
+var http = require('http'),
+    util = require('util'),
+    mu = require('mu2'),
+    db = require('./db'),
+    express = require('express'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    app = express();
 
 //Let the nice System Admin know the server is running.
 console.log('Goblin Lives.');
 
 //Configure Body Parser
-app.configure(function() {
+app.configure(function () {
     app.use(express.cookieParser());
     app.use(express.bodyParser());
-    app.use(express.session({ secret: 'goblin_session' }));
+    app.use(express.session({
+        secret: 'goblin_session'
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(app.router);
@@ -36,12 +38,15 @@ mu.root = __dirname + '/templates';
 var DEFAULT_GOB_THEME = 'page.gob';
 
 /*
-* Configure Authentication
-*/
+ * Configure Authentication
+ */
 
-var users = [
-    { id: 1, username: 'gb-admin', password: 'admin', email: 'nick@example.com' }
-];
+var users = [{
+    id: 1,
+    username: 'gb-admin',
+    password: 'admin',
+    email: 'nick@example.com'
+}];
 
 function findById(id, fn) {
     var idx = id - 1;
@@ -54,14 +59,14 @@ function findById(id, fn) {
 }
 
 function findByUsername(username, fn) {
-    var i    = null,
+    var i = null,
         user = null;
 
     for (i = 0, len = users.length; i < len; i++) {
         user = users[i];
-        
+
         if (user.username === username) {
-          return fn(null, user);
+            return fn(null, user);
         }
     }
     return fn(null, null);
@@ -72,11 +77,11 @@ function findByUsername(username, fn) {
 //   serialize users into and deserialize users out of the session.  Typically,
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function (id, done) {
     findById(id, function (err, user) {
         done(err, user);
     });
@@ -89,20 +94,30 @@ passport.deserializeUser(function(id, done) {
 //   with a user object.  In the real world, this would query a database;
 //   however, in this example we are using a baked-in set of users.
 passport.use(new LocalStrategy(
-    function(username, password, done) {
+    function (username, password, done) {
         // asynchronous verification, for effect...
         process.nextTick(function () {
-          
-          // Find the user by username.  If there is no user with the given
-          // username, or the password is not correct, set the user to `false` to
-          // indicate failure and set a flash message.  Otherwise, return the
-          // authenticated `user`.
-          findByUsername(username, function(err, user) {
-            if (err) { return done(err); }
-            if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-            if (user.password !== password) { return done(null, false, { message: 'Invalid password' }); }
-            return done(null, user);
-          });
+
+            // Find the user by username.  If there is no user with the given
+            // username, or the password is not correct, set the user to `false` to
+            // indicate failure and set a flash message.  Otherwise, return the
+            // authenticated `user`.
+            findByUsername(username, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    return done(null, false, {
+                        message: 'Unknown user ' + username
+                    });
+                }
+                if (user.password !== password) {
+                    return done(null, false, {
+                        message: 'Invalid password'
+                    });
+                }
+                return done(null, user);
+            });
         });
     }
 ));
@@ -122,11 +137,11 @@ function routesGetandSet(data) {
 
     for (key in data) {
         //Create a Closure because Javascript is strange, dude!
-        (function(key1) {
-          //In the looping, make sure you don't take the ID or Revision Number from the DB
+        (function (key1) {
+            //In the looping, make sure you don't take the ID or Revision Number from the DB
             if (key1 !== "_id" && key1 !== "_rev") {
                 //Set route for value
-                app.get('/' + data[key1], function(req, res) {
+                app.get('/' + data[key1], function (req, res) {
                     //Go into the DB and get that information, man!
                     db.get(key1, function (err, doc) {
                         var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
@@ -138,7 +153,7 @@ function routesGetandSet(data) {
     }
 
     //Set up the Index Page, by Default.
-    app.get('/', function(req, res) {
+    app.get('/', function (req, res) {
         db.get('SG9tZQ==', function (err, doc) {
             var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
             stream.pipe(res);
@@ -148,11 +163,11 @@ function routesGetandSet(data) {
 
 function deleteRoute(url) {
 
-  /*
+    /*
    This deletes a specific route from express route mapping.
   */
 
-  var i = null;
+    var i = null;
 
     for (i = app.routes.get.length - 1; i >= 0; i--) {
         if (app.routes.get[i].path === "/" + url) {
@@ -166,7 +181,7 @@ function saveToAllPages(data) {
     db.get('pages_routes', function (err, doc) {
         for (key in doc.pure_routes) {
             //Create a Closure because Javascript is strange, dude!
-            (function(key1) {
+            (function (key1) {
                 //Go into the DB and get that information, man!
                 db.merge(key1, data, function (err, res) {
                     console.log('saved to ' + key1);
@@ -179,16 +194,15 @@ function saveToAllPages(data) {
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 db.get('admin_config', function (err, doc) {
     if (doc === undefined) {
-         db.save('admin_config', {
+        db.save('admin_config', {
             ga_id: "UA-XXXXX-X",
-            nav: [
-               {
-                   "id": "SG9tZQ==",
-                   "url": "index.html",
-                   "item_name": "Home"
-               }],
-            site_title : "site title",
-            site_description : "site description"
+            nav: [{
+                "id": "SG9tZQ==",
+                "url": "index.html",
+                "item_name": "Home"
+            }],
+            site_title: "site title",
+            site_description: "site description"
         }, function (err, res) {
             console.log('admin_config document created.');
         });
@@ -199,7 +213,7 @@ db.get('admin_config', function (err, doc) {
 db.get('pages_routes', function (err, doc) {
 
     var routes_to_save = {
-       "SG9tZQ==": "index.html"
+        "SG9tZQ==": "index.html"
     };
 
     if (doc === undefined) {
@@ -207,7 +221,7 @@ db.get('pages_routes', function (err, doc) {
             pure_routes: routes_to_save
         }, function (err, res) {
 
-            db.get("SG9tZQ==", function(err, doc) {
+            db.get("SG9tZQ==", function (err, doc) {
 
                 if (doc === undefined) {
                     db.save("SG9tZQ==", {
@@ -217,52 +231,52 @@ db.get('pages_routes', function (err, doc) {
                         meta_description: "Default goblin page",
                         meta_keywords: "goblin, CMS, javascript",
                         ga_id: "UA-XXXXX-X",
-                        nav: [
-                           {
-                               "id": "SG9tZQ==",
-                               "url": "index.html",
-                               "item_name": "Home"
-                           }
-                        ],
-                        site_title : "site title",
-                        site_description : "site description"
+                        nav: [{
+                            "id": "SG9tZQ==",
+                            "url": "index.html",
+                            "item_name": "Home"
+                        }],
+                        site_title: "site title",
+                        site_description: "site description"
                     }, function (err, res) {
                         routesGetandSet(routes_to_save);
                         console.log('Default Routes Document Created and routes set.');
                     });
                 }
             });
-            
-        }); 
+
+        });
     } else {
-       routesGetandSet(doc.pure_routes); 
+        routesGetandSet(doc.pure_routes);
     }
-   
+
 });
 
 //Set up Static File for Components
 app.use(express.static(__dirname + '/components'));
 
 //Set up Login Post
-app.post('/login.json', 
-    passport.authenticate('local', { failureRedirect: '/gb-admin/login.html' }),
-    function(req, res) {
+app.post('/login.json',
+    passport.authenticate('local', {
+        failureRedirect: '/gb-admin/login.html'
+    }),
+    function (req, res) {
         res.redirect('/gb-admin/index.html');
-});
+    });
 
 //Set up Logout call
-app.get('/gb-admin/logout.html', function(req, res){
+app.get('/gb-admin/logout.html', function (req, res) {
     req.logout();
     res.redirect('/gb-admin/login.html');
 });
 
 //Ensure authentication for all admin visiting
-app.get('/gb-admin/*', ensureAuthenticated, function(req, res, next) {
+app.get('/gb-admin/*', ensureAuthenticated, function (req, res, next) {
     next();
 });
 
 //Apply the same rules for hitting it without the slash.
-app.get('/gb-admin', ensureAuthenticated, function(req, res, next) {
+app.get('/gb-admin', ensureAuthenticated, function (req, res, next) {
     next();
 });
 
@@ -270,14 +284,14 @@ app.get('/gb-admin', ensureAuthenticated, function(req, res, next) {
 app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
 
 //Ajax Calls and Responses
-app.post('/admin-save.json', function(req, res) {
+app.post('/admin-save.json', function (req, res) {
 
     db.get(req.body.page_id, function (err, doc) {
         if (doc === undefined) {
             //The document doesn't exist, so add it to the page_routes
             db.get('pages_routes', function (err, doc) {
                 var page_routes_data = doc.pure_routes;
-              
+
                 page_routes_data[req.body.page_id] = req.body.page_url;
 
                 db.merge("pages_routes", {
@@ -301,7 +315,7 @@ app.post('/admin-save.json', function(req, res) {
                     new_page_id = req.body.page_id;
 
                 //Add new route!
-                app.get('/' + new_page_url, function(req, res) {
+                app.get('/' + new_page_url, function (req, res) {
                     db.get(new_page_id, function (err, doc) {
                         var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
                         stream.pipe(res);
@@ -310,9 +324,9 @@ app.post('/admin-save.json', function(req, res) {
             });
 
             //And add it to the admin_config to play around with!
-            db.get('admin_config', function(err, doc) {
+            db.get('admin_config', function (err, doc) {
                 var navigation = doc.nav,
-                    objToPush  = {};
+                    objToPush = {};
 
                 //Push items into object
                 objToPush.id = req.body.page_id;
@@ -333,8 +347,8 @@ app.post('/admin-save.json', function(req, res) {
                 db.merge(req.body.page_id, {
                     ga_id: doc.ga_id,
                     nav: navigation,
-                    site_title : doc.site_title,
-                    site_description : doc.site_description
+                    site_title: doc.site_title,
+                    site_description: doc.site_description
                 }, function (err, res) {
                     console.log(' ajax post successful');
                     //Save the new navigation to all pages.
@@ -359,32 +373,36 @@ app.post('/admin-save.json', function(req, res) {
     });
 
     res.contentType('json');
-    res.send({ some: JSON.stringify({response:'success'}) });
+    res.send({
+        some: JSON.stringify({
+            response: 'success'
+        })
+    });
 
 });
 
-app.post('/page-edit.json', function(req, res) {
+app.post('/page-edit.json', function (req, res) {
     db.get(req.body.page_id, function (err, doc) {
         res.contentType('json');
         res.send(doc);
     });
- });
+});
 
-app.post('/get-pages.json', function(req, res) {
+app.post('/get-pages.json', function (req, res) {
     db.get('pages_routes', function (err, doc) {
         res.contentType('json');
         res.send(doc.pure_routes);
     });
 });
 
-app.post('/admin-delete.json', function(req, res) {
+app.post('/admin-delete.json', function (req, res) {
     var page_id = req.body.page_id,
         page_url = req.body.page_url;
 
     //Remove reference to it in Page Routes
     db.get('pages_routes', function (err, doc) {
         var page_routes_data = doc.pure_routes;
-      
+
         delete page_routes_data[page_id];
 
         db.merge("pages_routes", {
@@ -398,12 +416,12 @@ app.post('/admin-delete.json', function(req, res) {
     db.get('admin_config', function (err, doc) {
 
         var navigation = doc.nav,
-            i          = null;
+            i = null;
 
-      //Loop through array and remove route.
+        //Loop through array and remove route.
         for (i = 0; i < navigation.length; i++) {
             if (navigation[i].id === page_id) {
-                navigation.splice(i,1);
+                navigation.splice(i, 1);
             }
         }
 
@@ -432,11 +450,15 @@ app.post('/admin-delete.json', function(req, res) {
     deleteRoute(page_url);
 
     res.contentType('json');
-    res.send({ some: JSON.stringify({response:'success'}) });
- });
+    res.send({
+        some: JSON.stringify({
+            response: 'success'
+        })
+    });
+});
 
 //Config Page
-app.post('/config-page.json', function(req, res) {
+app.post('/config-page.json', function (req, res) {
     db.get("admin_config", function (err, doc) {
         res.contentType('json');
         res.send(doc);
@@ -444,7 +466,7 @@ app.post('/config-page.json', function(req, res) {
 });
 
 //Config Save
-app.post('/config-save.json', function(req, res) {
+app.post('/config-save.json', function (req, res) {
 
     var ga_id_req = req.body.ga_id,
         nav_req = req.body.nav,
@@ -455,31 +477,35 @@ app.post('/config-save.json', function(req, res) {
     saveToAllPages({
         ga_id: ga_id_req,
         nav: nav_req,
-        site_title : site_title_req,
-        site_description : site_description_req
+        site_title: site_title_req,
+        site_description: site_description_req
     });
 
     //The merge it into the reference document, so we can load it easily later!
     db.merge('admin_config', {
         ga_id: ga_id_req,
         nav: nav_req,
-        site_title : site_title_req,
-        site_description : site_description_req
+        site_title: site_title_req,
+        site_description: site_description_req
     }, function (err, res) {
         console.log('saved to admin_config');
     });
 
     //Send Response
     res.contentType('json');
-    res.send({ some: JSON.stringify({response:'success'}) });
- });
+    res.send({
+        some: JSON.stringify({
+            response: 'success'
+        })
+    });
+});
 
 
 //LOGIN PAGE
 app.post('/login',
     passport.authenticate('local'),
-    
-    function(req, res) {
+
+    function (req, res) {
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
         res.redirect('/users/' + req.user.username);
