@@ -80,6 +80,16 @@ you run into (no matter how small) and submit improvements if you can!
 
 ---
 
+###Feedback
+
+Please, please, please provide feedback! We would *love* to hear your thoughts on goblin, as well as field any and all bugs
+and issues thrown our way. If you find a defect, or have a feature suggestion, please log an 'issue' in GitHub, and we
+will address it as soon as possible! If you're having an issue figuring things out, you can either go to StackOverflow and
+post, use / develop our wiki here, and even just email me (nweingartner@maned.com) and I can try to help you out personally.
+
+Regardless of the method, please get in touch without any hesitation. Did we mention we love feedback?
+--
+
 ###License
 
 Copyright (C) 2013  Managing Editor Inc (http://www.maned.com/)
