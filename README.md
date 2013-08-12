@@ -88,7 +88,8 @@ will address it as soon as possible! If you're having an issue figuring things o
 post, use / develop our wiki here, and even just email me (nweingartner@maned.com) and I can try to help you out personally.
 
 Regardless of the method, please get in touch without any hesitation. Did we mention we love feedback?
---
+
+---
 
 ###License
 
