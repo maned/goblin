@@ -1,6 +1,7 @@
 {
     "name": "goblin",
-    "version": "0.0.1",
+    "version": "0.0.2",
+    "main": "goblin.js",
     "description": "Pure javascript content management system designed to serve static pages in the cloud.",
     "keywords": ["CMS", "Javascript CMS", "CouchDB", "static page", "server"],
     "homepage": "https://github.com/maned/goblin",
