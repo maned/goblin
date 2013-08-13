@@ -38,9 +38,11 @@ Then, here are the steps:
 5. Navigate to the directory in the command line, and run the 'goblin.js' file with node. ('nodejs goblin.js' in linux, 'node goblin.js' in OS X/Unix).
 6. Go to 'localhost:8000/' in your browser, and 'localhost:8000/gb-admin', and you'll see goblin run!
 
-In addition, you can feel free to use an already hosted CouchDB instance -- like signing up for one for free at IrisCouch (http://iriscouch.com) if you don't want to install couch locally. 
+In addition, you can feel free to use an already hosted CouchDB instance -- like signing up for one for free at IrisCouch (http://iriscouch.com) if you don't want to install couch locally (see the next part for more details!). 
 
-##Using IrisCouch as your CouchDB instance
+---
+
+##Using IrisCouch for your CouchDB instance
 
 I've found that, for developement, it's often too much to download and run CouchDB on your local machine. If you want to get started faster, without installing it, you can follow these instructions and create a CouchDB instance on a remote host (like IrisCouch.com)
 
@@ -67,7 +69,7 @@ If you have any issues installing, please provide feedback on where these instru
 
 ---
 
-### Themeing goblin
+### Theming goblin
 
 The ability to easily theme is at the heart of goblin's mission. The bulk of this work happens within the .gob file
 system.
