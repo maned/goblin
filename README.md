@@ -25,9 +25,9 @@ It just is! Let's get on to the details...
 
 Installing goblin is easy. First you must have these two dependencies installed:
 
-1. Node.js (currently tested on v0.10.5)
-2. Node Package Manager (npm) (currently tested on 1.2.14)
-3. CouchDB (currently tested on 1.2.0)
+1. Node.js (currently tested on v0.10.5 - http://nodejs.org/)
+2. Node Package Manager (npm) (currently tested on 1.2.14 - http://howtonode.org/introduction-to-npm)
+3. CouchDB (currently tested on 1.2.0 - http://couchdb.apache.org/)
 
 Then, here are the steps:
 
@@ -84,6 +84,16 @@ you run into (no matter how small) and submit improvements if you can!
 
 ---
 
+###Current Limitations / To-do List
+
+goblin is currently in a development, alpha phase. We are looking for feedback to help build the product out based on some great user feedback. However, there are a few things we are looking to do sooner than later (and would love your help with!):
+
+1. Redesigned Admin Area
+2. Multiple .gob file support
+3. Better, bootstrapped default theme.
+4. A script to make installing easier.
+
+---
 ###Feedback
 
 Please, please, please provide feedback! We would *love* to hear your thoughts on goblin, as well as field any and all bugs
