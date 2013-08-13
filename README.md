@@ -90,9 +90,10 @@ goblin is currently in a development, alpha phase. We are looking for feedback t
 
 1. Redesigned Admin Area
 2. Multiple .gob file support
-3. Multiple users support.
-4. Better, bootstrapped default theme.
-5. A script to make installing easier.
+3. Better, bootstrapped default theme.
+4. Nested navigation support.
+5. Multiple users support.
+6. A script to make installing easier.
 
 ---
 ###Feedback
