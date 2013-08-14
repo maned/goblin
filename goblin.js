@@ -10,7 +10,7 @@
  *
  */
 
-var mu =  ('mu2'),
+var mu = require('mu2'),
     db = require('./db'),
     express = require('express'),
     passport = require('passport'),
