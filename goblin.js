@@ -14,7 +14,7 @@ var mu = require('mu2'),
     db = require('./db'),
     express = require('express'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,z
+    LocalStrategy = require('passport-local').Strategy,
     app = express();
 
 //Configure Body Parser
@@ -191,8 +191,8 @@ function saveToAllPages(data) {
     });
 }
 
-//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
-db.get('admin_config', function (err, doc) {
+function checkForConfig(err, doc) {
+
     if (doc === undefined) {
         db.save('admin_config', {
             ga_id: "UA-XXXXX-X",
@@ -208,9 +208,9 @@ db.get('admin_config', function (err, doc) {
         });
     }
 
-});
+}
 
-db.get('pages_routes', function (err, doc) {
+function checkAndSetPageRoutes(err, doc) {
 
     var routes_to_save = {
         "SG9tZQ==": "index.html"
@@ -249,8 +249,14 @@ db.get('pages_routes', function (err, doc) {
     } else {
         routesGetandSet(doc.pure_routes);
     }
+}
 
-});
+
+//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
+db.get('admin_config', checkForConfig);
+
+//Check for 'page routes', if undefined, then create a default route, if not, then set them
+db.get('pages_routes', checkAndSetPageRoutes);
 
 //Set up Login Post
 app.post('/login.json',
