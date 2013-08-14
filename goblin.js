@@ -15,7 +15,6 @@ var mu = require('mu2'),
     express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    z
     app = express();
 
 //Configure Body Parser
