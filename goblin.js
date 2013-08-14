@@ -10,28 +10,27 @@
  *
  */
 
-var http = require('http'),
-    util = require('util'),
-    mu = require('mu2'),
+var mu = require('mu2'),
     db = require('./db'),
     express = require('express'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
+    LocalStrategy = require('passport-local').Strategy,z
     app = express();
-
-//Let the nice System Admin know the server is running.
-console.log('Goblin Lives.');
 
 //Configure Body Parser
 app.configure(function () {
     app.use(express.cookieParser());
     app.use(express.bodyParser());
     app.use(express.session({
-        secret: 'goblin_session'
+        secret: 'goblin_session' //this needs to be salted
     }));
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(app.router);
+    //Set up gb-admin folder.
+    app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
+    //Set up Static File for Components
+    app.use(express.static(__dirname + '/components'));
 });
 
 mu.root = __dirname + '/templates';
@@ -253,9 +252,6 @@ db.get('pages_routes', function (err, doc) {
 
 });
 
-//Set up Static File for Components
-app.use(express.static(__dirname + '/components'));
-
 //Set up Login Post
 app.post('/login.json',
     passport.authenticate('local', {
@@ -280,9 +276,6 @@ app.get('/gb-admin/*', ensureAuthenticated, function (req, res, next) {
 app.get('/gb-admin', ensureAuthenticated, function (req, res, next) {
     next();
 });
-
-//Set up gb-admin folder.
-app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
 
 //Ajax Calls and Responses
 app.post('/admin-save.json', function (req, res) {
