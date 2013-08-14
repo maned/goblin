@@ -10,15 +10,12 @@
  *
  */
 
-var mu = require('mu2'),
+var mu =  ('mu2'),
     db = require('./db'),
     express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,z
     app = express();
-
-//Let the nice System Admin know the server is running.
-console.log('Goblin Lives.');
 
 //Configure Body Parser
 app.configure(function () {
