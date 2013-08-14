@@ -22,7 +22,7 @@ app.configure(function () {
     app.use(express.cookieParser());
     app.use(express.bodyParser());
     app.use(express.session({
-        secret: 'goblin_session'
+        secret: 'goblin_session' //this needs to be salted
     }));
     app.use(passport.initialize());
     app.use(passport.session());
