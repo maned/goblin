@@ -28,14 +28,12 @@ app.configure(function () {
     app.use(passport.session());
     app.use(app.router);
     //Set up gb-admin folder.
-    app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
+    //app.use("/gb-admin", express.static(__dirname + "/gb-admin"));
     //Set up Static File for Components
-    app.use(express.static(__dirname + '/components'));
+    app.use(express.static(__dirname + '/public'));
 });
 
-mu.root = __dirname + '/templates';
-
-var DEFAULT_GOB_THEME = 'page.gob';
+mu.root = __dirname + '/views';
 
 /*
  * Configure Authentication
@@ -77,12 +75,12 @@ function findByUsername(username, fn) {
 //   serialize users into and deserialize users out of the session.  Typically,
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function serializeUser (user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function (id, done) {
-    findById(id, function (err, user) {
+passport.deserializeUser(function deserializeUser (id, done) {
+    findById(id, function deserializeUserDone (err, user) {
         done(err, user);
     });
 });
@@ -94,15 +92,15 @@ passport.deserializeUser(function (id, done) {
 //   with a user object.  In the real world, this would query a database;
 //   however, in this example we are using a baked-in set of users.
 passport.use(new LocalStrategy(
-    function (username, password, done) {
+    function verify (username, password, done) {
         // asynchronous verification, for effect...
-        process.nextTick(function () {
+        process.nextTick(function nextTick () {
 
             // Find the user by username.  If there is no user with the given
             // username, or the password is not correct, set the user to `false` to
             // indicate failure and set a flash message.  Otherwise, return the
             // authenticated `user`.
-            findByUsername(username, function (err, user) {
+            findByUsername(username, function checkUser (err, user) {
                 if (err) {
                     return done(err);
                 }
@@ -134,17 +132,17 @@ function routesGetandSet(data) {
     /*
     This loops through a key value set and builds routes to all needed pages
     */
-
-    for (key in data) {
+    //http://stackoverflow.com/questions/500504/why-is-using-for-in-with-array-iteration-such-a-bad-idea
+    for (var key in data) { //TODO: create a proper loop
         //Create a Closure because Javascript is strange, dude!
-        (function (key1) {
+        (function  (key1) {
             //In the looping, make sure you don't take the ID or Revision Number from the DB
             if (key1 !== "_id" && key1 !== "_rev") {
                 //Set route for value
-                app.get('/' + data[key1], function (req, res) {
+                app.get('/' + data[key1], function pageSelect (req, res) {
                     //Go into the DB and get that information, man!
-                    db.get(key1, function (err, doc) {
-                        var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
+                    db.get(key1, function compileAndRender (err, doc) {
+                        var stream = mu.compileAndRender('index.html', doc);
                         stream.pipe(res);
                     });
                 });
@@ -153,9 +151,9 @@ function routesGetandSet(data) {
     }
 
     //Set up the Index Page, by Default.
-    app.get('/', function (req, res) {
-        db.get('SG9tZQ==', function (err, doc) {
-            var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
+    app.get('/', function index (req, res) {
+        db.get('SG9tZQ==', function compileAndRender (err, doc) {
+            var stream = mu.compileAndRender('index.html', doc);
             stream.pipe(res);
         });
     });
@@ -178,14 +176,12 @@ function deleteRoute(url) {
 
 function saveToAllPages(data) {
     // This function saves a field with data to all page documents.
-    db.get('pages_routes', function (err, doc) {
+    db.get('pages_routes', function navUpdate (err, doc) {
         for (key in doc.pure_routes) {
             //Create a Closure because Javascript is strange, dude!
             (function (key1) {
                 //Go into the DB and get that information, man!
-                db.merge(key1, data, function (err, res) {
-                    console.log('saved to ' + key1);
-                });
+                db.merge(key1, data);
             })(key);
         }
     });
@@ -203,8 +199,6 @@ function checkForConfig(err, doc) {
             }],
             site_title: "site title",
             site_description: "site description"
-        }, function (err, res) {
-            console.log('admin_config document created.');
         });
     }
 
@@ -219,9 +213,9 @@ function checkAndSetPageRoutes(err, doc) {
     if (doc === undefined) {
         db.save("pages_routes", {
             pure_routes: routes_to_save
-        }, function (err, res) {
+        }, function indexSelect (err, res) {
 
-            db.get("SG9tZQ==", function (err, doc) {
+            db.get("SG9tZQ==", function indexInsertDefaults (err, doc) {
 
                 if (doc === undefined) {
                     db.save("SG9tZQ==", {
@@ -238,13 +232,9 @@ function checkAndSetPageRoutes(err, doc) {
                         }],
                         site_title: "site title",
                         site_description: "site description"
-                    }, function (err, res) {
-                        routesGetandSet(routes_to_save);
-                        console.log('Default Routes Document Created and routes set.');
-                    });
+                    }, routesGetandSet(routes_to_save));
                 }
             });
-
         });
     } else {
         routesGetandSet(doc.pure_routes);
@@ -296,8 +286,6 @@ app.post('/admin-save.json', function (req, res) {
 
                 db.merge("pages_routes", {
                     pure_routes: page_routes_data
-                }, function (err, res) {
-                    console.log('New Page Routes Saved');
                 });
             });
 
@@ -308,16 +296,16 @@ app.post('/admin-save.json', function (req, res) {
                 page_url: req.body.page_url,
                 meta_description: req.body.meta_description,
                 meta_keywords: req.body.meta_keywords
-            }, function (err, res) {
+            }, function confuseMe (err, res) { //TODO: rename or...
 
                 //Create variables to be able to pass them nicely.
                 var new_page_url = req.body.page_url,
                     new_page_id = req.body.page_id;
 
-                //Add new route!
+                //Add new route! WHAT? app
                 app.get('/' + new_page_url, function (req, res) {
-                    db.get(new_page_id, function (err, doc) {
-                        var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
+                    db.get(new_page_id, function compileAndRender (err, doc) {
+                        var stream = mu.compileAndRender('index.html', doc);
                         stream.pipe(res);
                     });
                 });
@@ -339,8 +327,6 @@ app.post('/admin-save.json', function (req, res) {
                 //Save to admin_config
                 db.merge('admin_config', {
                     nav: navigation
-                }, function (err, res) {
-                    console.log('saved to admin_config!');
                 });
 
                 //Save the universal fields to the page document
@@ -350,7 +336,6 @@ app.post('/admin-save.json', function (req, res) {
                     site_title: doc.site_title,
                     site_description: doc.site_description
                 }, function (err, res) {
-                    console.log(' ajax post successful');
                     //Save the new navigation to all pages.
                     saveToAllPages({
                         nav: navigation
@@ -366,8 +351,6 @@ app.post('/admin-save.json', function (req, res) {
                 page_url: req.body.page_url,
                 meta_description: req.body.meta_description,
                 meta_keywords: req.body.meta_keywords
-            }, function (err, res) {
-                console.log(' ajax post successful');
             });
         }
     });
@@ -407,13 +390,11 @@ app.post('/admin-delete.json', function (req, res) {
 
         db.merge("pages_routes", {
             pure_routes: page_routes_data
-        }, function (err, res) {
-            console.log('New Page Routes Saved');
         });
 
     });
 
-    db.get('admin_config', function (err, doc) {
+    db.get('admin_config', function adminUpdateNav (err, doc) {
 
         var navigation = doc.nav,
             i = null;
@@ -427,8 +408,6 @@ app.post('/admin-delete.json', function (req, res) {
 
         db.merge("admin_config", {
             nav: navigation
-        }, function (err, res) {
-            console.log('Deleted from admin_config');
         });
 
         //Save to All Pages so there's no dead links!
@@ -439,11 +418,9 @@ app.post('/admin-delete.json', function (req, res) {
     });
 
     //Get the Database revision number so we can properly remove it
-    db.get(req.body.page_id, function (err, doc) {
+    db.get(req.body.page_id, function pageDelete (err, doc) {
         //Remove the document, man!
-        db.remove(req.body.page_id, doc._rev, function (err, res) {
-            console.log('document removed');
-        });
+        db.remove(req.body.page_id, doc._rev);
     });
 
     //Delete Route to that Page from Express
@@ -458,15 +435,15 @@ app.post('/admin-delete.json', function (req, res) {
 });
 
 //Config Page
-app.post('/config-page.json', function (req, res) {
-    db.get("admin_config", function (err, doc) {
+app.post('/config-page.json', function configSelect (req, res) {
+    db.get("admin_config", function configSelect2Json (err, doc) {
         res.contentType('json');
         res.send(doc);
     });
 });
 
 //Config Save
-app.post('/config-save.json', function (req, res) {
+app.post('/config-save.json', function configUpdate (req, res) {
 
     var ga_id_req = req.body.ga_id,
         nav_req = req.body.nav,
@@ -487,8 +464,6 @@ app.post('/config-save.json', function (req, res) {
         nav: nav_req,
         site_title: site_title_req,
         site_description: site_description_req
-    }, function (err, res) {
-        console.log('saved to admin_config');
     });
 
     //Send Response
@@ -505,7 +480,7 @@ app.post('/config-save.json', function (req, res) {
 app.post('/login',
     passport.authenticate('local'),
 
-    function (req, res) {
+    function redirect (req, res) {
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
         res.redirect('/users/' + req.user.username);
