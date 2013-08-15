@@ -153,8 +153,8 @@ function routesGetandSet(data) {
     }
 
     //Set up the Index Page, by Default.
-    app.get('/', function (req, res) {
-        db.get('SG9tZQ==', function (err, doc) {
+    app.get('/', function setIndex(req, res) {
+        db.get('SG9tZQ==', function pipeIndex(err, doc) {
             var stream = mu.compileAndRender(DEFAULT_GOB_THEME, doc);
             stream.pipe(res);
         });
@@ -203,8 +203,6 @@ function checkForConfig(err, doc) {
             }],
             site_title: "site title",
             site_description: "site description"
-        }, function (err, res) {
-            console.log('admin_config document created.');
         });
     }
 
@@ -221,7 +219,7 @@ function checkAndSetPageRoutes(err, doc) {
             pure_routes: routes_to_save
         }, function (err, res) {
 
-            db.get("SG9tZQ==", function (err, doc) {
+            db.get("SG9tZQ==", function saveDefaultIndex(err, doc) {
 
                 if (doc === undefined) {
                     db.save("SG9tZQ==", {
@@ -238,9 +236,9 @@ function checkAndSetPageRoutes(err, doc) {
                         }],
                         site_title: "site title",
                         site_description: "site description"
-                    }, function (err, res) {
+                    }, function setDefaultIndex(err, res) {
                         routesGetandSet(routes_to_save);
-                        console.log('Default Routes Document Created and routes set.');
+                        console.log('No initial data found in database -- Default Routes Document Created and routes set.');
                     });
                 }
             });
@@ -251,6 +249,13 @@ function checkAndSetPageRoutes(err, doc) {
     }
 }
 
+function redirectToAdmin(req, res) {
+    res.redirect('/gb-admin/index.html');
+}
+
+function ensureAuth(req, res, next) {
+    next();
+}
 
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 db.get('admin_config', checkForConfig);
@@ -263,25 +268,20 @@ app.post('/login.json',
     passport.authenticate('local', {
         failureRedirect: '/gb-admin/login.html'
     }),
-    function (req, res) {
-        res.redirect('/gb-admin/index.html');
-    });
+    redirectToAdmin
+);
 
 //Set up Logout call
-app.get('/gb-admin/logout.html', function (req, res) {
+app.get('/gb-admin/logout.html', function logout(req, res) {
     req.logout();
     res.redirect('/gb-admin/login.html');
 });
 
 //Ensure authentication for all admin visiting
-app.get('/gb-admin/*', ensureAuthenticated, function (req, res, next) {
-    next();
-});
+app.get('/gb-admin/*', ensureAuthenticated, ensureAuth);
 
 //Apply the same rules for hitting it without the slash.
-app.get('/gb-admin', ensureAuthenticated, function (req, res, next) {
-    next();
-});
+app.get('/gb-admin', ensureAuthenticated, ensureAuth);
 
 //Ajax Calls and Responses
 app.post('/admin-save.json', function (req, res) {
@@ -296,8 +296,6 @@ app.post('/admin-save.json', function (req, res) {
 
                 db.merge("pages_routes", {
                     pure_routes: page_routes_data
-                }, function (err, res) {
-                    console.log('New Page Routes Saved');
                 });
             });
 
@@ -339,8 +337,6 @@ app.post('/admin-save.json', function (req, res) {
                 //Save to admin_config
                 db.merge('admin_config', {
                     nav: navigation
-                }, function (err, res) {
-                    console.log('saved to admin_config!');
                 });
 
                 //Save the universal fields to the page document
@@ -366,8 +362,6 @@ app.post('/admin-save.json', function (req, res) {
                 page_url: req.body.page_url,
                 meta_description: req.body.meta_description,
                 meta_keywords: req.body.meta_keywords
-            }, function (err, res) {
-                console.log(' ajax post successful');
             });
         }
     });
@@ -381,39 +375,39 @@ app.post('/admin-save.json', function (req, res) {
 
 });
 
-app.post('/page-edit.json', function (req, res) {
-    db.get(req.body.page_id, function (err, doc) {
+app.post('/page-edit.json', function fetchPageData(req, res) {
+    db.get(req.body.page_id, function sendPageData(err, doc) {
         res.contentType('json');
         res.send(doc);
     });
 });
 
-app.post('/get-pages.json', function (req, res) {
-    db.get('pages_routes', function (err, doc) {
+app.post('/get-pages.json', function getPageRoutes(req, res) {
+    db.get('pages_routes', function sendPageRoutes(err, doc) {
         res.contentType('json');
         res.send(doc.pure_routes);
     });
 });
 
-app.post('/admin-delete.json', function (req, res) {
+app.post('/admin-delete.json', function deletePage(req, res) {
     var page_id = req.body.page_id,
         page_url = req.body.page_url;
 
     //Remove reference to it in Page Routes
-    db.get('pages_routes', function (err, doc) {
+    db.get('pages_routes', function deletePageRoute(err, doc) {
         var page_routes_data = doc.pure_routes;
 
         delete page_routes_data[page_id];
 
         db.merge("pages_routes", {
             pure_routes: page_routes_data
-        }, function (err, res) {
+        }, function successfulPageRouteDeletion(err, res) {
             console.log('New Page Routes Saved');
         });
 
     });
 
-    db.get('admin_config', function (err, doc) {
+    db.get('admin_config', function deleteFromConfig(err, doc) {
 
         var navigation = doc.nav,
             i = null;
@@ -427,7 +421,7 @@ app.post('/admin-delete.json', function (req, res) {
 
         db.merge("admin_config", {
             nav: navigation
-        }, function (err, res) {
+        }, function sucessfulDeleteFromConfig(err, res) {
             console.log('Deleted from admin_config');
         });
 
@@ -439,11 +433,9 @@ app.post('/admin-delete.json', function (req, res) {
     });
 
     //Get the Database revision number so we can properly remove it
-    db.get(req.body.page_id, function (err, doc) {
+    db.get(req.body.page_id, function deletePageDoc(err, doc) {
         //Remove the document, man!
-        db.remove(req.body.page_id, doc._rev, function (err, res) {
-            console.log('document removed');
-        });
+        db.remove(req.body.page_id, doc._rev);
     });
 
     //Delete Route to that Page from Express
@@ -458,15 +450,15 @@ app.post('/admin-delete.json', function (req, res) {
 });
 
 //Config Page
-app.post('/config-page.json', function (req, res) {
-    db.get("admin_config", function (err, doc) {
+app.post('/config-page.json', function getConfigInfo(req, res) {
+    db.get("admin_config", function sendConfigInfo(err, doc) {
         res.contentType('json');
         res.send(doc);
     });
 });
 
 //Config Save
-app.post('/config-save.json', function (req, res) {
+app.post('/config-save.json', function saveConfig(req, res) {
 
     var ga_id_req = req.body.ga_id,
         nav_req = req.body.nav,
@@ -487,7 +479,7 @@ app.post('/config-save.json', function (req, res) {
         nav: nav_req,
         site_title: site_title_req,
         site_description: site_description_req
-    }, function (err, res) {
+    }, function configSaveSuccess(err, res) {
         console.log('saved to admin_config');
     });
 
@@ -505,7 +497,7 @@ app.post('/config-save.json', function (req, res) {
 app.post('/login',
     passport.authenticate('local'),
 
-    function (req, res) {
+    function successfulRedirect(req, res) {
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
         res.redirect('/users/' + req.user.username);
