@@ -15,7 +15,7 @@ super friendly for front-end developers (you know, the ones that will be themein
 It's a great, and very versitile language. It's also the lingua franca of the web, and is one that front-end
 developers are more likely to be comfortable with.
 
-**Why is Goblin so great?**
+**Why is goblin so great?**
 
 It just is! Let's get on to the details...
 
