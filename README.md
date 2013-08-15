@@ -1,4 +1,4 @@
-# goblin: a MEI Technology
+# goblin
 ## a pure content management system
 
 goblin in a Javascript-based Content Management System, built on Node.js and utilizing CouchDB as it's data store.
