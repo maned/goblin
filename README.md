@@ -15,7 +15,7 @@ super friendly for front-end developers (you know, the ones that will be themein
 It's a great, and very versitile language. It's also the lingua franca of the web, and is one that front-end
 developers are more likely to be comfortable with.
 
-**Why is Goblin so great?**
+**Why is goblin so great?**
 
 It just is! Let's get on to the details...
 
@@ -44,7 +44,7 @@ If you have any issues installing, please provide feedback on where these instru
 
 ---
 
-### Themeing goblin
+### Theming goblin
 
 The ability to easily theme is at the heart of goblin's mission. The bulk of this work happens within the .gob file
 system.
