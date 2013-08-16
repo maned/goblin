@@ -140,7 +140,7 @@ function routesGetandSet(data) {
         app.get('/' + data[key1], function pageSelect (req, res) {
           //Go into the DB and get that information, man!
           db.get(key1, function compileAndRender (err, doc) {
-            var stream = mu.compileAndRender('index.html', doc)  
+            var stream = mu.compileAndRender('index.gob', doc)  
             stream.pipe(res)  
           })  
         })  
@@ -151,7 +151,7 @@ function routesGetandSet(data) {
   //Set up the Index Page, by Default.
   app.get('/', function index (req, res) {
     db.get('SG9tZQ==', function compileAndRender (err, doc) {
-      var stream = mu.compileAndRender('index.html', doc)  
+      var stream = mu.compileAndRender('index.gob', doc)  
       stream.pipe(res)  
     })  
   })  
@@ -300,7 +300,7 @@ app.post('/admin-save.json', function (req, res) {
         //Add new route! WHAT? app
         app.get('/' + new_page_url, function (req, res) {
           db.get(new_page_id, function compileAndRender (err, doc) {
-            var stream = mu.compileAndRender('index.html', doc)  
+            var stream = mu.compileAndRender('index.gob', doc)  
             stream.pipe(res)  
           })  
         })  
