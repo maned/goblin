@@ -27,8 +27,6 @@ app.configure(function () {
   app.use(passport.initialize())  
   app.use(passport.session())  
   app.use(app.router)  
-  //Set up gb-admin folder.
-  app.use("/login", express.static(__dirname + "/lib/views"))  
   //Set up Static File for Components
   app.use(express.static(__dirname + '/public'))  
 })  
@@ -482,5 +480,20 @@ app.post('/login',
     // `req.user` contains the authenticated user.
     res.redirect('/users/' + req.user.username)  
   })  
+
+// a convenient variable to refer to the HTML directory
+var html_dir = './lib/views/';
+
+app.get('/login', function(req, res) {
+    res.sendfile(html_dir + 'login.html');
+});
+
+app.get('/edit', function(req, res) {
+    res.sendfile(html_dir + 'edit.html');
+});
+
+app.get('/config', function(req, res) {
+    res.sendfile(html_dir + 'config.html');
+});
 
 app.listen(8000)  
