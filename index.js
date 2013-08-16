@@ -197,7 +197,7 @@ function checkForConfig(err, doc) {
       }],
       site_title: "site title",
       site_description: "site description"
-    })  
+    }, callbackEmpty)  
   }
 
 }
@@ -387,7 +387,7 @@ app.post('/admin-delete.json', function (req, res) {
 
     db.merge("pages_routes", {
       pure_routes: page_routes_data
-    })  
+    }, callbackEmpty)  
 
   })  
 
@@ -405,7 +405,7 @@ app.post('/admin-delete.json', function (req, res) {
 
     db.merge("admin_config", {
       nav: navigation
-    })  
+    }, callbackEmpty)  
 
     //Save to All Pages so there's no dead links!
     saveToAllPages({
