@@ -230,7 +230,9 @@ function checkAndSetPageRoutes(err, doc) {
             }],
             site_title: "site title",
             site_description: "site description"
-          }, routesGetandSet(routes_to_save))  
+          }, function (err, res) {
+            routesGetandSet(routes_to_save);
+          })  
         }
       })  
     })  
