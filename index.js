@@ -252,7 +252,7 @@ app.post('/login.json',
     failureRedirect: '/login'
   }),
   function (req, res) {
-    res.redirect('/')  
+    res.redirect('/edit')  
   })  
 
 //Set up Logout call

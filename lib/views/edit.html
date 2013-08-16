@@ -1,51 +1,92 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{meta_description}}">
+    <meta name="author" content="">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
 
-        <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/main.css">
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 60px 0;
+      }
 
-        <!-- Plugins -->
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+        width: 100%;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+    </style>
+  </head>
+    <body>
         <link rel="stylesheet" href="/css/wisywig/jquery.wysiwyg.css">
         <link rel="stylesheet" href="/css/wisywig/default.css">
-
-        <!-- Custom -->
-        <link rel="stylesheet" href="/css/style.css">
-        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
-    </head>
-    <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-
-        <!-- Add your site or application content here -->
-        <div id="wrapper"><!-- Start Wrapper -->
-            <div id="main_container"><!-- Start Main Container -->
-
-                <div id="admin_left">
-                    <article id="logo">
-                        <h1>goblin</h1>
-                    </article>
-                   <ul>
-                        <li><a href="index.html">Dashboard</a></li>
-                        <li><a href="edit_pages.html">Manage Pages</a></li>
-                        <li><a href="configuration.html">Configuration</a></li>
-                        <li><a href="feedback.html">Feedback</a></li>
-                        <li><a href="logout.html">Logout</a></li>
-                   </ul>
-                </div>
-                <div id="admin_right">
-                    
+            <div class="container">
                     <div id="select_a_page">
                         <h2>Edit -- </h2>
                         <select id="page_to_edit">
@@ -74,16 +115,12 @@
 
                             <div class="clear"></div>
                             <div class="button_container">
-                                <button id="delete" type="button">Delete</button><button id="submit" type="button">Save</button>
+                                <button id="delete" class="btn" type="button">Delete</button><button id="submit" class="btn" type="button">Save</button>
                             </div>
                         </script>
                     </div>
-                </div>
+             </div>
 
-                <footer>
-                </footer>
-             </div><!-- End Main Container -->
-        </div><!-- End Wrapper -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="gb-admin/js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
