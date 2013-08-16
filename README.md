@@ -35,7 +35,7 @@ Then, here are the steps:
 2. Create a database in CouchDB. Write down the name of it, as well as CouchDB's url, port and credientials (You will have to create a default user for your database; goblin now looks for 'admin', 'admin').
 3. Take this information, and place it in the appropriate fields in 'lib/couchdb.js'.
 4. Change the default username and password in 'index.js' (by default, it is admin and admin, respectively).
-5. Navigate to the directory in the command line, run 'npm install' to install dependencies, and then run the 'goblin.js' file with node. ('nodejs index.js' in linux, 'node index.js' in OS X/Unix).
+5. Navigate to the directory in the command line, run 'npm install' to install dependencies, and then run the 'index.js' file with node. ('nodejs index.js' in linux, 'node index.js' in OS X/Unix).
 6. Go to 'localhost:8000/' in your browser, and 'localhost:8000/login', and you'll see goblin run!
 
 In addition, you can feel free to use an already hosted CouchDB instance -- like signing up for one for free at IrisCouch (http://iriscouch.com) if you don't want to install couch locally (see the next part for more details!). 
@@ -90,8 +90,8 @@ These are the variables currently supported in this release of goblin:
 
 After you are done, change the extension from .html to .gob, and place it in the templates folder.
 
-Place all of your customized CSS and JS files into components > custom. All the files will render in the /custom/
-directory in the browser, so make sure you point to them using '/custom/' path in your .gob file.
+Place all of your customized CSS and JS files into the public folder. All the files will render in the root
+directory in the browser.
 
 goblin adopts mustache's great templating language (https://github.com/janl/mustache.js/), so anything you can
 do with mustache you can use here (this information will come in handy when creating themes with custom variables).
