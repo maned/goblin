@@ -12,105 +12,21 @@
 var mu = require('mu2')
   , db = require('./lib/couchdb.js')
   , express = require('express')
-  , passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy
+  , auth = require('./lib/auth.js')
   , app = express()
 //Configure Body Parser
 app.configure(function() {
   app.use(express.cookieParser())
-  app.use(express.bodyParser())
   app.use(express.session({
-    secret: 'goblin_session'
-  })) //this needs to be salted
-  app.use(passport.initialize())
-  app.use(passport.session())
+    key : "QAWdefrAQ"
+    , secret : 'asfyvhq987ertvyweiurytsdfgadekjr4yhtfsdfgt9jfwe3ht987234yh'
+  }))
+  app.use(express.bodyParser())
   app.use(app.router)
   //Set up Static File for Components
   app.use(express.static(__dirname + '/public'))
 })
 mu.root = __dirname + '/views'
-/*
- * Configure Authentication
- */
-var users = [{
-  id: 1
-  , username: 'admin'
-  , password: 'admin'
-  , email: 'nick@example.com'
-}]
-
-function findById(id, fn) {
-  var idx = id - 1
-  if (users[idx]) {
-    fn(null, users[idx])
-  } else {
-    fn(new Error('User ' + id + ' does not exist'))
-  }
-}
-
-function findByUsername(username, fn) {
-  var i = null
-    , user = null
-  for (i = 0, len = users.length; i < len; i++) {
-    user = users[i]
-    if (user.username === username) {
-      return fn(null, user)
-    }
-  }
-  return fn(null, null)
-}
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.
-passport.serializeUser(function serializeUser(user, done) {
-  done(null, user.id)
-})
-passport.deserializeUser(function deserializeUser(id, done) {
-  findById(id, function deserializeUserDone(err, user) {
-    done(err, user)
-  })
-})
-// Use the LocalStrategy within Passport.
-//   Strategies in passport require a `verify` function, which accept
-//   credentials (in this case, a username and password), and invoke a callback
-//   with a user object.  In the real world, this would query a database  
-//   however, in this example we are using a baked-in set of users.
-passport.use(new LocalStrategy(
-
-function verify(username, password, done) {
-  // asynchronous verification, for effect...
-  process.nextTick(function nextTick() {
-    // Find the user by username.  If there is no user with the given
-    // username, or the password is not correct, set the user to `false` to
-    // indicate failure and set a flash message.  Otherwise, return the
-    // authenticated `user`.
-    findByUsername(username, function checkUser(err, user) {
-      if (err) {
-        return done(err)
-      }
-      if (!user) {
-        return done(null, false, {
-          message: 'Unknown user ' + username
-        })
-      }
-      if (user.password !== password) {
-        return done(null, false, {
-          message: 'Invalid password'
-        })
-      }
-      return done(null, user)
-    })
-  })
-}))
-
-function ensureAuthenticated(req, res, next) {
-  if (req.path === '/login' || req.isAuthenticated()) {
-    return next()
-  }
-  res.redirect('/login')
-}
 
 function routesGetandSet(data) {
   /*
@@ -220,29 +136,9 @@ function checkAndSetPageRoutes(err, doc) {
 db.get('admin_config', checkForConfig)
 //Check for 'page routes', if undefined, then create a default route, if not, then set them
 db.get('pages_routes', checkAndSetPageRoutes)
-//Set up Login Post
-app.post('/login.json', passport.authenticate('local', {
-  successRedirect: '/edit'
-  , failureRedirect: '/login'
-}))
 
-function httpRedirect(req, res) {
-  res.redirect(req)
-  console.log(req)
-}
-//Set up Logout call
-app.get('/logout', function(req, res) {
-  req.logout()
-  res.redirect('/login')
-})
-app.get('/edit', ensureAuthenticated, function(req, res, next) {
-  next()
-})
-app.get('/config', ensureAuthenticated, function(req, res, next) {
-  next()
-})
 //Ajax Calls and Responses
-app.post('/admin-save.json', function(req, res) {
+app.post('/admin-save.json', auth.check, function(req, res) {
   db.get(req.body.page_id, function(err, doc) {
     if (doc === undefined) {
       //The document doesn't exist, so add it to the page_routes
@@ -334,7 +230,7 @@ app.post('/get-pages.json', function(req, res) {
     res.send(doc.pure_routes)
   })
 })
-app.post('/admin-delete.json', function(req, res) {
+app.post('/admin-delete.json', auth.check, function(req, res) {
   var page_id = req.body.page_id
     , page_url = req.body.page_url
     //Remove reference to it in Page Routes
@@ -384,7 +280,7 @@ app.post('/config-page.json', function configSelect(req, res) {
   })
 })
 //Config Save
-app.post('/config-save.json', function configUpdate(req, res) {
+app.post('/config-save.json', auth.check, function configUpdate(req, res) {
   var ga_id_req = req.body.ga_id
     , nav_req = req.body.nav
     , site_title_req = req.body.site_title
@@ -411,21 +307,18 @@ app.post('/config-save.json', function configUpdate(req, res) {
       })
     })
 })
-//LOGIN PAGE
-app.post('/login', passport.authenticate('local'), function redirect(req, res) {
-  // If this function gets called, authentication was successful.
-  // `req.user` contains the authenticated user.
-  res.redirect('/users/' + req.user.username)
-})
-// a convenient variable to refer to the HTML directory
 var html_dir = './lib/views/'
+//Edit page
+app.get('/edit', auth.check, function(req, res) {
+  res.sendfile(html_dir + 'edit.html')
+})
+//Config Page
+app.get('/config', auth.check, function(req, res) {
+  res.sendfile(html_dir + 'config.html')
+})
 app.get('/login', function(req, res) {
   res.sendfile(html_dir + 'login.html')
 })
-app.get('/edit', function(req, res) {
-  res.sendfile(html_dir + 'edit.html')
-})
-app.get('/config', function(req, res) {
-  res.sendfile(html_dir + 'config.html')
-})
+app.post('/login', auth.login)
+app.get('/logout', auth.logout)
 app.listen(8000)
