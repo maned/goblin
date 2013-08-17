@@ -10,20 +10,18 @@
  *
  */
 
-var mu = require('mu2'),
-  db = require('./lib/couchdb.js'),
-  express = require('express'),
-  passport = require('passport'),
-  LocalStrategy = require('passport-local').Strategy,
-  app = express()  
+var mu = require('mu2')
+  , db = require('./lib/couchdb.js')
+  , express = require('express')
+  , passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy
+  , app = express()  
 
 //Configure Body Parser
 app.configure(function () {
   app.use(express.cookieParser())  
   app.use(express.bodyParser())  
-  app.use(express.session({
-    secret: 'goblin_session' //this needs to be salted
-  }))  
+  app.use(express.session({secret: 'goblin_session'})) //this needs to be salted
   app.use(passport.initialize())  
   app.use(passport.session())  
   app.use(app.router)  
@@ -37,12 +35,12 @@ mu.root = __dirname + '/views'
  * Configure Authentication
  */
 
-var users = [{
-  id: 1,
-  username: 'admin',
-  password: 'admin',
-  email: 'nick@example.com'
-}]  
+var users = [
+    { id: 1
+    , username: 'admin'
+    , password: 'admin'
+    , email: 'nick@example.com'
+    } ]
 
 function findById(id, fn) {
   var idx = id - 1  
@@ -55,8 +53,8 @@ function findById(id, fn) {
 }
 
 function findByUsername(username, fn) {
-  var i = null,
-    user = null  
+  var i = null
+    , user = null  
 
   for (i = 0, len = users.length;   i < len;   i++) {
     user = users[i]  
@@ -158,13 +156,10 @@ function routesGetandSet(data) {
 }
 
 function deleteRoute(url) {
-
   /*
    This deletes a specific route from express route mapping.
   */
-
   var i = null  
-
   for (i = app.routes.get.length - 1; i >= 0; i--) {
     if (app.routes.get[i].path === "/" + url) {
       app.routes.get.splice(i, 1)  
@@ -186,61 +181,53 @@ function saveToAllPages(data) {
 }
 
 function checkForConfig(err, doc) {
-
   if (doc === undefined) {
-    db.save('admin_config', {
-      ga_id: "UA-XXXXX-X",
-      nav: [{
-        "id": "SG9tZQ==",
-        "url": "index.html",
-        "item_name": "Home"
-      }],
-      site_title: "site title",
-      site_description: "site description"
-    }, callbackEmpty)  
+    db.save('admin_config',
+      { ga_id: "UA-XXXXX-X"
+      , nav: [
+        { "id": "SG9tZQ=="
+        , "url": "index.html"
+        , "item_name": "Home"
+        } ]
+      , site_title: "site title"
+      , site_description: "site description"
+      }
+    , callbackEmpty )
   }
-
 }
 
 function checkAndSetPageRoutes(err, doc) {
-
-  var routes_to_save = {
-    "SG9tZQ==": "index.html"
-  }  
-
+  var routes_to_save = {"SG9tZQ==": "index.html"}
   if (doc === undefined) {
-    db.save("pages_routes", {
-      pure_routes: routes_to_save
-    }, function indexSelect (err, res) {
-
-      db.get("SG9tZQ==", function indexInsertDefaults (err, doc) {
-
-        if (doc === undefined) {
-          db.save("SG9tZQ==", {
-            page_title: "Home",
-            page_content: "Initial Home Content",
-            page_url: "index.html",
-            meta_description: "Default goblin page",
-            meta_keywords: "goblin, CMS, javascript",
-            ga_id: "UA-XXXXX-X",
-            nav: [{
-              "id": "SG9tZQ==",
-              "url": "index.html",
-              "item_name": "Home"
-            }],
-            site_title: "site title",
-            site_description: "site description"
-          }, function (err, res) {
-            routesGetandSet(routes_to_save);
-          })  
-        }
-      })  
-    })  
+    db.save("pages_routes",
+      { pure_routes: routes_to_save }, function indexSelect (err, res) {
+        db.get("SG9tZQ==", function indexInsertDefaults (err, doc) {
+          if (doc === undefined) {
+            db.save("SG9tZQ==", {
+              page_title: "Home",
+              page_content: "Initial Home Content",
+              page_url: "index.html",
+              meta_description: "Default goblin page",
+              meta_keywords: "goblin, CMS, javascript",
+              ga_id: "UA-XXXXX-X",
+              nav: [{
+                "id": "SG9tZQ==",
+                "url": "index.html",
+                "item_name": "Home"
+              }],
+              site_title: "site title",
+              site_description: "site description"
+            }, function (err, res) {
+              routesGetandSet(routes_to_save);
+            })  
+          }
+        })  
+      }
+    )  
   } else {
     routesGetandSet(doc.pure_routes)  
   }
 }
-
 
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 db.get('admin_config', checkForConfig)  
@@ -274,7 +261,6 @@ app.get('/config', ensureAuthenticated, function (req, res, next) {
 
 //Ajax Calls and Responses
 app.post('/admin-save.json', function (req, res) {
-
   db.get(req.body.page_id, function (err, doc) {
     if (doc === undefined) {
       //The document doesn't exist, so add it to the page_routes
@@ -484,18 +470,18 @@ app.post('/login',
   })  
 
 // a convenient variable to refer to the HTML directory
-var html_dir = './lib/views/';
+var html_dir = './lib/views/'
 
 app.get('/login', function(req, res) {
-    res.sendfile(html_dir + 'login.html');
-});
+    res.sendfile(html_dir + 'login.html')
+})
 
 app.get('/edit', function(req, res) {
-    res.sendfile(html_dir + 'edit.html');
-});
+    res.sendfile(html_dir + 'edit.html')
+})
 
 app.get('/config', function(req, res) {
-    res.sendfile(html_dir + 'config.html');
-});
+    res.sendfile(html_dir + 'config.html')
+})
 
 app.listen(8000)  
