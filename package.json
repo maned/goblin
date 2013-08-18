@@ -32,8 +32,6 @@
   "readmeFilename": "README.md",
   "license": "GPLv3",
   "dependencies": {
-    "passport": "~0.1.17",
-    "passport-local": "~0.1.6",
     "cradle": "~0.6.6",
     "mu2": "~0.5.19",
     "express": "~3.3.5"
