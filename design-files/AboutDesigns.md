@@ -1,4 +1,4 @@
-###Info About Design Files
+#Info About Design Files
 
 These files are made and designed as Adobe Fireworks pngs, contributed by davemullen.
 
