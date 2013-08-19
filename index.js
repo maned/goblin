@@ -29,7 +29,7 @@ app.configure(function() {
   app.use(express.static(__dirname + '/public'))
 })
 
-mu.root = __dirname + '/views'
+mu.root = __dirname + '/theme'
 
 function routesGetandSet(data) {
   /*
