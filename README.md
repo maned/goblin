@@ -113,7 +113,7 @@ you run into (no matter how small) and submit improvements if you can!
 
 goblin is currently in a development, alpha phase. We are looking for feedback to help build the product out based on some great user feedback. However, there are a few things we are looking to do sooner than later (and would love your help with!):
 
-1. Redesigned Admin Area
+1. Bootstrap new Admin area based on new designs (see '/design-files')
 2. Multiple .gob file support
 3. Better, bootstrapped default theme.
 4. Nested navigation support.
