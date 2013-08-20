@@ -37,8 +37,6 @@ var mu = require('mu2'),
         This loops through a key value set and builds routes to all needed pages
         */
 
-        //http://stackoverflow.com/questions/500504/why-is-using-for-in-with-array-iteration-such-a-bad-idea
-
         _.each(data, function grabRoute(navObj) {
 
             app.get('/' + navObj.url, function pageSelect(req, res) {
@@ -68,7 +66,7 @@ var mu = require('mu2'),
     function deleteRoute(url) {
         /*
         This deletes a specific route from express route mapping.
-    */
+        */
         var i = null
         for (i = app.routes.get.length - 1; i >= 0; i--) {
             if (app.routes.get[i].path === "/" + url) {
