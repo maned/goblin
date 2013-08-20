@@ -37,18 +37,6 @@ var mu = require('mu2'),
         This loops through a key value set and builds routes to all needed pages
         */
 
-        //{ 'SG9tZQ==': 'index.html', 'Yg==': 'b.html' }
-        data = [{
-            "id": "SG9tZQ==",
-            "url": "index.html",
-            "item_name": "Home",
-            "theme": "index.gob"
-        }, {
-            "id": "Test2",
-            "url": "test2.html",
-            "item_name": "Test2",
-            "theme": "index.gob"
-        }]
         //http://stackoverflow.com/questions/500504/why-is-using-for-in-with-array-iteration-such-a-bad-idea
 
         _.each(data, function grabRoute(navObj) {
@@ -92,13 +80,9 @@ var mu = require('mu2'),
     function saveToAllPages(data) {
         // This function saves a field with data to all page documents.
         db.get('pages_routes', function navUpdate(err, doc) {
-            for (var key in doc.pure_routes) {
-                //Create a Closure because Javascript is strange, dude!
-                (function (key1) {
-                    //Go into the DB and get that information, man!
-                    db.merge(key1, data, callbackEmpty)
-                })(key)
-            }
+            _.each(doc.pure_routes, function mergeUpdate(navObj) {
+                db.merge(navObj.id, data, callbackEmpty)
+            });
         })
     }
 
@@ -177,12 +161,12 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 objToPush.id = req.body.page_id
                 objToPush.url = req.body.page_url
                 objToPush.item_name = req.body.page_title
-                objToPush.theme = "index.gob"
+                objToPush.theme = req.body.theme
 
-
+                page_routes_data.push(objToPush)
 
                 db.merge("pages_routes", {
-                    pure_routes: page_routes_data.push(objToPush)
+                    pure_routes: page_routes_data
                 }, callbackEmpty)
             })
 
@@ -192,7 +176,8 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 page_content: req.body.page_content,
                 page_url: req.body.page_url,
                 meta_description: req.body.meta_description,
-                meta_keywords: req.body.meta_keywords
+                meta_keywords: req.body.meta_keywords,
+                theme: req.body.theme
             }, function confuseMe(err, res) { //TODO: rename or...
 
                 //Create variables to be able to pass them nicely.
@@ -217,7 +202,6 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 objToPush.id = req.body.page_id
                 objToPush.url = req.body.page_url
                 objToPush.item_name = req.body.page_title
-                objToPush.theme = "index.gob"
 
                 //Push that object into navigation
                 navigation.push(objToPush)
@@ -287,7 +271,7 @@ app.post('/admin-delete.json', auth.check, function (req, res) {
 
             var new_page_routes = _.reject(page_routes_data,
                 function routeDeleter(navObj) {
-                    return navObj.id = page_id
+                    return navObj.id == page_id
                 })
 
             db.merge("pages_routes", {
@@ -306,9 +290,11 @@ app.post('/admin-delete.json', auth.check, function (req, res) {
                     navigation.splice(i, 1)
                 }
             }
+
             db.merge("admin_config", {
                 nav: navigation
             }, callbackEmpty)
+
             //Save to All Pages so there's no dead links!
             saveToAllPages({
                 nav: navigation

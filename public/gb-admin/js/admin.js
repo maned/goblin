@@ -99,7 +99,8 @@ function setSubmitEvent() {
           page_url: $('#page_url').val(),
           page_content: $('#page_content').val(),
           meta_description: $('#meta_description').val(),
-          meta_keywords: $('#meta_keywords').val()
+          meta_keywords: $('#meta_keywords').val(),
+          theme: "index.gob"
         },
 
         success: function (data) {
