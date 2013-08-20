@@ -14,6 +14,7 @@ var mu = require('mu2'),
     db = require('./lib/couchdb.js'),
     express = require('express'),
     auth = require('./lib/auth.js'),
+    _ = require('underscore'),
     app = express()
 
     //Configure Body Parser
@@ -34,37 +35,46 @@ var mu = require('mu2'),
     function routesGetandSet(data) {
         /*
         This loops through a key value set and builds routes to all needed pages
-    */
+        */
 
+        //{ 'SG9tZQ==': 'index.html', 'Yg==': 'b.html' }
+        data = [{
+            "id": "SG9tZQ==",
+            "url": "index.html",
+            "item_name": "Home",
+            "theme": "index.gob"
+        }, {
+            "id": "Test2",
+            "url": "test2.html",
+            "item_name": "Test2",
+            "theme": "index.gob"
+        }]
         //http://stackoverflow.com/questions/500504/why-is-using-for-in-with-array-iteration-such-a-bad-idea
 
-        for (var key in data) { //TODO: create a proper loop
-            //Create a Closure because Javascript is strange, dude!
-            (function (key1) {
+        _.each(data, function grabRoute(navObj) {
 
-                //In the looping, make sure you don't take the ID or Revision Number from the DB
-                if (key1 !== "_id" && key1 !== "_rev") {
+            app.get('/' + navObj.url, function pageSelect(req, res) {
 
-                    //Set route for value
-                    app.get('/' + data[key1], function pageSelect(req, res) {
+                //Go into the DB and get that information, man!
+                db.get(navObj.id, function compileAndRender(err, doc) {
+                    var stream = mu.compileAndRender(navObj.theme, doc)
+                    stream.pipe(res)
+                })
 
-                        //Go into the DB and get that information, man!
-                        db.get(key1, function compileAndRender(err, doc) {
-                            var stream = mu.compileAndRender('index.gob', doc)
+                //Set up the Index Page, by Default.
+                if (navObj.id === "SG9tZQ==") {
+                    app.get('/', function index(req, res) {
+                        db.get(navObj.id, function compileAndRender(err, doc) {
+                            var stream = mu.compileAndRender(navObj.theme, doc)
                             stream.pipe(res)
                         })
-
                     })
                 }
-            })(key)
-        }
-        //Set up the Index Page, by Default.
-        app.get('/', function index(req, res) {
-            db.get('SG9tZQ==', function compileAndRender(err, doc) {
-                var stream = mu.compileAndRender('index.gob', doc)
-                stream.pipe(res)
+
             })
-        })
+
+        });
+
     }
 
     function deleteRoute(url) {
@@ -99,7 +109,8 @@ var mu = require('mu2'),
                 nav: [{
                     "id": "SG9tZQ==",
                     "url": "index.html",
-                    "item_name": "Home"
+                    "item_name": "Home",
+                    "theme": "index.gob"
                 }],
                 site_title: "site title",
                 site_description: "site description"
@@ -108,9 +119,12 @@ var mu = require('mu2'),
     }
 
     function checkAndSetPageRoutes(err, doc) {
-        var routes_to_save = {
-            "SG9tZQ==": "index.html"
-        }
+        var routes_to_save = [{
+            "id": "SG9tZQ==",
+            "url": "index.html",
+            "item_name": "Home",
+            "theme": "index.gob"
+        }]
 
         if (doc === undefined) {
             db.save("pages_routes", {
@@ -131,7 +145,8 @@ var mu = require('mu2'),
                                 "item_name": "Home"
                             }],
                             site_title: "site title",
-                            site_description: "site description"
+                            site_description: "site description",
+                            theme: "index.gob"
                         }, function (err, res) {
                             routesGetandSet(routes_to_save)
                         })
@@ -156,10 +171,18 @@ app.post('/admin-save.json', auth.check, function (req, res) {
 
             //The document doesn't exist, so add it to the page_routes
             db.get('pages_routes', function (err, doc) {
-                var page_routes_data = doc.pure_routes
-                page_routes_data[req.body.page_id] = req.body.page_url
+                var page_routes_data = doc.pure_routes,
+                    objToPush = {}
+
+                objToPush.id = req.body.page_id
+                objToPush.url = req.body.page_url
+                objToPush.item_name = req.body.page_title
+                objToPush.theme = "index.gob"
+
+
+
                 db.merge("pages_routes", {
-                    pure_routes: page_routes_data
+                    pure_routes: page_routes_data.push(objToPush)
                 }, callbackEmpty)
             })
 
@@ -194,6 +217,7 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 objToPush.id = req.body.page_id
                 objToPush.url = req.body.page_url
                 objToPush.item_name = req.body.page_title
+                objToPush.theme = "index.gob"
 
                 //Push that object into navigation
                 navigation.push(objToPush)
@@ -260,11 +284,17 @@ app.post('/admin-delete.json', auth.check, function (req, res) {
         //Remove reference to it in Page Routes
         db.get('pages_routes', function (err, doc) {
             var page_routes_data = doc.pure_routes
-            delete page_routes_data[page_id]
+
+            var new_page_routes = _.reject(page_routes_data,
+                function routeDeleter(navObj) {
+                    return navObj.id = page_id
+                })
+
             db.merge("pages_routes", {
-                pure_routes: page_routes_data
+                pure_routes: new_page_routes
             }, callbackEmpty)
         })
+
         db.get('admin_config', function adminUpdateNav(err, doc) {
 
             var navigation = doc.nav,
