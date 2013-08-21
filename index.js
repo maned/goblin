@@ -46,12 +46,7 @@ function routesGetandSet(data) {
 
             //Set up the Index Page, by Default.
             if (navObj.id === "SG9tZQ==") {
-                app.get('/', function index(req, res) {
-                    db.get(navObj.id, function compileAndRender(err, doc) {
-                        var stream = mu.compileAndRender(navObj.theme, doc)
-                        stream.pipe(res)
-                    })
-                })
+
             }
         })
     });
@@ -223,8 +218,31 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 page_content: req.body.page_content,
                 page_url: req.body.page_url,
                 meta_description: req.body.meta_description,
-                meta_keywords: req.body.meta_keywords
+                meta_keywords: req.body.meta_keywords,
+                theme: req.body.theme
             }, callbackEmpty)
+
+            // HERE -- need to figure out how to update routs
+            db.get('pages_routes', function (err, doc) {
+                var page_routes_data = doc.pure_routes,
+                    objToPush = {}
+
+                var new_page_routes = _.reject(page_routes_data,
+                    function routeDeleter(navObj) {
+                        return navObj.id == req.body.page_id
+                    })
+
+                objToPush.id = req.body.page_id
+                objToPush.url = req.body.page_url
+                objToPush.item_name = req.body.page_title
+                objToPush.theme = req.body.theme
+
+                new_page_routes.push(objToPush)
+
+                db.merge("pages_routes", {
+                    pure_routes: new_page_routes
+                }, callbackEmpty)
+            })
         }
     })
     res.contentType('json')
@@ -254,6 +272,7 @@ app.post('/get-pages.json', function (req, res) {
 })
 
 app.post('/admin-delete.json', auth.check, function (req, res) {
+
     var page_id = req.body.page_id,
         page_url = req.body.page_url
 
