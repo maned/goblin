@@ -340,8 +340,6 @@ app.post('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
     })
 })
 
-
-
 var html_dir = './lib/views/'
 
 //Edit page
