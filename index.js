@@ -185,7 +185,7 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                     //Add new route! WHAT? app
                     app.get('/' + new_page_url, function (req, res) {
                         db.get(new_page_id, function compileAndRender(err, doc) {
-                            var stream = mu.compileAndRender('index.gob', doc)
+                            var stream = mu.compileAndRender(req.body.theme, doc)
                             stream.pipe(res)
                         })
                     })
