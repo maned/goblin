@@ -1,6 +1,7 @@
 ### Code Style Guidelines
 
-Here are the basic style guides for all JS committed to the project. Before you commit, please make sure your
+Here are the basic style guides for all JS committed to the project. This will be evolving as new problems
+are encountered, with both additions and subtractions. Before you commit, please make sure your
 code meets these guidelines (and please feel free to raise new points and objections!):
 
 1. ASI is used (due to the diligent efforts of the brilliant @sotiri) -- only used semicolons when actually needed.
