@@ -359,6 +359,7 @@ app.get('/login', function (req, res) {
 
 //Set up dynamic routes for all pages
 app.get('/:page_name', function(req, res) {
+
     db.get('pages_routes', function(err, doc) {
         var pure_routes = doc.pure_routes,
             requested_page = req.params.page_name, 
@@ -369,8 +370,15 @@ app.get('/:page_name', function(req, res) {
                 var stream = mu.compileAndRender(page_info.theme, doc)
                 stream.pipe(res)
             })
+        } else {
+            res.redirect('/index.html')
         }
     })
+})
+
+//Default '/' to index.html
+app.get('/', function(req, res) {
+    res.redirect('/index.html')
 })
 
 app.post('/login', auth.login)
