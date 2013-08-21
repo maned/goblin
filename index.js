@@ -18,7 +18,7 @@ var mu = require('mu2'),
     app = express()
 
     //Configure Body Parser
-    app.configure(function () {
+    app.configure(function() {
         app.use(express.cookieParser())
         app.use(express.session({
             key: "QAWdefrAQ",
@@ -129,7 +129,7 @@ var mu = require('mu2'),
                             site_title: "site title",
                             site_description: "site description",
                             theme: "index.gob"
-                        }, function (err, res) {
+                        }, function(err, res) {
                             routesGetandSet(routes_to_save)
                         })
                     }
@@ -140,19 +140,19 @@ var mu = require('mu2'),
         }
     }
 
-    //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
+//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 db.get('admin_config', checkForConfig)
 
 //Check for 'page routes', if undefined, then create a default route, if not, then set them
 db.get('pages_routes', checkAndSetPageRoutes)
 
 //Ajax Calls and Responses
-app.post('/admin-save.json', auth.check, function (req, res) {
-    db.get(req.body.page_id, function (err, doc) {
+app.post('/admin-save.json', auth.check, function(req, res) {
+    db.get(req.body.page_id, function(err, doc) {
         if (doc === undefined) {
 
             //The document doesn't exist, so add it to the page_routes
-            db.get('pages_routes', function (err, doc) {
+            db.get('pages_routes', function(err, doc) {
                 var page_routes_data = doc.pure_routes,
                     objToPush = {}
 
@@ -183,7 +183,7 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                     new_page_id = req.body.page_id
 
                     //Add new route! WHAT? app
-                    app.get('/' + new_page_url, function (req, res) {
+                    app.get('/' + new_page_url, function(req, res) {
                         db.get(new_page_id, function compileAndRender(err, doc) {
                             var stream = mu.compileAndRender(req.body.theme, doc)
                             stream.pipe(res)
@@ -192,7 +192,7 @@ app.post('/admin-save.json', auth.check, function (req, res) {
             })
 
             //And add it to the admin_config to play around with!
-            db.get('admin_config', function (err, doc) {
+            db.get('admin_config', function(err, doc) {
                 var navigation = doc.nav,
                     objToPush = {}
 
@@ -215,7 +215,7 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                     nav: navigation,
                     site_title: doc.site_title,
                     site_description: doc.site_description
-                }, function (err, res) {
+                }, function(err, res) {
                     //Save the new navigation to all pages.
                     saveToAllPages({
                         nav: navigation
@@ -245,26 +245,26 @@ function callbackEmpty(err, res) {
     // Handle response
 }
 
-app.post('/page-edit.json', function (req, res) {
-    db.get(req.body.page_id, function (err, doc) {
+app.post('/page-edit.json', function(req, res) {
+    db.get(req.body.page_id, function(err, doc) {
         res.contentType('json')
         res.send(doc)
     })
 })
 
-app.post('/get-pages.json', function (req, res) {
-    db.get('pages_routes', function (err, doc) {
+app.post('/get-pages.json', function(req, res) {
+    db.get('pages_routes', function(err, doc) {
         res.contentType('json')
         res.send(doc.pure_routes)
     })
 })
 
-app.post('/admin-delete.json', auth.check, function (req, res) {
+app.post('/admin-delete.json', auth.check, function(req, res) {
     var page_id = req.body.page_id,
         page_url = req.body.page_url
 
         //Remove reference to it in Page Routes
-        db.get('pages_routes', function (err, doc) {
+        db.get('pages_routes', function(err, doc) {
             var page_routes_data = doc.pure_routes
 
             var new_page_routes = _.reject(page_routes_data,
@@ -359,17 +359,17 @@ app.post('/config-save.json', auth.check, function configUpdate(req, res) {
 var html_dir = './lib/views/'
 
 //Edit page
-app.get('/gb-admin/edit', auth.check, function (req, res) {
+app.get('/gb-admin/edit', auth.check, function(req, res) {
     res.sendfile(html_dir + 'edit.html')
 })
 
 //Config Page
-app.get('/gb-admin/config', auth.check, function (req, res) {
+app.get('/gb-admin/config', auth.check, function(req, res) {
     res.sendfile(html_dir + 'config.html')
 })
 
 //Login Page
-app.get('/login', function (req, res) {
+app.get('/login', function(req, res) {
     res.sendfile(html_dir + 'login.html')
 })
 
