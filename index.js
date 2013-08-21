@@ -15,6 +15,7 @@ var mu = require('mu2'),
     express = require('express'),
     auth = require('./lib/auth.js'),
     _ = require('underscore'),
+    fs = require('fs'),
     app = express()
 
 //Configure Body Parser
@@ -31,31 +32,6 @@ app.configure(function() {
 })
 
 mu.root = __dirname + '/theme'
-
-function routesGetandSet(data) {
-    // This loops through a key value set and builds routes to all needed pages 
-
-    _.each(data, function grabRoute(navObj) {
-        app.get('/' + navObj.url, function pageSelect(req, res) {
-            //Go into the DB and get that information, man!
-            db.get(navObj.id, function compileAndRender(err, doc) {
-                var stream = mu.compileAndRender(navObj.theme, doc)
-                stream.pipe(res)
-            })
-
-            //Set up the Index Page, by Default.
-            if (navObj.id === "SG9tZQ==") {
-                app.get('/', function index(req, res) {
-                    db.get(navObj.id, function compileAndRender(err, doc) {
-                        var stream = mu.compileAndRender(navObj.theme, doc)
-                        stream.pipe(res)
-                    })
-                })
-            }
-        })
-    });
-
-}
 
 function deleteRoute(url) {
     //This deletes a specific route from express route mapping.
@@ -121,14 +97,10 @@ function checkAndSetPageRoutes(err, doc) {
                         site_title: "site title",
                         site_description: "site description",
                         theme: "index.gob"
-                    }, function (err, res) {
-                        routesGetandSet(routes_to_save)
-                    })
+                    }, callbackEmpty)
                 }
             })
         })
-    } else {
-        routesGetandSet(doc.pure_routes)
     }
 }
 
@@ -168,21 +140,7 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 meta_description: req.body.meta_description,
                 meta_keywords: req.body.meta_keywords,
                 theme: req.body.theme
-            }, function confuseMe(err, res) { //TODO: rename or...
-
-                //Create variables to be able to pass them nicely.
-                var new_page_url = req.body.page_url,
-                    new_page_id = req.body.page_id,
-                    page_theme = req.body.theme
-
-                    //Add new route! WHAT? app
-                    app.get('/' + new_page_url, function (req, res) {
-                        db.get(new_page_id, function compileAndRender(err, doc) {
-                            var stream = mu.compileAndRender(page_theme, doc)
-                            stream.pipe(res)
-                        })
-                    })
-            })
+            }, callbackEmpty)
 
             //And add it to the admin_config to play around with!
             db.get('admin_config', function (err, doc) {
@@ -222,8 +180,31 @@ app.post('/admin-save.json', auth.check, function (req, res) {
                 page_content: req.body.page_content,
                 page_url: req.body.page_url,
                 meta_description: req.body.meta_description,
-                meta_keywords: req.body.meta_keywords
+                meta_keywords: req.body.meta_keywords,
+                theme: req.body.theme
             }, callbackEmpty)
+
+            //HERE -- can't update!
+            db.get('pages_routes', function (err, doc) {
+                var page_routes_data = doc.pure_routes,
+                    objToPush = {}
+
+                var new_page_routes = _.reject(page_routes_data,
+                    function routeDeleter(navObj) {
+                        return navObj.id == req.body.page_id
+                    })
+
+                objToPush.id = req.body.page_id
+                objToPush.url = req.body.page_url
+                objToPush.item_name = req.body.page_title
+                objToPush.theme = req.body.theme
+
+                new_page_routes.push(objToPush)
+
+                db.merge("pages_routes", {
+                    pure_routes: new_page_routes
+                }, callbackEmpty)
+            })
         }
     })
     res.contentType('json')
@@ -349,6 +330,16 @@ app.post('/config-save.json', auth.check, function configUpdate(req, res) {
         })
 })
 
+app.post('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
+    fs.readdir('theme', function getThemeFiles(err, files) {
+        //Send Response
+        res.contentType('json')
+        res.send({
+            response: files
+        })
+    })
+})
+
 var html_dir = './lib/views/'
 
 //Edit page
@@ -364,6 +355,22 @@ app.get('/gb-admin/config', auth.check, function (req, res) {
 //Login Page
 app.get('/login', function (req, res) {
     res.sendfile(html_dir + 'login.html')
+})
+
+//Set up dynamic routes for all pages
+app.get('/:page_name', function(req, res) {
+    db.get('pages_routes', function(err, doc) {
+        var pure_routes = doc.pure_routes,
+            requested_page = req.params.page_name, 
+            page_info = _.findWhere(pure_routes, { "url" : requested_page })
+
+        if (page_info !== undefined) {
+            db.get(page_info.id, function compileAndRender(err, doc) {
+                var stream = mu.compileAndRender(page_info.theme, doc)
+                stream.pipe(res)
+            })
+        }
+    })
 })
 
 app.post('/login', auth.login)
