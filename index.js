@@ -36,9 +36,7 @@ function routesGetandSet(data) {
     // This loops through a key value set and builds routes to all needed pages 
 
     _.each(data, function grabRoute(navObj) {
-
         app.get('/' + navObj.url, function pageSelect(req, res) {
-
             //Go into the DB and get that information, man!
             db.get(navObj.id, function compileAndRender(err, doc) {
                 var stream = mu.compileAndRender(navObj.theme, doc)
@@ -54,9 +52,7 @@ function routesGetandSet(data) {
                     })
                 })
             }
-
         })
-
     });
 
 }
