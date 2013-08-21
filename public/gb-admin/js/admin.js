@@ -62,6 +62,8 @@ function makeNewList(page_id_to_save) {
       //Initate Admin Area
       setAdminArea();
 
+      getThemeFiles(data.theme);
+
       if ($('#page_id').val() !== "") {
         $('#page_title').prop('disabled', true);
         $('#page_url').prop('disabled', true);
@@ -81,7 +83,7 @@ function setSubmitEvent() {
 
     //Automatically make page_id to be 100% sure for existing and for new ones!
     var saved_id = utf8_to_b64($('#page_title').val());
-    console.log(saved_id);
+
     $('#page_id').val(saved_id);
 
     var page_id_to_saveX = $('#page_id').val();
@@ -100,7 +102,7 @@ function setSubmitEvent() {
           page_content: $('#page_content').val(),
           meta_description: $('#meta_description').val(),
           meta_keywords: $('#meta_keywords').val(),
-          theme: "index.gob"
+          theme: $('#theme_files').val()
         },
 
         success: function (data) {
@@ -173,6 +175,35 @@ function setAdminArea() {
   $('#page_content').wysiwyg({
     controls: "bold,italic,|,undo,redo,image"
   });
+}
+
+function getThemeFiles(passed_value) {
+    // Clear all values before
+    $('#theme_files').empty();
+
+    //Shitty way to do this. Must be refactored.
+
+    $.ajax({
+        url: "/admin-theme-files.json",
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+
+            // Horrible DOM scripting -- must be refactored.
+            var theme_files = data.response,
+                i;
+
+            for (i = 0; i < theme_files.length; i++) {
+                $('#theme_files').append('<option value="' + theme_files[i] + '">' + theme_files[i] + '</option>');
+            }
+
+            $('#theme_files').val(passed_value);
+        },
+
+        error: function () {
+
+        }
+      });
 }
 
 //The Ready
