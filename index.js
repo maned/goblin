@@ -15,6 +15,7 @@ var mu = require('mu2'),
     express = require('express'),
     auth = require('./lib/auth.js'),
     _ = require('underscore'),
+    fs = require('fs'),
     app = express()
 
 //Configure Body Parser
@@ -347,6 +348,16 @@ app.post('/config-save.json', auth.check, function configUpdate(req, res) {
                 response: 'success'
             })
         })
+})
+
+app.post('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
+    fs.readdir('theme', function getThemeFiles(err, files) {
+        //Send Response
+        res.contentType('json')
+        res.send({
+            response: files
+        })
+    })
 })
 
 var html_dir = './lib/views/'
