@@ -17,128 +17,124 @@ var mu = require('mu2'),
     _ = require('underscore'),
     app = express()
 
-    //Configure Body Parser
-    app.configure(function() {
-        app.use(express.cookieParser())
-        app.use(express.session({
-            key: "QAWdefrAQ",
-            secret: 'asfyvhq987ertvyweiurytsdfgadekjr4yhtfsdfgt9jfwe3ht987234yh'
-        }))
-        app.use(express.bodyParser())
-        app.use(app.router)
-        //Set up Static File for Components
-        app.use(express.static(__dirname + '/public'))
-    })
+//Configure Body Parser
+app.configure(function() {
+    app.use(express.cookieParser())
+    app.use(express.session({
+        key: "QAWdefrAQ",
+        secret: 'asfyvhq987ertvyweiurytsdfgadekjr4yhtfsdfgt9jfwe3ht987234yh'
+    }))
+    app.use(express.bodyParser())
+    app.use(app.router)
+    //Set up Static File for Components
+    app.use(express.static(__dirname + '/public'))
+})
 
-    mu.root = __dirname + '/theme'
+mu.root = __dirname + '/theme'
 
-    function routesGetandSet(data) {
-        /*
-        This loops through a key value set and builds routes to all needed pages
-        */
+function routesGetandSet(data) {
+    // This loops through a key value set and builds routes to all needed pages 
 
-        _.each(data, function grabRoute(navObj) {
+    _.each(data, function grabRoute(navObj) {
 
-            app.get('/' + navObj.url, function pageSelect(req, res) {
+        app.get('/' + navObj.url, function pageSelect(req, res) {
 
-                //Go into the DB and get that information, man!
-                db.get(navObj.id, function compileAndRender(err, doc) {
-                    var stream = mu.compileAndRender(navObj.theme, doc)
-                    stream.pipe(res)
+            //Go into the DB and get that information, man!
+            db.get(navObj.id, function compileAndRender(err, doc) {
+                var stream = mu.compileAndRender(navObj.theme, doc)
+                stream.pipe(res)
+            })
+
+            //Set up the Index Page, by Default.
+            if (navObj.id === "SG9tZQ==") {
+                app.get('/', function index(req, res) {
+                    db.get(navObj.id, function compileAndRender(err, doc) {
+                        var stream = mu.compileAndRender(navObj.theme, doc)
+                        stream.pipe(res)
+                    })
                 })
+            }
 
-                //Set up the Index Page, by Default.
-                if (navObj.id === "SG9tZQ==") {
-                    app.get('/', function index(req, res) {
-                        db.get(navObj.id, function compileAndRender(err, doc) {
-                            var stream = mu.compileAndRender(navObj.theme, doc)
-                            stream.pipe(res)
-                        })
+        })
+
+    });
+
+}
+
+function deleteRoute(url) {
+    //This deletes a specific route from express route mapping.
+    var i = null
+    for (i = app.routes.get.length - 1; i >= 0; i--) {
+        if (app.routes.get[i].path === "/" + url) {
+            app.routes.get.splice(i, 1)
+        }
+    }
+}
+
+function saveToAllPages(data) {
+    // This function saves a field with data to all page documents.
+    db.get('pages_routes', function navUpdate(err, doc) {
+        _.each(doc.pure_routes, function mergeUpdate(navObj) {
+            db.merge(navObj.id, data, callbackEmpty)
+        });
+    })
+}
+
+function checkForConfig(err, doc) {
+    if (doc === undefined) {
+        db.save('admin_config', {
+            ga_id: "UA-XXXXX-X",
+            nav: [{
+                "id": "SG9tZQ==",
+                "url": "index.html",
+                "item_name": "Home",
+                "theme": "index.gob"
+            }],
+            site_title: "site title",
+            site_description: "site description"
+        }, callbackEmpty)
+    }
+}
+
+function checkAndSetPageRoutes(err, doc) {
+    var routes_to_save = [{
+        "id": "SG9tZQ==",
+        "url": "index.html",
+        "item_name": "Home",
+        "theme": "index.gob"
+    }]
+
+    if (doc === undefined) {
+        db.save("pages_routes", {
+            pure_routes: routes_to_save
+        }, function indexSelect(err, res) {
+            db.get("SG9tZQ==", function indexInsertDefaults(err, doc) {
+                if (doc === undefined) {
+                    db.save("SG9tZQ==", {
+                        page_title: "Home",
+                        page_content: "Initial Home Content",
+                        page_url: "index.html",
+                        meta_description: "Default goblin page",
+                        meta_keywords: "goblin, CMS, javascript",
+                        ga_id: "UA-XXXXX-X",
+                        nav: [{
+                            "id": "SG9tZQ==",
+                            "url": "index.html",
+                            "item_name": "Home"
+                        }],
+                        site_title: "site title",
+                        site_description: "site description",
+                        theme: "index.gob"
+                    }, function (err, res) {
+                        routesGetandSet(routes_to_save)
                     })
                 }
-
             })
-
-        });
-
-    }
-
-    function deleteRoute(url) {
-        /*
-        This deletes a specific route from express route mapping.
-        */
-        var i = null
-        for (i = app.routes.get.length - 1; i >= 0; i--) {
-            if (app.routes.get[i].path === "/" + url) {
-                app.routes.get.splice(i, 1)
-            }
-        }
-    }
-
-    function saveToAllPages(data) {
-        // This function saves a field with data to all page documents.
-        db.get('pages_routes', function navUpdate(err, doc) {
-            _.each(doc.pure_routes, function mergeUpdate(navObj) {
-                db.merge(navObj.id, data, callbackEmpty)
-            });
         })
+    } else {
+        routesGetandSet(doc.pure_routes)
     }
-
-    function checkForConfig(err, doc) {
-        if (doc === undefined) {
-            db.save('admin_config', {
-                ga_id: "UA-XXXXX-X",
-                nav: [{
-                    "id": "SG9tZQ==",
-                    "url": "index.html",
-                    "item_name": "Home",
-                    "theme": "index.gob"
-                }],
-                site_title: "site title",
-                site_description: "site description"
-            }, callbackEmpty)
-        }
-    }
-
-    function checkAndSetPageRoutes(err, doc) {
-        var routes_to_save = [{
-            "id": "SG9tZQ==",
-            "url": "index.html",
-            "item_name": "Home",
-            "theme": "index.gob"
-        }]
-
-        if (doc === undefined) {
-            db.save("pages_routes", {
-                pure_routes: routes_to_save
-            }, function indexSelect(err, res) {
-                db.get("SG9tZQ==", function indexInsertDefaults(err, doc) {
-                    if (doc === undefined) {
-                        db.save("SG9tZQ==", {
-                            page_title: "Home",
-                            page_content: "Initial Home Content",
-                            page_url: "index.html",
-                            meta_description: "Default goblin page",
-                            meta_keywords: "goblin, CMS, javascript",
-                            ga_id: "UA-XXXXX-X",
-                            nav: [{
-                                "id": "SG9tZQ==",
-                                "url": "index.html",
-                                "item_name": "Home"
-                            }],
-                            site_title: "site title",
-                            site_description: "site description",
-                            theme: "index.gob"
-                        }, function(err, res) {
-                            routesGetandSet(routes_to_save)
-                        })
-                    }
-                })
-            })
-        } else {
-            routesGetandSet(doc.pure_routes)
-        }
-    }
+}
 
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 db.get('admin_config', checkForConfig)
@@ -147,12 +143,12 @@ db.get('admin_config', checkForConfig)
 db.get('pages_routes', checkAndSetPageRoutes)
 
 //Ajax Calls and Responses
-app.post('/admin-save.json', auth.check, function(req, res) {
-    db.get(req.body.page_id, function(err, doc) {
+app.post('/admin-save.json', auth.check, function (req, res) {
+    db.get(req.body.page_id, function (err, doc) {
         if (doc === undefined) {
 
             //The document doesn't exist, so add it to the page_routes
-            db.get('pages_routes', function(err, doc) {
+            db.get('pages_routes', function (err, doc) {
                 var page_routes_data = doc.pure_routes,
                     objToPush = {}
 
@@ -180,19 +176,20 @@ app.post('/admin-save.json', auth.check, function(req, res) {
 
                 //Create variables to be able to pass them nicely.
                 var new_page_url = req.body.page_url,
-                    new_page_id = req.body.page_id
+                    new_page_id = req.body.page_id,
+                    page_theme = req.body.theme
 
                     //Add new route! WHAT? app
-                    app.get('/' + new_page_url, function(req, res) {
+                    app.get('/' + new_page_url, function (req, res) {
                         db.get(new_page_id, function compileAndRender(err, doc) {
-                            var stream = mu.compileAndRender(req.body.theme, doc)
+                            var stream = mu.compileAndRender(page_theme, doc)
                             stream.pipe(res)
                         })
                     })
             })
 
             //And add it to the admin_config to play around with!
-            db.get('admin_config', function(err, doc) {
+            db.get('admin_config', function (err, doc) {
                 var navigation = doc.nav,
                     objToPush = {}
 
@@ -215,7 +212,7 @@ app.post('/admin-save.json', auth.check, function(req, res) {
                     nav: navigation,
                     site_title: doc.site_title,
                     site_description: doc.site_description
-                }, function(err, res) {
+                }, function (err, res) {
                     //Save the new navigation to all pages.
                     saveToAllPages({
                         nav: navigation
@@ -245,26 +242,26 @@ function callbackEmpty(err, res) {
     // Handle response
 }
 
-app.post('/page-edit.json', function(req, res) {
-    db.get(req.body.page_id, function(err, doc) {
+app.post('/page-edit.json', function (req, res) {
+    db.get(req.body.page_id, function (err, doc) {
         res.contentType('json')
         res.send(doc)
     })
 })
 
-app.post('/get-pages.json', function(req, res) {
-    db.get('pages_routes', function(err, doc) {
+app.post('/get-pages.json', function (req, res) {
+    db.get('pages_routes', function (err, doc) {
         res.contentType('json')
         res.send(doc.pure_routes)
     })
 })
 
-app.post('/admin-delete.json', auth.check, function(req, res) {
+app.post('/admin-delete.json', auth.check, function (req, res) {
     var page_id = req.body.page_id,
         page_url = req.body.page_url
 
         //Remove reference to it in Page Routes
-        db.get('pages_routes', function(err, doc) {
+        db.get('pages_routes', function (err, doc) {
             var page_routes_data = doc.pure_routes
 
             var new_page_routes = _.reject(page_routes_data,
@@ -359,17 +356,17 @@ app.post('/config-save.json', auth.check, function configUpdate(req, res) {
 var html_dir = './lib/views/'
 
 //Edit page
-app.get('/gb-admin/edit', auth.check, function(req, res) {
+app.get('/gb-admin/edit', auth.check, function (req, res) {
     res.sendfile(html_dir + 'edit.html')
 })
 
 //Config Page
-app.get('/gb-admin/config', auth.check, function(req, res) {
+app.get('/gb-admin/config', auth.check, function (req, res) {
     res.sendfile(html_dir + 'config.html')
 })
 
 //Login Page
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
     res.sendfile(html_dir + 'login.html')
 })
 
