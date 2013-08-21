@@ -361,8 +361,7 @@ app.get('/login', function (req, res) {
 
 //Set up dynamic routes for all pages
 app.get('/:page_name', function(req, res) {
-    db.get('pages_routes', function(err, doc) {
-    
+    db.get('pages_routes', function(err, doc) {giut
         var pure_routes = doc.pure_routes,
             requested_page = req.params.page_name, 
             page_info = _.findWhere(pure_routes, { "url" : requested_page })
