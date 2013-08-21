@@ -1,39 +1,41 @@
 {
-  "name": "goblin",
-  "version": "0.0.2",
-  "main": "goblin.js",
-  "description": "Pure javascript content management system designed to serve static pages in the cloud.",
-  "contributors": [ 
-    {
-      "name": "Sotirios Vrachas",
-      "email": "sotiros@vrachas.net"
-    } 
-  ],
-  "keywords": [
-    "CMS",
-    "Javascript CMS",
-    "CouchDB",
-    "static page",
-    "server"
-  ],
-  "homepage": "https://github.com/maned/goblin",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/maned/goblin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/maned/goblin/issues"
-  },
-  "author": {
-    "name": "Nick Weingartner - Managing Editor Inc",
-    "email": "nweingartner@maned.com",
-    "url": "http://www.maned.com"
-  },
-  "readmeFilename": "README.md",
-  "license": "GPLv3",
-  "dependencies": {
-    "cradle": "~0.6.6",
-    "mu2": "~0.5.19",
-    "express": "~3.3.5"
-  }
+    "name": "goblin",
+    "version": "0.0.2",
+    "main": "goblin.js",
+    "description": "Pure javascript content management system designed to serve static pages in the cloud.",
+    "contributors": [{
+        "name": "Sotirios Vrachas",
+        "email": "sotiros@vrachas.net"
+    }, {
+        "name": "Dave Mullen",
+        "email": "upperdecker@gmail.com"
+    }],
+    "keywords": [
+        "CMS",
+        "Javascript CMS",
+        "CouchDB",
+        "static page",
+        "server"
+    ],
+    "homepage": "https://github.com/maned/goblin",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/maned/goblin.git"
+    },
+    "bugs": {
+        "url": "https://github.com/maned/goblin/issues"
+    },
+    "author": {
+        "name": "Nick Weingartner - Managing Editor Inc",
+        "email": "nweingartner@maned.com",
+        "url": "http://www.maned.com"
+    },
+    "readmeFilename": "README.md",
+    "license": "GPLv3",
+    "dependencies": {
+        "cradle": "~0.6.6",
+        "mu2": "~0.5.19",
+        "express": "~3.3.5",
+        "underscore": "~1.5.1"
+    }
 }
