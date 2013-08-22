@@ -31,7 +31,6 @@ app.configure(function() {
     app.use(app.router)
     //Set up Static File for Components
     app.use(express.static(__dirname + '/public'))
-    
 })
 
 mu.root = __dirname + '/theme'
@@ -76,6 +75,7 @@ app.get('/:page_name', function(req, res) {
             res.redirect('/index.html')
         }
     })
+
 })
 
 //Default '/' to index.html
