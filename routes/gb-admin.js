@@ -1,13 +1,13 @@
-var auth = require('../lib/auth.js')
+var auth = require('../lib/auth.js'),
+	express = require('express'),
+	app = express()
 
-var app = module.exports = express.createServer()
+var app = module.exports = app
 
 var html_dir = '../lib/views/'
 
-console.log(auth);
-
 //Edit page
-app.get('/edit', function (req, res) {
+app.get('/edit', auth.check, function (req, res) {
     res.sendfile(html_dir + 'edit.html')
 })
 
