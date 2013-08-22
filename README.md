@@ -115,7 +115,7 @@ goblin is currently in a development, alpha phase. We are looking for feedback t
 
 1. Break up 'index.js' into multiple modules for easier development. (IN PROGRESS)
 2. Bootstrap new Admin area based on new designs (see '/design-files')
-~~3. Multiple .gob file support (COMPLETED by streetlight)~~
+3. ~~Multiple .gob file support (COMPLETED by streetlight)~~
 4. Better, bootstrapped default theme.
 5. Nested navigation support.
 6. Multiple users support.
