@@ -16,8 +16,8 @@ var mu = require('mu2'),
     auth = require('./lib/auth.js'),
     _ = require('underscore'),
     fs = require('fs'),
-    utils = require('./lib/utils.js'),
-    app = express()
+    app = express(),
+    utils = require('./lib/utils.js')
 
 //Configure Body Parser
 app.configure(function() {

@@ -175,7 +175,11 @@ module.exports = function() {
 	        })
 
 	        //Delete Route to that Page from Express
-	        utils.deleteRoute(page_url)
+		    for (i = app.routes.get.length - 1; i >= 0; i--) {
+		        if (app.routes.get[i].path === "/" + page_url) {
+		            app.routes.get.splice(i, 1)
+		        }
+		    }
 
 	        res.contentType('json')
 	        res.send({
@@ -214,7 +218,7 @@ module.exports = function() {
 	            nav: nav_req,
 	            site_title: site_title_req,
 	            site_description: site_description_req
-	        }, callbackEmpty)
+	        }, utils.callbackEmpty)
 
 	        //Send Response
 	        res.contentType('json')
