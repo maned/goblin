@@ -21,7 +21,7 @@ function getAllPages() {
 
       _.each(data, function grabRoute(navObj) {
 
-        $('#page_to_edit').append('<option class="option_values" value="' + navObj.id + '">' + navObj.url + '</option>')
+        $('#page_to_edit').prepend('<option class="option_values" value="' + navObj.id + '">' + navObj.url + '</option>')
 
       });
 
