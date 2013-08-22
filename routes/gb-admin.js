@@ -46,7 +46,7 @@ module.exports = function() {
 	                var navigation = doc.nav,
 	                    objToPush = {}
 
-	                    //Push items into object
+	                //Push items into object
 	                objToPush.id = req.body.page_id
 	                objToPush.url = req.body.page_url
 	                objToPush.item_name = req.body.page_title
@@ -151,7 +151,7 @@ module.exports = function() {
 	            var navigation = doc.nav,
 	                i = null
 
-	                //Loop through array and remove route.
+	            //Loop through array and remove route.
 	            for (i = 0; i < navigation.length; i++) {
 	                if (navigation[i].id === page_id) {
 	                    navigation.splice(i, 1)
@@ -175,11 +175,7 @@ module.exports = function() {
 	        })
 
 	        //Delete Route to that Page from Express
-		    for (i = app.routes.get.length - 1; i >= 0; i--) {
-		        if (app.routes.get[i].path === "/" + page_url) {
-		            app.routes.get.splice(i, 1)
-		        }
-		    }
+	        utils.deleteRoute(app, page_url)
 
 	        res.contentType('json')
 	        res.send({
