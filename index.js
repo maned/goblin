@@ -111,7 +111,7 @@ db.get('admin_config', checkForConfig)
 db.get('pages_routes', checkAndSetPageRoutes)
 
 //Ajax Calls and Responses
-app.post('/admin-save.json', auth.check, function (req, res) {
+app.post('/gb-admin/page-save.json', auth.check, function (req, res) {
     db.get(req.body.page_id, function (err, doc) {
         if (doc === undefined) {
 
@@ -219,21 +219,21 @@ function callbackEmpty(err, res) {
     // Handle response
 }
 
-app.post('/page-edit.json', function (req, res) {
+app.post('/gb-admin/page-edit.json', function (req, res) {
     db.get(req.body.page_id, function (err, doc) {
         res.contentType('json')
         res.send(doc)
     })
 })
 
-app.post('/get-pages.json', function (req, res) {
+app.post('/gb-admin/get-pages.json', function (req, res) {
     db.get('pages_routes', function (err, doc) {
         res.contentType('json')
         res.send(doc.pure_routes)
     })
 })
 
-app.post('/admin-delete.json', auth.check, function (req, res) {
+app.post('/gb-admin/page-delete.json', auth.check, function (req, res) {
     var page_id = req.body.page_id,
         page_url = req.body.page_url
 
@@ -291,7 +291,7 @@ app.post('/admin-delete.json', auth.check, function (req, res) {
 })
 
 //Config Page
-app.post('/config-page.json', function configSelect(req, res) {
+app.get('/gb-admin/get-config.json', function configSelect(req, res) {
     db.get("admin_config", function configSelect2Json(err, doc) {
         res.contentType('json')
         res.send(doc)
@@ -299,7 +299,7 @@ app.post('/config-page.json', function configSelect(req, res) {
 })
 
 //Config Save
-app.post('/config-save.json', auth.check, function configUpdate(req, res) {
+app.post('/gb-admin/config-save.json', auth.check, function configUpdate(req, res) {
     var ga_id_req = req.body.ga_id,
         nav_req = req.body.nav,
         site_title_req = req.body.site_title,
@@ -330,7 +330,7 @@ app.post('/config-save.json', auth.check, function configUpdate(req, res) {
         })
 })
 
-app.post('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
+app.post('/gb-admin/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
     fs.readdir('theme', function getThemeFiles(err, files) {
         //Send Response
         res.contentType('json')

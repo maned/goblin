@@ -13,7 +13,7 @@ function getAllPages() {
 
   //Then make an AJAX Call to get the new ones.
   $.ajax({
-    url: "/get-pages.json",
+    url: "/gb-admin/get-pages.json",
     type: "POST",
     dataType: "json",
     async: false,
@@ -38,7 +38,7 @@ function getAllPages() {
 function makeNewList(page_id_to_save) {
 
   $.ajax({
-    url: "/page-edit.json",
+    url: "/gb-admin/page-edit.json",
     type: "POST",
     dataType: "json",
     async: false,
@@ -92,7 +92,7 @@ function setSubmitEvent() {
     if ($('#page_id').val() !== "") {
       //Go on with Ajax!
       $.ajax({
-        url: "/admin-save.json",
+        url: "/gb-admin/page-save.json",
         type: "POST",
         dataType: "json",
         data: {
@@ -138,7 +138,7 @@ function setDeleteEvent() {
   $('#delete').click(function () {
     if ($('#page_to_edit').val() !== "new_page" && $('#page_to_edit').val() !== "SG9tZQ==") {
       $.ajax({
-        url: "/admin-delete.json",
+        url: "/gb-admin/page-delete.json",
         type: "POST",
         dataType: "json",
         data: {
@@ -184,7 +184,7 @@ function getThemeFiles(passed_value) {
     //Shitty way to do this. Must be refactored.
 
     $.ajax({
-        url: "/admin-theme-files.json",
+        url: "/gb-admin/admin-theme-files.json",
         type: "POST",
         dataType: "json",
         success: function (data) {
