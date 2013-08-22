@@ -26,7 +26,7 @@ app.configure(function() {
         secret: 'asfyvhq987ertvyweiurytsdfgadekjr4yhtfsdfgt9jfwe3ht987234yh'
     }))
     app.use(express.bodyParser())
-    app.use('/gb-admin', './routes/gb-admin');
+    app.use('/gb-admin', require('./routes/gb-admin'));
     app.use(app.router)
     //Set up Static File for Components
     app.use(express.static(__dirname + '/public'))
