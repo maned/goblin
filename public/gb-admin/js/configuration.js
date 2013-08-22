@@ -9,8 +9,8 @@ function b64_to_utf8( str ) {
 function paintConfig() {
 	//Make ajax call and paint values
 	$.ajax({
-          url: "/config-page.json",
-          type : "POST",
+          url: "/gb-admin/get-config.json",
+          type : "GET",
           dataType: "json",
           data: {},
           success: function(data) {
@@ -65,7 +65,7 @@ function createNavJSON() {
 
 function getPages() {
   $.ajax({
-      url: "/get-pages.json",
+      url: "/gb-admin/get-pages.json",
       type : "POST",
       dataType: "json",
       success: function(data) {
@@ -92,7 +92,7 @@ function getPages() {
 function setSubmitEvent() { 
 	$('#submit').click(function() {
 		$.ajax({
-          url: "/config-save.json",
+          url: "/gb-admin/config-save.json",
           type : "POST",
           dataType: "json",
           data: {
