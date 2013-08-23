@@ -33,10 +33,9 @@ Then, here are the steps:
 
 1. Download goblin and place it in a directory
 2. Install CouchDB. Write CouchDB's url, port and credientials (You will have to create a default user for your database; goblin now looks for 'admin', 'admin').
-3. Take this information, and place it in the appropriate fields in 'lib/couchdb.js'.
-4. Change the default username and password in 'index.js' (by default, it is admin and admin, respectively).
-5. Navigate to the directory in the command line, run 'npm install' to install dependencies, and then run the 'index.js' file with node. ('nodejs index.js' in linux, 'node index.js' in OS X/Unix).
-6. Go to 'localhost:8000/' in your browser, and 'localhost:8000/login', and you'll see goblin run!
+3. Go to 'lib/config.js' and place in the information you just wrote down, as well as the admin username, password and port (defaults to 'admin', 'admin', and 8000, respectively).
+4. Navigate to the directory in the command line, run 'npm install' to install dependencies, and then run the 'index.js' file with node. ('nodejs index.js' in linux, 'node index.js' in OS X/Unix).
+5. Go to 'localhost:8000/' in your browser, and 'localhost:8000/login', and you'll see goblin run!
 
 In addition, you can feel free to use an already hosted CouchDB instance -- like signing up for one for free at IrisCouch (http://iriscouch.com) if you don't want to install couch locally (see the next part for more details!). 
 
@@ -50,20 +49,22 @@ These steps explain how to do it with a hosted CouchDB on IrisCouch (for free)
 1. Go to IrisCouch.com and sign up for a free instance.
 2. Take the url for the instance you recieved and visit it.
 3. For security, in the lower right hand corner, add an admin account. Write the credientials down.
-4. Create a new database (like you would in any CouchDB instance) and write it down.
-5. Go to db.js in Gobln.
-6. Insert the name, port (443 if it's over HTTPS), username, password and database name in the file.
-7. Go and get started, like a boss!
+4. Go to 'lib/config.js' in goblin, insert the db URL, port (443 if it's over HTTPS), username, password, as well as the goblin admin information as well.
+6. Go and get started, like a boss!
 
-Here is an example:
+Here is an example (from 'lib/config.js'):
 
-     var db = new(cradle.Connection)('https://subdomain.iriscouch.com', 443, {
-	     auth: {
-		    username: 'username',
-		    password: 'password'
-	     },
-	     cache: false
-     }).database('db_name');
+	// Couch Admin user name
+	config.couchUsername = "username"
+	
+	// Couch Admin Password
+	config.couchPassword = "password"
+	
+	// URL of the CouchDB instance
+	config.couchURL = "https://subdomain.iriscouch.com"
+	
+	// Port of the CouchDB instance
+	config.couchPort = 443
 
 If you have any issues installing, please provide feedback on where these instructions are not illumintating enough! You can report an issue on GitHub for this to be fixed, or even email me directly (see: Feedback).
 
