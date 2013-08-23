@@ -17,7 +17,8 @@ var mu = require('mu2'),
     _ = require('underscore'),
     fs = require('fs'),
     app = express(),
-    utils = require('./lib/utils.js')
+    utils = require('./lib/utils.js'),
+    config = require('./lib/config.js')
 
 //Configure Body Parser
 app.configure(function() {
@@ -85,4 +86,6 @@ app.get('/', function(req, res) {
 
 app.post('/login', auth.login)
 app.get('/logout', auth.logout)
-app.listen(8000)
+app.listen(config.desiredPort)
+
+console.log("Goblin lives... on port " + config.desiredPort)
