@@ -1,115 +1,76 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     <title>{{page_title}} - {{site_title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <meta name="description" content="{{meta_description}}">
-    <meta name="author" content="">
-
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 60px;
-      }
-
-      /* Custom container */
-      .container {
-        margin: 0 auto;
-        max-width: 1000px;
-      }
-      .container > hr {
-        margin: 60px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 80px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 100px;
-        line-height: 1;
-      }
-      .jumbotron .lead {
-        font-size: 24px;
-        line-height: 1.25;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-
-
-      /* Customize the navbar links to be fill the entire space of the .navbar */
-      .navbar .navbar-inner {
-        padding: 0;
-      }
-      .navbar .nav {
-        margin: 0;
-        display: table;
-        width: 100%;
-      }
-      .navbar .nav li {
-        display: table-cell;
-        width: 1%;
-        float: none;
-      }
-      .navbar .nav li a {
-        font-weight: bold;
-        text-align: center;
-        border-left: 1px solid rgba(255,255,255,.75);
-        border-right: 1px solid rgba(0,0,0,.1);
-      }
-      .navbar .nav li:first-child a {
-        border-left: 0;
-        border-radius: 3px 0 0 3px;
-      }
-      .navbar .nav li:last-child a {
-        border-right: 0;
-        border-radius: 0 3px 3px 0;
-      }
-    </style>
+    <meta name="keywords" content="{{meta_keywords}}">
+    <link rel="stylesheet" href="/theme/css/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="/theme/css/bootswatch.min.css">
   </head>
-
   <body>
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="boo/" class="navbar-brand">{{site_title}}</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+             {{#nav}}
+                <li><a href="/{{url}}">{{item_name}}</a></li>
+              {{/nav}}
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a>{{site_description}}</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
 
     <div class="container">
 
-      <div class="masthead">
-        <h3 class="muted">This is a page.gob theme -- {{site_title}}</h3>
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                {{#nav}}
-                  <li><a href="/{{url}}">{{item_name}}</a></li>
-                {{/nav}}
-              </ul>
-            </div>
+      <div class="page-header" id="banner">
+        <div class="row">
+          <div class="col-lg-6">
+            <h1>{{page_title}}</h1>
+            <p class="lead">{{{page_content}}}</p>
           </div>
-        </div><!-- /.navbar -->
-      </div>
-      <h1>{{page_title}}</h1>
-      {{{page_content}}}
-      <hr>
-
-      <div class="footer">
-        <p>&copy; {{site_title}} 2013 - {{site_description}}</p>
+        </div>
       </div>
 
+
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-unstyled">
+              {{#nav}}
+                <li><a href="/{{url}}">{{item_name}}</a></li>
+              {{/nav}}
+            </ul>
+            <p>Theme made by <a href="http://thomaspark.me">Thomas Park</a>. Contact him at <a href="mailto:hello@thomaspark.me">hello@thomaspark.me</a>.</p>
+            <p>Theme code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.</p>
+            <p>Based on <a href="http://getbootstrap.com">Bootstrap</a>. Icons from <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>. Web fonts from <a href="http://www.google.com/webfonts">Google</a>.</p>
+            <p>Powered by <a href="http://www.github.com/maned/goblin">goblin</a>.</p>
+
+          </div>
+        </div>
+        
+      </footer>
+    
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+
+    <script src="/theme/js/vendor/jquery-2.0.3.min.js"></script>
+    <script src="/theme/js/vendor/bootstrap.min.js"></script>
   </body>
 </html>
-
