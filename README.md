@@ -91,7 +91,7 @@ These are the variables currently supported in this release of goblin:
 
 After you are done, change the extension from .html to .gob, and place it in the templates folder.
 
-Place all of your customized CSS and JS files into the public folder. All the files will render in the root
+Place all of your customized CSS and JS files into the 'public/theme' folder. All the files will render in the '/theme'
 directory in the browser.
 
 goblin adopts mustache's great templating language (https://github.com/janl/mustache.js/), so anything you can
