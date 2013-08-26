@@ -3,6 +3,11 @@
     "version": "0.0.2",
     "main": "goblin.js",
     "description": "Pure javascript content management system designed to serve static pages in the cloud.",
+    "author": {
+        "name": "Nick Weingartner - Managing Editor Inc",
+        "email": "nweingartner@maned.com",
+        "url": "http://www.maned.com"
+    },
     "contributors": [{
         "name": "Sotirios Vrachas",
         "email": "sotiros@vrachas.net"
@@ -24,11 +29,6 @@
     },
     "bugs": {
         "url": "https://github.com/maned/goblin/issues"
-    },
-    "author": {
-        "name": "Nick Weingartner - Managing Editor Inc",
-        "email": "nweingartner@maned.com",
-        "url": "http://www.maned.com"
     },
     "readmeFilename": "README.md",
     "license": "GPLv3",
