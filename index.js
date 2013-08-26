@@ -86,6 +86,4 @@ app.get('/', function(req, res) {
 
 app.post('/login', auth.login)
 app.get('/logout', auth.logout)
-app.listen(config.desiredPort)
-
-console.log("Goblin lives... on port " + config.desiredPort)
+app.listen(config.desiredPort, utils.listeningOn(config.desiredPort))
