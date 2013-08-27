@@ -13,7 +13,8 @@ define([
 
             appRoutes: {
                 "": "index",
-                "login": "login"
+                "login": "login",
+                "config" : "config"
             }
 
         });

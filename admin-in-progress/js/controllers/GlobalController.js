@@ -22,6 +22,10 @@ define([
 
             login : function() {
                 
+            },
+
+            config : function() {
+                alert('config');
             }
 
         });

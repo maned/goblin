@@ -17,7 +17,16 @@ define([
             tagName : 'ul',
 
             events: {
+                "click .config" : "sendToConfig",
+                "click .logout" : "sendToLogout"
+            },
 
+            sendToConfig : function() {
+                GOB.Application.vent.on("navigateTo", "config")
+            },
+
+            sendToLogout : function() {
+                window.location.href = "/logout"
             }
 
         });

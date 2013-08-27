@@ -15,7 +15,7 @@ require.config({
         'marionette': 'vendor/backbone.marionette',
         'mustache': 'vendor/mustache.min',
         'bootstrap': 'vendor/bootstrap.min',
-        'common': 'config/common',
+        'common': 'config/common'
     },
 
     //Set up shims for non-AMD style libaries
@@ -46,7 +46,6 @@ require.config({
 
 //Initalize the App right after setting up the configuration
 require([
-        'jquery',
         'backbone',
         'marionette',
         'common',
@@ -54,7 +53,7 @@ require([
         'controllers/GlobalController',
         'routers/GlobalRouter'
     ],
-    function ($, Backbone, Marionette, Common, Mustache) {
+    function (Backbone, Marionette, Common, Mustache) {
 
         'use strict';
 
@@ -66,6 +65,19 @@ require([
         //Add wrapper region, so we can easily swap all of our views in the controller in and out of this constant
         GOB.Application.addRegions({
             wrapper: '#wrapper'
+        });
+
+        //Bind Router/Controller to vent to access globally
+        GOB.Application.vent.on("navigateTo", function (page) {
+
+            var globalController = new GOB.Controllers.GlobalController(),
+                tempRouter = new GOB.Routers.GlobalRouter({
+                    controller: globalController
+                });
+
+            tempRouter.navigate(page, true);
+
+            globalController.close();
         });
 
         function createRouter(controller) {
