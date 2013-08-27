@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>goblin : the admin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+    <body>
+        <div id="wrapper"></div>
+
+        <script id="admin_layout_template" type="text/template">
+            <div id="nav" class="column col-md-2"></div>
+            <div id="page" class="column col-md-10">XXX</div>
+        </script>
+
+        <script id="nav_view_template" type="text/template">
+            <li><span class="glyphicon glyphicon-file"></span> Manage Pages</li>
+            <li><span class="glyphicon glyphicon-wrench"></span> Configuration</li>
+            <li><span class="glyphicon glyphicon-new-window"></span> Feedback</li>
+            <li><span class="glyphicon glyphicon-off"></span> Logout</li>
+        </script>
+
+        <script id="manage_pages_layout_template" type="text/template">
+            <h1>Goblin ></h1>
+            <ol class="breadcrumb">
+                <li>Pages /</li>
+            </ol>
+            <div class="row-fluid">
+                <div class="col-md-12">
+                    <label>Edit</label>
+                    <div id="edit_page_field">
+                        <select>
+                            <option>Awesome</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="main_edit_fields row-fluid">
+                <div class="col-md-4">
+                    <label>Page Title</label>
+                    <input type="text">
+                </div>
+                <div class="col-md-4">
+                    <label>Page URL</label>
+                    <input type="text">
+                </div>
+                <div class="col-md-4">
+                    <label>Page Template</label>
+                    <div id="page_template_field">
+                        <select>
+                            <option>Awesome</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="wisywig" class="row-fluid clearfix">
+                <div class="col-md-12">
+                    <textarea id="page_content" placeholder="Page Content">{{page_content}}</textarea>
+                </div>
+            </div>
+
+            <h3>Metadata and SEO</h3>
+            <div class="row-fluid">
+                <div class="col-md-6">
+                    <label>Description</label>
+                    <input type="text">
+                </div>
+                <div class="col-md-6">
+                    <label>Keywords</label>
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="buttons row-fluid">
+            <span class="col-md-3 col-md-offset-9">
+                <button type="button" class="btn btn-default">Delete</button>
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+        </script>
+
+        <script data-main="js/config/main" src="js/vendor/require.js"></script>
+
+    </body>
+</html>
