@@ -4,9 +4,6 @@ require.config({
     //Define the base url where our javascript files live
     baseUrl: "js",
 
-    //Increase the timeout time so if the server is insanely slow the client won't burst
-    waitSeconds: 200,
-
     //Set up paths to our libraries and plugins
     paths: {
         'jquery': 'vendor/jquery-2.0.3.min',
@@ -65,19 +62,6 @@ require([
         //Add wrapper region, so we can easily swap all of our views in the controller in and out of this constant
         GOB.Application.addRegions({
             wrapper: '#wrapper'
-        });
-
-        //Bind Router/Controller to vent to access globally
-        GOB.Application.vent.on("navigateTo", function (page) {
-
-            var globalController = new GOB.Controllers.GlobalController(),
-                tempRouter = new GOB.Routers.GlobalRouter({
-                    controller: globalController
-                });
-
-            tempRouter.navigate(page, true);
-
-            globalController.close();
         });
 
         function createRouter(controller) {

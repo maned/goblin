@@ -1,9 +1,7 @@
 define([
         'backbone',
         'common',
-        'marionette',
-        'views/NavView',
-        'layouts/ManagePagesLayout'
+        'marionette'
     ],
     function (Backbone, Common) {
 
@@ -11,19 +9,20 @@ define([
 
         var GOB = Common.app_namespace || {};
 
-        GOB.Layouts.AdminLayout = Backbone.Marionette.Layout.extend({
+        GOB.Layouts.ConfigLayout = Backbone.Marionette.Layout.extend({
 
-            template: "#admin_layout_template",
+            template: "#config_layout_template",
 
-            className: 'columns row-fluid',
+            className: 'config',
 
             regions: {
-                nav: "#nav",
-                page: "#page"
+                'editPage' : '#edit_page_field',
+                'pageTemplate' : "#page_template_field"
             },
 
             onRender: function() {
                 //this.nav.show(new GOB.Views.NavView());
+                //this.page.show();
             }
 
         });
