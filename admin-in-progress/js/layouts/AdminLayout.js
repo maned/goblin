@@ -22,8 +22,8 @@ define([
                 page: "#page"
             },
 
-            onRender: function() {
-                //this.nav.show(new GOB.Views.NavView());
+            onRender: function () {
+                this.nav.show(new GOB.Views.NavView());
             }
 
         });

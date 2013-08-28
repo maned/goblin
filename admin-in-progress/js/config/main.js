@@ -1,4 +1,3 @@
-
 require.config({
 
     //Define the base url where our javascript files live
@@ -12,7 +11,8 @@ require.config({
         'marionette': 'vendor/backbone.marionette',
         'mustache': 'vendor/mustache.min',
         'bootstrap': 'vendor/bootstrap.min',
-        'common': 'config/common'
+        'common': 'config/common',
+        'jquery-ui': 'vendor/jquery-ui-1.10.2.min'
     },
 
     //Set up shims for non-AMD style libaries
@@ -36,6 +36,10 @@ require.config({
         },
 
         'bootstrap': {
+            deps: ['jquery']
+        },
+
+        'jquery-ui': {
             deps: ['jquery']
         }
     }

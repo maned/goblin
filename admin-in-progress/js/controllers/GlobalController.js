@@ -17,48 +17,42 @@ define([
 
         GOB.Controllers.GlobalController = Marionette.Controller.extend({
 
-            index: function() {
+            index: function () {
                 var nav = new GOB.Views.NavView();
 
                 nav.navigateTo('edit');
             },
 
-            edit : function () {
+            edit: function () {
 
                 var adminLayout = new GOB.Layouts.AdminLayout();
-                
+
                 GOB.Application.wrapper.show(adminLayout);
 
-                adminLayout.nav.show(new GOB.Views.NavView())
-                
                 adminLayout.page.show(new GOB.Layouts.ManagePagesLayout());
 
             },
 
-            login : function() {
-                
+            login: function () {
+
             },
 
-            config : function() {
+            config: function () {
 
                 var adminLayout = new GOB.Layouts.AdminLayout();
-                
+
                 GOB.Application.wrapper.show(adminLayout);
 
-                adminLayout.nav.show(new GOB.Views.NavView());
-                
                 adminLayout.page.show(new GOB.Layouts.ConfigLayout());
-                
+
             },
 
-            feedback: function() {
+            feedback: function () {
 
                 var adminLayout = new GOB.Layouts.AdminLayout();
-                
+
                 GOB.Application.wrapper.show(adminLayout);
 
-                adminLayout.nav.show(new GOB.Views.NavView());
-                
                 adminLayout.page.show(new GOB.Views.FeedbackView());
             }
 

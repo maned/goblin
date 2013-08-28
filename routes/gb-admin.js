@@ -192,6 +192,13 @@ module.exports = function() {
 	    })
 	})
 
+	app.get('/get-navigation-config.json'), function getNavConfig(req, res) {
+	    db.get("page_routes", function navConfigToJson(err, doc) {
+	        res.contentType('json')
+	        res.send(doc.pure_routes)
+	    })
+	})
+
 	//Config Save
 	app.post('/config-save.json', auth.check, function configUpdate(req, res) {
 	    var ga_id_req = req.body.ga_id,

@@ -26,6 +26,7 @@
 #nav ul li.active, #nav ul li:hover {
 	background-color: #6DAB36;
 }
+
 /* Admin Page Section */
 
 #page {
@@ -38,6 +39,12 @@
 
 #page .buttons {
 	margin:20px 0;
+}
+
+/* Admin Config */
+
+#page #navigation {
+	min-height: 50px;
 }
 
 /* Specific Queries */

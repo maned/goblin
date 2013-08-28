@@ -12,13 +12,14 @@ function paintConfig() {
         url: "/gb-admin/get-config.json",
         type: "GET",
         dataType: "json",
-        data: {},
         success: function (data) {
 
             //Empty the admin area
             $('#admin-area').empty();
+
             //Rebuild the template with the new data
             var configHTML = ich.config_page(data);
+
             //Append it
             $('#admin-area').append(configHTML);
 

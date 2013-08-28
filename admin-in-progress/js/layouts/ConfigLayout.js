@@ -1,7 +1,8 @@
 define([
         'backbone',
         'common',
-        'marionette'
+        'marionette',
+        'views/ConfigNavigationView'
     ],
     function (Backbone, Common) {
 
@@ -16,13 +17,24 @@ define([
             className: 'config',
 
             regions: {
-                'editPage' : '#edit_page_field',
-                'pageTemplate' : "#page_template_field"
+                'editPage': '#edit_page_field',
+                'navigation': "#navigation"
             },
 
-            onRender: function() {
+            onRender: function () {
                 //this.nav.show(new GOB.Views.NavView());
                 //this.page.show();
+
+                var navItems = new Backbone.Collection([{
+                    "id": "SG9tZQ==",
+                    "url": "index.html",
+                    "item_name": "Home",
+                    "theme": "index.gob"
+                }]);
+
+                this.navigation.show(new GOB.Views.ConfigNavigationView({
+                    collection: navItems
+                }));
             }
 
         });
