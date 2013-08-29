@@ -12,13 +12,14 @@ function paintConfig() {
         url: "/gb-admin/get-config.json",
         type: "GET",
         dataType: "json",
-        data: {},
         success: function (data) {
 
             //Empty the admin area
             $('#admin-area').empty();
+
             //Rebuild the template with the new data
             var configHTML = ich.config_page(data);
+
             //Append it
             $('#admin-area').append(configHTML);
 
@@ -54,6 +55,7 @@ function createNavJSON() {
                 return {
                     'id': e,
                     'url': $(id).attr('data-url'),
+                    'theme': $(id).attr('data-theme'),
                     'item_name': atob(e)
                 }
             }
@@ -66,20 +68,18 @@ function createNavJSON() {
 function getPages() {
     $.ajax({
         url: "/gb-admin/get-pages.json",
-        type: "POST",
+        type: "GET",
         dataType: "json",
         success: function (data) {
-            console.log(data)
-            for (key in data) {
-                //Create a Closure because Javascript is strange, dude!
-                (function (key1) {
-                    //In the looping, make sure you don't take the ID or Revision Number from the DB
-                    if (key1 !== "_id" && key1 !== "_rev") {
-                        //Add option to dropdown
-                        $('#nav_conf').append('<li id="' + key1 + '" class="ui-state-default">' + b64_to_utf8(key1) + '</li>')
-                    }
-                })(key)
-            }
+
+            _.each(data, function createNavList(navObj) {
+
+                console.log(navObj)
+
+                $('#nav_conf').append('<li id="' + navObj.id + '" class="ui-state-default" data-url="' + navObj.url + '" data-theme="' + navObj.theme+'">' + navObj.item_name + '</li>')
+
+            });
+
         },
 
         error: function () {

@@ -14,7 +14,7 @@ function getAllPages() {
     //Then make an AJAX Call to get the new ones.
     $.ajax({
         url: "/gb-admin/get-pages.json",
-        type: "POST",
+        type: "GET",
         dataType: "json",
         async: false,
         success: function (data) {
@@ -35,45 +35,58 @@ function getAllPages() {
     });
 }
 
+function createAdminArea(data) {
+
+    //Empty the admin area
+    $('#admin-area').empty();
+    
+    //Rebuild the template with the new data
+    var adminHTML = ich.page_admin(data);
+    //Append it
+    $('#admin-area').append(adminHTML);
+
+    //Set Submit Event
+    setSubmitEvent();
+
+    //Set up Delete Event
+    setDeleteEvent();
+
+    //Initate Admin Area
+    setAdminArea();
+
+    var theme = data !== undefined ? data.theme : "index.gob";
+
+    getThemeFiles(theme);
+
+    if ($('#page_id').val() !== "") {
+        $('#page_title').prop('disabled', true);
+        $('#page_url').prop('disabled', true);
+    }
+}
+
 function makeNewList(page_id_to_save) {
 
-    $.ajax({
-        url: "/gb-admin/page-edit.json",
-        type: "POST",
-        dataType: "json",
-        async: false,
-        data: {
-            page_id: page_id_to_save
-        },
-        success: function (data) {
-            //Empty the admin area
-            $('#admin-area').empty();
-            //Rebuild the template with the new data
-            var adminHTML = ich.page_admin(data);
-            //Append it
-            $('#admin-area').append(adminHTML);
+    if (page_id_to_save !== "new_page") {
+        $.ajax({
+            url: "/gb-admin/page-edit.json",
+            type: "POST",
+            dataType: "json",
+            async: false,
+            data: {
+                page_id: page_id_to_save
+            },
+            success: function (data) {
+                createAdminArea(data);
+            },
+            error: function () {
+                console.log('Admin creation has failed. Please try again.');
+            },
+        });
+    } else {
+        createAdminArea()
+    }
 
-            //Set Submit Event
-            setSubmitEvent();
-
-            //Set up Delete Event
-            setDeleteEvent();
-
-            //Initate Admin Area
-            setAdminArea();
-
-            getThemeFiles(data.theme);
-
-            if ($('#page_id').val() !== "") {
-                $('#page_title').prop('disabled', true);
-                $('#page_url').prop('disabled', true);
-            }
-
-        },
-        error: function () {
-            console.log('Admin creation has failed. Please try again.');
-        },
-    });
+   
 }
 
 function setSubmitEvent() {
@@ -197,11 +210,14 @@ function getThemeFiles(passed_value) {
                 $('#theme_files').append('<option value="' + theme_files[i] + '">' + theme_files[i] + '</option>');
             }
 
-            $('#theme_files').val(passed_value);
+            if (passed_value !== undefined || passed_value !== null) {
+                $('#theme_files').val(passed_value);
+            }
+            
         },
 
-        error: function () {
-
+        error: function (xhr) {
+            console.log('Failed to get theme files. ' + xhr);
         }
     });
 }
