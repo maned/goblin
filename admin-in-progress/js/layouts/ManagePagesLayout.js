@@ -1,7 +1,11 @@
 define([
         'backbone',
         'common',
-        'marionette'
+        'marionette',
+        'models/PageModel',
+        'views/EditPageView',
+        'views/EditWhichPageView',
+        'collections/RoutesCollection'
     ],
     function (Backbone, Common) {
 
@@ -16,13 +20,24 @@ define([
             className: 'manage_pages',
 
             regions: {
-                'editPage' : '#edit_page_field',
-                'pageTemplate' : "#page_template_field"
+                'editPage': '#pages_select',
+                'pageTemplate': "#page_edit_fields"
             },
 
-            onRender: function() {
-                //this.nav.show(new GOB.Views.NavView());
-                //this.page.show();
+            onRender: function () {
+
+                var routesCollection = new GOB.Collections.RoutesCollection(),
+                    pageModel = new GOB.Models.PageModel();
+
+                this.editPage.show(new GOB.Views.EditWhichPageView({
+                    collection: routesCollection,
+                    pageModel: pageModel
+                }));
+
+                this.pageTemplate.show(new GOB.Views.EditPageView({
+                    model: pageModel
+                }));
+
             }
 
         });

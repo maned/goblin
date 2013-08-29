@@ -12,7 +12,8 @@ require.config({
         'mustache': 'vendor/mustache.min',
         'bootstrap': 'vendor/bootstrap.min',
         'common': 'config/common',
-        'jquery-ui': 'vendor/jquery-ui-1.10.2.min'
+        'jquery-ui': 'vendor/jquery-ui-1.10.2.min',
+        'wysiwyg': 'vendor/bootstrap-wysiwyg/bootstrap-wysihtml5-0.0.2.min'
     },
 
     //Set up shims for non-AMD style libaries
@@ -41,7 +42,12 @@ require.config({
 
         'jquery-ui': {
             deps: ['jquery']
+        },
+
+        'wysiwyg': {
+            deps: ['vendor/bootstrap-wysiwyg/wysihtml5-0.3.0.min', 'jquery', 'bootstrap']
         }
+
     }
 });
 

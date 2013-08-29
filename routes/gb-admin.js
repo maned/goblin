@@ -29,7 +29,11 @@ module.exports = function() {
 
 	                db.merge("pages_routes", {
 	                    pure_routes: page_routes_data
-	                }, utils.callbackEmpty)
+	                }, function(err, doc) {
+	                	utils.saveToAllPages({
+	                        nav: page_routes_data
+	                    })
+	                })
 	            })
 
 	            //Then make a document and add the new info, bro.
@@ -42,23 +46,6 @@ module.exports = function() {
 	                theme: req.body.theme
 	            }, utils.callbackEmpty)
 
-	            //And add it to the admin_config to play around with!
-	            db.get('admin_config', function(err, doc) {
-	                var navigation = doc.nav
-
-	                //Save the universal fields to the page document
-	                db.merge(req.body.page_id, {
-	                    ga_id: doc.ga_id,
-	                    nav: navigation,
-	                    site_title: doc.site_title,
-	                    site_description: doc.site_description
-	                }, function (err, res) {
-	                    //Save the new navigation to all pages.
-	                    utils.saveToAllPages({
-	                        nav: navigation
-	                    })
-	                })
-	            })
 	        } else {
 	            //It exists, so just merge the new info
 	            db.merge(req.body.page_id, {
@@ -69,24 +56,10 @@ module.exports = function() {
 	                meta_keywords: req.body.meta_keywords,
 	                theme: req.body.theme
 	            }, utils.callbackEmpty)
-
-	            //HERE -- can't update!
-	            db.get('pages_routes', function(err, doc) {
-	                var page_routes_data = doc.pure_routes
-
-	                var new_page_routes = _.reject(page_routes_data,
-	                    function routeDeleter(navObj) {
-	                        return navObj.id == req.body.page_id
-	                    })
-
-	                new_page_routes.push(objToPush)
-
-	                db.merge("pages_routes", {
-	                    pure_routes: new_page_routes
-	                }, utils.callbackEmpty)
-	            })
 	        }
+
 	    })
+
 	    res.contentType('json')
 	    res.send({
 	        some: JSON.stringify({
@@ -124,28 +97,10 @@ module.exports = function() {
 
 	            db.merge("pages_routes", {
 	                pure_routes: new_page_routes
-	            }, utils.callbackEmpty)
-	        })
-
-	        db.get('admin_config', function adminUpdateNav(err, doc) {
-
-	            var navigation = doc.nav,
-	                i = null
-
-	            //Loop through array and remove route.
-	            for (i = 0; i < navigation.length; i++) {
-	                if (navigation[i].id === page_id) {
-	                    navigation.splice(i, 1)
-	                }
-	            }
-
-	            db.merge("admin_config", {
-	                nav: navigation
-	            }, utils.callbackEmpty)
-
-	            //Save to All Pages so there's no dead links!
-	            utils.saveToAllPages({
-	                nav: navigation
+	            }, function (err, doc) {
+	            	utils.saveToAllPages({
+		                nav: new_page_routes
+		            })
 	            })
 	        })
 
@@ -194,6 +149,10 @@ module.exports = function() {
 	            ga_id: ga_id_req,
 	            site_title: site_title_req,
 	            site_description: site_description_req
+	        }, utils.callbackEmpty)
+
+	        db.merge("pages_routes", {
+	            pure_routes: nav_req
 	        }, utils.callbackEmpty)
 
 	        //Send Response

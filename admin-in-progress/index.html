@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/wysiwyg-color.css">
 
     </head>
     <body>
@@ -35,27 +36,50 @@
 
         <script id="manage_pages_layout_template" type="text/template">
             <h1>Goblin ></h1>
+            
             <ol class="breadcrumb">
                 <li>Pages /</li>
             </ol>
+
             <div class="row-fluid">
                 <div class="col-md-12">
                     <label>Edit</label>
-                    <div id="edit_page_field">
+                    <div id="pages_select">
+                        <!-- INSERT REGION HERE -->
                         <select>
                             <option>Awesome</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="main_edit_fields row-fluid">
+
+            <div id="page_edit_fields">
+
+
+            </div>
+
+            <div class="row-fluid">
+                <h3>Look & Feel</h3>
+                <div id="page_templates">
+                </div>
+            </div>
+
+            <div class="buttons row-fluid">
+                <span class="col-md-3 col-md-offset-9">
+                <button type="button" class="btn btn-default">Delete</button>
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+        </script>
+
+        <script id="page_edit_fields_template" type="text/template">
+            <div class="row-fluid">
                 <div class="col-md-4">
                     <label>Page Title</label>
-                    <input type="text">
+                    <input type="text" value="{{page_title}}">
                 </div>
                 <div class="col-md-4">
                     <label>Page URL</label>
-                    <input type="text">
+                    <input type="text" value="{{page_url}}">
                 </div>
                 <div class="col-md-4">
                     <label>Page Template</label>
@@ -69,7 +93,7 @@
             
             <div id="wisywig" class="row-fluid clearfix">
                 <div class="col-md-12">
-                    <textarea id="page_content" placeholder="Page Content">{{page_content}}</textarea>
+                    <textarea class="page_content" placeholder="Page Content">{{page_content}}</textarea>
                 </div>
             </div>
 
@@ -77,38 +101,33 @@
             <div class="row-fluid">
                 <div class="col-md-6">
                     <label>Description</label>
-                    <input type="text">
+                    <input type="text" value="{{meta_description}}">
                 </div>
                 <div class="col-md-6">
                     <label>Keywords</label>
-                    <input type="text">
+                    <input type="text" value="{{meta_keywords}}">
                 </div>
             </div>
 
-            <div class="buttons row-fluid">
-            <span class="col-md-3 col-md-offset-9">
-                <button type="button" class="btn btn-default">Delete</button>
-                <button type="button" class="btn btn-success">Save</button>
-            </div>
         </script>
 
         <script id="config_layout_template" type="text/template">
             <h1>Goblin ></h1>
+
             <ol class="breadcrumb">
                 <li>Pages /</li>
             </ol>
 
-            <div class="row-fluid">
+            <div id="standard_con" class="row-fluid clearfix">
                 <div class="col-md-4">
-                    <label>Page Title</label>
+                    <label>Site Title</label>
                     <input type="text">
                 </div>
-                <div class="col-md-8">
-                    <label>Page URL</label>
+                <div class="col-md-4">
+                    <label>Site Description</label>
                     <input type="text">
                 </div>
             </div>
-            
             
             <div class="row-fluid">
                 <div class="col-md-12">
@@ -149,6 +168,10 @@
         </script>
 
         <script id="config_nav_item_template" type="text/template">
+            {{item_name}} - {{url}}
+        </script>
+
+        <script id="page_option_template" type="text/template">
             {{item_name}} - {{url}}
         </script>
 

@@ -2,7 +2,8 @@ define([
         'backbone',
         'common',
         'marionette',
-        'views/ConfigNavigationView'
+        'views/ConfigNavigationView',
+        'collections/RoutesCollection'
     ],
     function (Backbone, Common) {
 
@@ -22,15 +23,8 @@ define([
             },
 
             onRender: function () {
-                //this.nav.show(new GOB.Views.NavView());
-                //this.page.show();
 
-                var navItems = new Backbone.Collection([{
-                    "id": "SG9tZQ==",
-                    "url": "index.html",
-                    "item_name": "Home",
-                    "theme": "index.gob"
-                }]);
+                var navItems = new GOB.Collections.RoutesCollection();
 
                 this.navigation.show(new GOB.Views.ConfigNavigationView({
                     collection: navItems

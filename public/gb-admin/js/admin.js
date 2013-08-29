@@ -54,7 +54,9 @@ function createAdminArea(data) {
     //Initate Admin Area
     setAdminArea();
 
-    getThemeFiles(data.theme);
+    var theme = data !== undefined ? data.theme : "index.gob";
+
+    getThemeFiles(theme);
 
     if ($('#page_id').val() !== "") {
         $('#page_title').prop('disabled', true);

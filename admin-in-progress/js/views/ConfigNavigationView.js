@@ -1,11 +1,12 @@
 define([
+        'jquery',
         'backbone',
         'common',
         'marionette',
         'jquery-ui',
         'views/ConfigNavigationItemView'
     ],
-    function (Backbone, Common) {
+    function ($, Backbone, Common) {
 
         'use strict';
 
@@ -21,6 +22,25 @@ define([
                 this.$el.sortable({
                     revert: false
                 });
+            },
+
+            convertToJson: function () {
+                /* var idsInOrder = $('#nav_conf').sortable("toArray"),
+                    nav_info = JSON.stringify(
+                        idsInOrder.map(
+                            function (e) {
+                                var esc_e = e.replace(/[=]/g, "\\=");
+                                var id = '#' + esc_e;
+                                return {
+                                    'id': e,
+                                    'url': $(id).attr('data-url'),
+                                    'item_name': atob(e)
+                                }
+                            }
+                        ),
+                        0, 4);
+
+                return $.parseJSON(nav_info); */
             }
 
         });
