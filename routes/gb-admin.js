@@ -11,17 +11,19 @@ module.exports = function() {
 	//Ajax Calls and Responses
 	app.post('/page-save.json', auth.check, function(req, res) {
 	    db.get(req.body.page_id, function(err, doc) {
+
+	    	var objToPush = {}
+
+        	objToPush.id = req.body.page_id
+            objToPush.url = req.body.page_url
+            objToPush.item_name = req.body.page_title
+            objToPush.theme = req.body.theme
+
 	        if (doc === undefined) {
 
 	            //The document doesn't exist, so add it to the page_routes
 	            db.get('pages_routes', function(err, doc) {
-	                var page_routes_data = doc.pure_routes,
-	                    objToPush = {}
-
-	                objToPush.id = req.body.page_id
-	                objToPush.url = req.body.page_url
-	                objToPush.item_name = req.body.page_title
-	                objToPush.theme = req.body.theme
+	                var page_routes_data = doc.pure_routes
 
 	                page_routes_data.push(objToPush)
 
@@ -42,21 +44,7 @@ module.exports = function() {
 
 	            //And add it to the admin_config to play around with!
 	            db.get('admin_config', function(err, doc) {
-	                var navigation = doc.nav,
-	                    objToPush = {}
-
-	                //Push items into object
-	                objToPush.id = req.body.page_id
-	                objToPush.url = req.body.page_url
-	                objToPush.item_name = req.body.page_title
-
-	                //Push that object into navigation
-	                navigation.push(objToPush)
-
-	                //Save to admin_config
-	                db.merge('admin_config', {
-	                    nav: navigation
-	                }, utils.callbackEmpty)
+	                var navigation = doc.nav
 
 	                //Save the universal fields to the page document
 	                db.merge(req.body.page_id, {
@@ -84,18 +72,12 @@ module.exports = function() {
 
 	            //HERE -- can't update!
 	            db.get('pages_routes', function(err, doc) {
-	                var page_routes_data = doc.pure_routes,
-	                    objToPush = {}
+	                var page_routes_data = doc.pure_routes
 
 	                var new_page_routes = _.reject(page_routes_data,
 	                    function routeDeleter(navObj) {
 	                        return navObj.id == req.body.page_id
 	                    })
-
-	                objToPush.id = req.body.page_id
-	                objToPush.url = req.body.page_url
-	                objToPush.item_name = req.body.page_title
-	                objToPush.theme = req.body.theme
 
 	                new_page_routes.push(objToPush)
 
@@ -120,7 +102,7 @@ module.exports = function() {
 	    })
 	})
 
-	app.post('/get-pages.json', function(req, res) {
+	app.get('/get-pages.json', function(req, res) {
 	    db.get('pages_routes', function(err, doc) {
 	        res.contentType('json')
 	        res.send(doc.pure_routes)
@@ -192,13 +174,6 @@ module.exports = function() {
 	    })
 	})
 
-	app.get('/get-navigation-config.json'), function getNavConfig(req, res) {
-	    db.get("page_routes", function navConfigToJson(err, doc) {
-	        res.contentType('json')
-	        res.send(doc.pure_routes)
-	    })
-	})
-
 	//Config Save
 	app.post('/config-save.json', auth.check, function configUpdate(req, res) {
 	    var ga_id_req = req.body.ga_id,
@@ -217,7 +192,6 @@ module.exports = function() {
 	        //The merge it into the reference document, so we can load it easily later!
 	        db.merge('admin_config', {
 	            ga_id: ga_id_req,
-	            nav: nav_req,
 	            site_title: site_title_req,
 	            site_description: site_description_req
 	        }, utils.callbackEmpty)
