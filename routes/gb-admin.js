@@ -6,63 +6,112 @@ module.exports = function() {
 		fs = require('fs'),
 		utils = require('../lib/utils.js'),
 		_ = require('underscore'),
+		async = require('async'),
 		app = express()
 
 	//Ajax Calls and Responses
 	app.post('/page-save.json', auth.check, function(req, res) {
-	    db.get(req.body.page_id, function(err, doc) {
+
+		var pageId = req.body.page_id
+
+	    db.get(pageId, function(err, doc) {
 
 	    	var objToPush = {}
 
-        	objToPush.id = req.body.page_id
+        	objToPush.id = pageId
             objToPush.url = req.body.page_url
             objToPush.item_name = req.body.page_title
             objToPush.theme = req.body.theme
 
 	        if (doc === undefined) {
 
-	            db.get("config_standard", function configStandardSelectToJson(err, doc) {
-			        var siteTitle = doc.site_title,
-			        	siteDescription = doc.site_description
+	        	/*
 
-			        db.get("config_custom", function(err, doc) {
-			        	var gaId = doc.ga_id
-
-			        	//Then make a document and add the new info, bro.
-			            db.save(req.body.page_id, {
-			                page_title: req.body.page_title,
-			                page_content: req.body.page_content,
-			                page_url: req.body.page_url,
-			                meta_description: req.body.meta_description,
-			                meta_keywords: req.body.meta_keywords,
-			                theme: req.body.theme,
-			                site_title: siteTitle,
-			                site_description: siteDescription,
-			                ga_id: gaId
+	        	async.series([
+	        		db.save(pageId, {
+		                page_title: req.body.page_title,
+		                page_content: req.body.page_content,
+		                page_url: req.body.page_url,
+		                meta_description: req.body.meta_description,
+		                meta_keywords: req.body.meta_keywords,
+		                theme: req.body.theme
+		            }, utils.callbackEmpty),
+		            // Grab and save standard config vars to page
+	            	db.get("config_standard", function (err, doc) {
+	            		db.merge(pageId, {
+			                site_title: doc.site_title,
+			                site_description: doc.site_description
 			            }, utils.callbackEmpty)
+	            	}),
+	            	db.get("config_custom", function (err, doc) {
+	            		db.merge(pageId, {
+			                ga_id : doc.ga_id
+			            }, utils.callbackEmpty)
+	            	}),
+	            	//The document doesn't exist, so add it to the page_routes
+		            db.get('pages_routes', function(err, doc) {
+		                var page_routes_data = doc.pure_routes
 
-			            //The document doesn't exist, so add it to the page_routes
-			            db.get('pages_routes', function(err, doc) {
-			                var page_routes_data = doc.pure_routes
+		                page_routes_data.push(objToPush)
 
-			                page_routes_data.push(objToPush)
+		                db.merge("pages_routes", {
+		                    pure_routes: page_routes_data
+		                }, function(err, doc) {
+		                	utils.saveToAllPages({
+		                        nav: page_routes_data
+		                    })
+		                })
+		            })
 
-			                db.merge("pages_routes", {
-			                    pure_routes: page_routes_data
-			                }, function(err, doc) {
-			                	utils.saveToAllPages({
-			                        nav: page_routes_data
-			                    })
-			                })
+	        	]); 
+				*/
+
+			    db.save(pageId, {
+	                page_title: req.body.page_title,
+	                page_content: req.body.page_content,
+	                page_url: req.body.page_url,
+	                meta_description: req.body.meta_description,
+	                meta_keywords: req.body.meta_keywords,
+	                theme: req.body.theme
+	            }, function saveConfigVarsToNew(err, doc) {
+
+	            	// Grab and save standard config vars to page
+	            	db.get("config_standard", function (err, doc) {
+	            		db.merge(pageId, {
+			                site_title: doc.site_title,
+			                site_description: doc.site_description
+			            }, function (err, doc) {
+			            	// Grab and save custom config vars to page
+			            	db.get("config_custom", function (err, doc) {
+			            		db.merge(pageId, {
+					                ga_id : doc.ga_id
+					            }, utils.callbackEmpty)
+			            	})
 			            })
+	            	})
+	            	
 
-			        })
+	            	//The document doesn't exist, so add it to the page_routes
+		            db.get('pages_routes', function(err, doc) {
+		                var page_routes_data = doc.pure_routes
 
-			    })
+		                page_routes_data.push(objToPush)
+
+		                db.merge("pages_routes", {
+		                    pure_routes: page_routes_data
+		                }, function(err, doc) {
+		                	utils.saveToAllPages({
+		                        nav: page_routes_data
+		                    })
+		                })
+		            })
+
+	            })
+	            
 
 	        } else {
 	            //It exists, so just merge the new info
-	            db.merge(req.body.page_id, {
+	            db.merge(pageId, {
 	                page_title: req.body.page_title,
 	                page_content: req.body.page_content,
 	                page_url: req.body.page_url,
