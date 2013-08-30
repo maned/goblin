@@ -36,11 +36,11 @@ app.configure(function() {
 
 mu.root = __dirname + '/theme'
 
-//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
-db.get('admin_config', utils.checkForConfig)
-
 //Check for 'page routes', if undefined, then create a default route, if not, then set them
 db.get('pages_routes', utils.checkAndSetPageRoutes)
+
+//Check to see if key databases exist, and if not, build the necessary components so goblin can run!
+utils.checkAndSetConfig()
 
 var html_dir = './lib/views/'
 

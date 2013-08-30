@@ -6,41 +6,69 @@ function b64_to_utf8(str) {
     return decodeURIComponent(escape(window.atob(str)));
 }
 
-function paintConfig() {
-    //Make ajax call and paint values
+function getAndPaintStandard() {
     $.ajax({
-        url: "/gb-admin/get-config.json",
+        url: "/gb-admin/get-config-standard.json",
         type: "GET",
         dataType: "json",
         success: function (data) {
 
-            //Empty the admin area
-            $('#admin-area').empty();
+            var standardHTML = ich.standard_vars(data);
 
-            //Rebuild the template with the new data
-            var configHTML = ich.config_page(data);
+            $('#standard_vars').append(standardHTML);
 
-            //Append it
-            $('#admin-area').append(configHTML);
-
-            //Submit Event
-            setSubmitEvent();
-
-            //If there are none in the default database, then load them from page_routes
-            if (!$('.nav_item_count').length) {
-                getPages();
-            }
-
-            $("#nav_conf").sortable({
-                revert: false
-            });
-
-            $("ul, li").disableSelection();
         },
+
         error: function () {
-            console.log('process error');
-        }
+            console.log('Failed to get Standard Variables');
+        },
     });
+}
+
+function getAndPaintCustom() {
+    $.ajax({
+        url: "/gb-admin/get-config-custom.json",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+
+            var customHTML = ich.custom_vars(data);
+
+            $('#custom_vars').append(customHTML);
+
+        },
+
+        error: function () {
+            console.log('Failed to get Custom Variables');
+        },
+    });
+}
+
+function paintConfig() {
+
+    //Empty the admin area
+    $('#standard_vars, #nav_conf, #custom_vars').empty();
+
+    //Get Standard Variables
+    getAndPaintStandard();
+
+    //Get Custom Variables
+    getAndPaintCustom();
+
+    //Submit Event
+    setSubmitEvent();
+
+    //If there are none in the default database, then load them from page_routes
+    if (!$('.nav_item_count').length) {
+        getPages();
+    }
+
+    $("#nav_conf").sortable({
+        revert: false
+    });
+
+    $("ul, li").disableSelection();
+
 }
 
 function createNavJSON() {
@@ -73,8 +101,6 @@ function getPages() {
         success: function (data) {
 
             _.each(data, function createNavList(navObj) {
-
-                console.log(navObj)
 
                 $('#nav_conf').append('<li id="' + navObj.id + '" class="ui-state-default" data-url="' + navObj.url + '" data-theme="' + navObj.theme+'">' + navObj.item_name + '</li>')
 
