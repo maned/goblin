@@ -21,30 +21,44 @@ module.exports = function() {
 
 	        if (doc === undefined) {
 
-	            //The document doesn't exist, so add it to the page_routes
-	            db.get('pages_routes', function(err, doc) {
-	                var page_routes_data = doc.pure_routes
+	            db.get("config_standard", function configStandardSelectToJson(err, doc) {
+			        var siteTitle = doc.site_title,
+			        	siteDescription = doc.site_description
 
-	                page_routes_data.push(objToPush)
+			        db.get("config_custom", function(err, doc) {
+			        	var gaId = doc.ga_id
 
-	                db.merge("pages_routes", {
-	                    pure_routes: page_routes_data
-	                }, function(err, doc) {
-	                	utils.saveToAllPages({
-	                        nav: page_routes_data
-	                    })
-	                })
-	            })
+			        	//Then make a document and add the new info, bro.
+			            db.save(req.body.page_id, {
+			                page_title: req.body.page_title,
+			                page_content: req.body.page_content,
+			                page_url: req.body.page_url,
+			                meta_description: req.body.meta_description,
+			                meta_keywords: req.body.meta_keywords,
+			                theme: req.body.theme,
+			                site_title: siteTitle,
+			                site_description: siteDescription,
+			                ga_id: gaId
+			            }, utils.callbackEmpty)
 
-	            //Then make a document and add the new info, bro.
-	            db.save(req.body.page_id, {
-	                page_title: req.body.page_title,
-	                page_content: req.body.page_content,
-	                page_url: req.body.page_url,
-	                meta_description: req.body.meta_description,
-	                meta_keywords: req.body.meta_keywords,
-	                theme: req.body.theme
-	            }, utils.callbackEmpty)
+			            //The document doesn't exist, so add it to the page_routes
+			            db.get('pages_routes', function(err, doc) {
+			                var page_routes_data = doc.pure_routes
+
+			                page_routes_data.push(objToPush)
+
+			                db.merge("pages_routes", {
+			                    pure_routes: page_routes_data
+			                }, function(err, doc) {
+			                	utils.saveToAllPages({
+			                        nav: page_routes_data
+			                    })
+			                })
+			            })
+
+			        })
+
+			    })
 
 	        } else {
 	            //It exists, so just merge the new info
@@ -121,9 +135,25 @@ module.exports = function() {
 	        })
 	})
 
-	//Config Page
+	// Config Page
 	app.get('/get-config.json', function configSelect(req, res) {
 	    db.get("admin_config", function configSelect2Json(err, doc) {
+	        res.contentType('json')
+	        res.send(doc)
+	    })
+	})
+
+	// Standard Config Variables
+	app.get('/get-config-standard.json', function configStandardSelect(req, res) {
+	    db.get("config_standard", function configStandardSelectToJson(err, doc) {
+	        res.contentType('json')
+	        res.send(doc)
+	    })
+	})
+
+	// Custom Config Variables
+	app.get('/get-config-custom.json', function configCustomSelect(req, res) {
+	    db.get("config_custom", function configCustomSelectToJson(err, doc) {
 	        res.contentType('json')
 	        res.send(doc)
 	    })
@@ -151,6 +181,18 @@ module.exports = function() {
 	            site_description: site_description_req
 	        }, utils.callbackEmpty)
 
+	        //Merge Standard Variables
+	        db.merge('config_standard', {
+	            site_title: site_title_req,
+	            site_description: site_description_req
+	        }, utils.callbackEmpty)
+
+	        //Merge Custom Variables
+	        db.merge('config_custom', {
+	            ga_id: ga_id_req
+	        }, utils.callbackEmpty)
+
+	        //Merge Page Routes
 	        db.merge("pages_routes", {
 	            pure_routes: nav_req
 	        }, utils.callbackEmpty)

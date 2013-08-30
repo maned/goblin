@@ -103,8 +103,46 @@
       <h1>Configuration</h1>
                     <div id="admin-area"> 
                         <article id="navigation_list">
+                            
+                            <div id="standard_vars">
+                                <script id="standard_vars" type="text/html">
+                                    <h3>Standard Variables</h3>
+                                    <label>Site Title :</label>
+                                    <input type="text" id="site_title" value="{{site_title}}" placeholder="Site Title">
+                                    <div class="clear"></div>
+                                    <label>Site Description :</label>
+                                    <input type="text" id="site_description" value="{{site_description}}" placeholder="Site Description">
+                                    <div class="clear"></div>
+                                </script>
+                            </div>
+
+                            <div id="nav_var">
+                              <h4> Navigation (shift to order) :</h4>
+                                    <ul id="nav_conf">
+                                    <script id="nav_var" type="text/html">
+                                      {{#nav}}
+                                          <li id="{{id}}" data-url="{{url}}" class="ui-state-default nav_item_count">{{item_name}}</li>
+                                      {{/nav}}
+                                    </script>
+                                  </ul>
+                            </div>
+
+                            <div id="custom_vars">
+                                <script id="custom_vars" type="text/html">
+                                    <div class="clear"></div>
+                                    <h3>Custom Variables</h3>
+                                    <label>Google Analytics Id :</label>
+                                    <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">  
+                                </script>
+                            </div>
+
+                            <div class="clear"></div>
+                            <div class="button_container">
+                                <button id="submit" type="button">Save</button>
+                            </div>
+
                             <script id="config_page" type="text/html">
-                                
+                                <h3>Standard Variables</h3>
                                 <label>Site Title :</label>
                                 <input type="text" id="site_title" value="{{site_title}}" placeholder="Site Title">
                                 <div class="clear"></div>
@@ -112,7 +150,7 @@
                                 <input type="text" id="site_description" value="{{site_description}}" placeholder="Site Description">
                                 <div class="clear"></div>
 
-                                <label> Navigation (shift to order) :</label>
+                                <h4> Navigation (shift to order) :</h4>
                                 <ul id="nav_conf">
                                     {{#nav}}
                                         <li id="{{id}}" data-url="{{url}}" class="ui-state-default nav_item_count">{{item_name}}</li>
@@ -120,6 +158,7 @@
                                 </ul>
 
                                 <div class="clear"></div>
+                                <h3>Custom Variables</h3>
                                 <label>Google Analytics Id :</label>
                                 <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">
 
