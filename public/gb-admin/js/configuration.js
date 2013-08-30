@@ -15,13 +15,22 @@ function paintConfig() {
         success: function (data) {
 
             //Empty the admin area
-            $('#admin-area').empty();
+            $('#standard_vars, #nav_conf, #custom_vars').empty();
 
-            //Rebuild the template with the new data
-            var configHTML = ich.config_page(data);
+            //Make 'Fake' Standard Meta -- mimicing eventual data seperation
+            var standard_vars = {};
+            standard_vars.site_title = data.site_title;
+            standard_vars.site_description = data.site_description
 
-            //Append it
-            $('#admin-area').append(configHTML);
+            var custom_vars = {};
+            custom_vars.ga_id = data.ga_id;
+
+            var standardHTML = ich.standard_vars(standard_vars);
+
+            var customHTML = ich.custom_vars(custom_vars);
+
+            $('#standard_vars').append(standardHTML);
+            $('#custom_vars').append(customHTML);
 
             //Submit Event
             setSubmitEvent();
@@ -73,8 +82,6 @@ function getPages() {
         success: function (data) {
 
             _.each(data, function createNavList(navObj) {
-
-                console.log(navObj)
 
                 $('#nav_conf').append('<li id="' + navObj.id + '" class="ui-state-default" data-url="' + navObj.url + '" data-theme="' + navObj.theme+'">' + navObj.item_name + '</li>')
 
