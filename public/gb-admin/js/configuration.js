@@ -6,50 +6,69 @@ function b64_to_utf8(str) {
     return decodeURIComponent(escape(window.atob(str)));
 }
 
-function paintConfig() {
-    //Make ajax call and paint values
+function getAndPaintStandard() {
     $.ajax({
-        url: "/gb-admin/get-config.json",
+        url: "/gb-admin/get-config-standard.json",
         type: "GET",
         dataType: "json",
         success: function (data) {
 
-            //Empty the admin area
-            $('#standard_vars, #nav_conf, #custom_vars').empty();
-
-            //Make 'Fake' Standard Meta -- mimicing eventual data seperation
-            var standard_vars = {};
-            standard_vars.site_title = data.site_title;
-            standard_vars.site_description = data.site_description
-
-            var custom_vars = {};
-            custom_vars.ga_id = data.ga_id;
-
-            var standardHTML = ich.standard_vars(standard_vars);
-
-            var customHTML = ich.custom_vars(custom_vars);
+            var standardHTML = ich.standard_vars(data);
 
             $('#standard_vars').append(standardHTML);
+
+        },
+
+        error: function () {
+            console.log('Failed to get Standard Variables');
+        },
+    });
+}
+
+function getAndPaintCustom() {
+    $.ajax({
+        url: "/gb-admin/get-config-custom.json",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+
+            var customHTML = ich.custom_vars(data);
+
             $('#custom_vars').append(customHTML);
 
-            //Submit Event
-            setSubmitEvent();
-
-            //If there are none in the default database, then load them from page_routes
-            if (!$('.nav_item_count').length) {
-                getPages();
-            }
-
-            $("#nav_conf").sortable({
-                revert: false
-            });
-
-            $("ul, li").disableSelection();
         },
+
         error: function () {
-            console.log('process error');
-        }
+            console.log('Failed to get Custom Variables');
+        },
     });
+}
+
+function paintConfig() {
+
+    //Empty the admin area
+    $('#standard_vars, #nav_conf, #custom_vars').empty();
+
+    //Get Standard Variables
+    getAndPaintStandard();
+
+    //Get Custom Variables
+    getAndPaintCustom();
+
+    //Submit Event
+    setSubmitEvent();
+
+    //If there are none in the default database, then load them from page_routes
+    if (!$('.nav_item_count').length) {
+        getPages();
+    }
+
+    $("#nav_conf").sortable({
+        revert: false
+    });
+
+    $("ul, li").disableSelection();
+
 }
 
 function createNavJSON() {
