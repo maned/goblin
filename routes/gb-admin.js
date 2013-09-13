@@ -70,6 +70,25 @@ module.exports = function() {
 	                meta_keywords: req.body.meta_keywords,
 	                theme: req.body.theme
 	            }, utils.callbackEmpty)
+
+	            db.get('pages_routes', function(err, doc) {
+	                var page_routes_data = doc.pure_routes
+
+					_.each(page_routes_data, function (navObj) {
+						if (navObj.id === req.body.page_id) {
+							navObj.theme = req.body.theme;
+						}
+					})
+
+					db.merge("pages_routes", {
+						pure_routes: page_routes_data
+					}, function (err, doc) {
+						utils.saveToAllPages({
+							nav: page_routes_data
+						})
+					})
+	            })
+	            
 	        }
 
 	    })
