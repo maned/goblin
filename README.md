@@ -132,6 +132,15 @@ post, use / develop our wiki here, and even just email me (nweingartner@maned.co
 
 Regardless of the method, please get in touch without any hesitation. Did we mention we love feedback?
 
+--
+###Related Projects
+
+goblin has some sibilings! Below are projects that either directly correspond with the goblin project, or have been inspired
+by and/or help the goblin cause. Please consider getting involved in these great projects as well!
+
+1. [Official goblin marketing website](http://www.github.com/maned/goblin-website)
+2. [CouchDB Puppet Module](https://github.com/jonbrouse/puppet-couchdb)
+
 ---
 
 ###License
