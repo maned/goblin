@@ -114,9 +114,9 @@ you run into (no matter how small) and submit improvements if you can!
 
 goblin is currently in a development, alpha phase. We are looking for feedback to help build the product out based on some great user feedback. However, there are a few things we are looking to do sooner than later (and would love your help with!):
 
-1. Break up 'index.js' into multiple modules for easier development. (IN PROGRESS)
+1. ~~Break up 'index.js' into multiple modules for easier development.~~
 2. Bootstrap new Admin area based on new designs (see '/design-files')
-3. ~~Multiple .gob file support (COMPLETED by streetlight)~~
+3. ~~Multiple .gob file support~~
 4. Better, bootstrapped default theme.
 5. Nested navigation support.
 6. Multiple users support.
@@ -131,6 +131,15 @@ will address it as soon as possible! If you're having an issue figuring things o
 post, use / develop our wiki here, and even just email me (nweingartner@maned.com) and I can try to help you out personally.
 
 Regardless of the method, please get in touch without any hesitation. Did we mention we love feedback?
+
+--
+###Related Projects
+
+goblin has some sibilings! Below are projects that either directly correspond with the goblin project, or have been inspired
+by and/or help the goblin cause. Please consider getting involved in these great projects as well!
+
+1. [Official goblin marketing website](http://www.github.com/maned/goblin-website)
+2. [CouchDB Puppet Module](https://github.com/jonbrouse/puppet-couchdb)
 
 ---
 
