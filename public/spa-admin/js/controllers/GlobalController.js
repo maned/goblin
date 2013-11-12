@@ -1,7 +1,8 @@
 define([
         'marionette',
         'common',
-        'backbone'
+        'backbone',
+        'layouts/OverallAdminLayout'
     ],
     function (Marionette, Common) {
 
@@ -13,8 +14,12 @@ define([
 
             index: function () {
 
-                console.log('index has been hit!'); 
-                
+                console.log('index has been hit!');
+
+                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+
+                GOB.Application.wrapper.show(overallAdminLayout);
+
             }
 
         });
