@@ -11,11 +11,14 @@ define([
 
         GOB.Layouts.PageLayout = Backbone.Marionette.ItemView.extend({
 
-            template: "#nav_view_template",
+            template: "#page_layout_template",
 
-            className: "nav",
+            className: "admin-container",
 
-            tagName: "ul"
+            regions: {
+                pagesToEdit: "#pages-to-edit",
+                adminArea: "#admin-area"
+            }
 
         });
     }

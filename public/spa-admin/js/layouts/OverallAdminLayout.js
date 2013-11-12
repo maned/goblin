@@ -2,7 +2,8 @@ define([
         'backbone',
         'common',
         'marionette',
-        'views/NavView'
+        'views/NavView',
+        'layouts/PageLayout'
     ],
     function (Backbone, Common) {
 
@@ -18,7 +19,7 @@ define([
 
             regions: {
                 nav: "#admin-navigation",
-                page: "#admin-page"
+                pages: "#admin-page"
             },
 
             onRender: function() {
@@ -29,7 +30,10 @@ define([
                     overallAdminLayout: this
                 });
 
+                var pageLayout = new GOB.Layouts.PageLayout();
+
                 this.nav.show(navView);
+                this.pages.show(pageLayout);
             }
 
         });
