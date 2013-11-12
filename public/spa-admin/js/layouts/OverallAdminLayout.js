@@ -1,7 +1,8 @@
 define([
         'backbone',
         'common',
-        'marionette'
+        'marionette',
+        'views/NavView'
     ],
     function (Backbone, Common) {
 
@@ -18,6 +19,17 @@ define([
             regions: {
                 nav: "#admin-navigation",
                 page: "#admin-page"
+            },
+
+            onRender: function() {
+
+                console.log(GOB);
+
+                var navView = new GOB.Views.NavView({
+                    overallAdminLayout: this
+                });
+
+                this.nav.show(navView);
             }
 
         });
