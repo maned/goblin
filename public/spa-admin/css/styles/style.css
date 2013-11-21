@@ -1,0 +1,15 @@
+/* Overall styles */
+
+html, body, #wrapper, .main_container {
+    height: 100%;
+}
+
+body {
+    background-color: #f0f3ed;
+}
+
+/* Main Admin Styles */
+#admin-navigation {
+    background:black;
+    height: 100%;
+}

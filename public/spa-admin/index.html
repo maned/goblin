@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Goblin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Favicon and Touch Icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/gb-admin/img/ico/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/gb-admin/img/ico/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/gb-admin/img/ico/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/gb-admin/img/ico/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/gb-admin/img/ico/apple-touch-icon-precomposed.png">
+        <link rel="shortcut icon" href="/gb-admin/img/ico/favicon.ico">
+
+        <!-- Begin Stylesheets -->
+        <link rel="stylesheet" href="css/styles/main.css">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap-theme.min.css">
+
+        <!-- Custom CSS-->
+        <link rel="stylesheet" href="css/styles/style.css">
+
+    </head>
+    <body>
+
+        <div id="wrapper"></div>
+
+        <!-- Start Templates -->
+
+        <!-- Layouts -->
+
+        <script id="overall_admin_layout_template" type="text/template">
+            <nav id="admin-navigation" class="col-md-2"></nav>
+            <section class="col-md-10" id="admin-page"></section>
+        </script>
+
+        <script id="nav_view_template" type="text/template">
+            <li class="dashboard">Dashboard</li>
+            <li class="pages">Pages</li>
+            <li class="configuration">Configuration</li>
+            <li class="feedback">Feedback</li>
+            <li class="logout">Logout</li>
+        </script>
+
+        <script id="page_layout_template" type="text/template">
+            <h2>Pages</h2>
+            <div id="pages-to-edit">Page Selection</div>
+            <div id="admin-area">Admin Area</div>
+
+            <h3>Meta and SEO</h3>
+            <input id="meta_description" placeholder="Page Description">
+            <input id="meta_keywords" placeholder="Page Keywords">
+
+            <h3>Look & Feel</h3>
+            <div id="look-and-feel">Look and Feel Dropdown</div>
+        </script>
+
+        <!-- End Templates -->
+
+        <!-- Call the application files, AMD-style -->
+        <script data-main="js/config" src="js/vendor/require.js"></script>
+        
+    </body>
+</html>
