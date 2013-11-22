@@ -63,8 +63,12 @@ app.get('/login', function(req, res) {
 app.get('/:page_name', function(req, res) {
 
     db.get('pages_routes', function(err, doc) {
+        if (err) {
+            console.log(JSON.stringify(err));
+            throw(err);
+        }
         var pure_routes = doc.pure_routes,
-            requested_page = req.params.page_name, 
+            requested_page = req.params.page_name,
             page_info = _.findWhere(pure_routes, { "url" : requested_page })
 
         if (page_info !== undefined) {
