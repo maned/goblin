@@ -18,7 +18,8 @@ var mu = require('mu2'),
     fs = require('fs'),
     app = express(),
     utils = require('./lib/utils.js'),
-    config = require('./lib/config.js')
+    config = require('./lib/config.js'),
+    html_dir = './lib/views/'
 
 //Configure Body Parser
 app.configure(function() {
@@ -28,7 +29,7 @@ app.configure(function() {
         secret: 'asfyvhq987ertvyweiurytsdfgadekjr4yhtfsdfgt9jfwe3ht987234yh'
     }))
     app.use(express.bodyParser())
-    app.use('/gb-admin', require('./routes/gb-admin'));
+    app.use('/gb-admin', require('./routes/gb-admin'))
     app.use(app.router)
     //Set up Static File for Components
     app.use(express.static(__dirname + '/public'))
@@ -41,8 +42,6 @@ db.get('pages_routes', utils.checkAndSetPageRoutes)
 
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 utils.checkAndSetConfig()
-
-var html_dir = './lib/views/'
 
 //Edit page
 app.get('/gb-admin/edit', auth.check, function (req, res) {
