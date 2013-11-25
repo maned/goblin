@@ -12,7 +12,7 @@ module.exports = function() {
 	app.post('/page-save.json', auth.check, function(req, res) {
 	    db.get(req.body.page_id, function(err, doc) {
 
-	    	var objToPush = {}
+                var objToPush = {}
 
         	objToPush.id = req.body.page_id
                 objToPush.url = req.body.page_url

@@ -115,7 +115,7 @@ you run into (no matter how small) and submit improvements if you can!
 goblin is currently in a development, alpha phase. We are looking for feedback to help build the product out based on some great user feedback. However, there are a few things we are looking to do sooner than later (and would love your help with!):
 
 1. ~~Break up 'index.js' into multiple modules for easier development.~~
-2. Move admin to Backbone/Marionette single-page app (IN PROGRESS on spa-admin branch)
+2. Move admin to Backbone/Marionette single-page app (IN PROGRESS on spa-admin branch -- see https://www.github.com/streetlight/citeclub for guidance)
 3. Bootstrap new Admin area based on new designs (see '/design-files')
 4. ~~Multiple .gob file support~~
 5. ~~Better, bootstrapped default theme.~~
