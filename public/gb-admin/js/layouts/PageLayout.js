@@ -3,6 +3,7 @@ define([
         'common',
         'marionette',
         'collections/PagesToEditCollection',
+        'models/PageModel',
         'views/PagesToEditDropdownView',
         'views/PageAdminAreaView'
     ],
@@ -25,12 +26,14 @@ define([
 
             onRender: function () {
 
-                this.showPagesToEdit();
-                this.showAdminArea();
+                var pageModel = new GOB.Models.PageModel();
+
+                this.showPagesToEdit(pageModel);
+                this.showAdminArea(pageModel);
 
             },
 
-            showPagesToEdit: function () {
+            showPagesToEdit: function (pageModel) {
 
                 var that = this,
                     pageCollection = new GOB.Collections.PagesToEditCollection();
@@ -46,7 +49,9 @@ define([
                     });
 
                     var pagesToEditDropdown = new GOB.Views.PagesToEditDropdownView({
-                        collection: pageCollection
+                        collection: pageCollection,
+                        pageModel: pageModel,
+                        pageLayout: that
                     });
 
                     that.pagesToEdit.show(pagesToEditDropdown);
@@ -58,6 +63,7 @@ define([
             },
 
             showAdminArea: function (model) {
+
                 this.adminArea.show(new GOB.Views.PageAdminAreaView({
                     model: model
                 }));
