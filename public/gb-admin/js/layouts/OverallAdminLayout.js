@@ -22,15 +22,13 @@ define([
                 pages: "#admin-page"
             },
 
-            onRender: function() {
+            onRender: function () {
 
-                console.log(GOB);
-
+                // Create Navigation view and page layat, then show them.
                 var navView = new GOB.Views.NavView({
                     overallAdminLayout: this
-                });
-
-                var pageLayout = new GOB.Layouts.PageLayout();
+                }),
+                    pageLayout = new GOB.Layouts.PageLayout();
 
                 this.nav.show(navView);
                 this.pages.show(pageLayout);

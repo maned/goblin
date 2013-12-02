@@ -15,9 +15,9 @@ module.exports = function() {
 	    	var objToPush = {}
 
         	objToPush.id = req.body.page_id
-            objToPush.url = req.body.page_url
-            objToPush.item_name = req.body.page_title
-            objToPush.theme = req.body.theme
+                objToPush.url = req.body.page_url
+                objToPush.item_name = req.body.page_title
+                objToPush.theme = req.body.theme
 
 	        if (doc === undefined) {
 
