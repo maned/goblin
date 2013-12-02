@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap/bootstrap-theme.min.css">
 
+        <link rel="stylesheet" href="css/plugins/bootstrap-wysihtml5.css">
+
         <!-- Custom CSS-->
         <link rel="stylesheet" href="css/styles/style.css">
 
@@ -68,8 +70,27 @@
             
         </script>
 
-        <script id="pages-to-edit-option-view" type="text/template">
+        <script id="pages_to_edit_option_view_template" type="text/template">
             {{item_name}}
+        </script>
+
+        <script id="page_admin_area_view_template" type="text/template">
+            <input type="hidden" id="page-id" value="{{_id}}" placeholder="Page Id" disabled="true">
+            <label>Page Title:</label>
+            <input type="text" id="page-title" value="{{page_title}}" placeholder="Page Title">
+
+            <label>Page Url:</label>
+            <input type="text" id="page-url" value="{{page_url}}" placeholder="Page Url">
+
+            <div class="clear"></div>
+            <textarea id="page-content" style="width:100%; height:500px;" placeholder="Page Content">{{page_content}}</textarea>
+
+            <h3>Meta and SEO</h3>
+            <label>Description:</label>
+            <input type="text" id="meta-description" value="{{meta_description}}" placeholder="Page Description">
+
+            <label>Keywords:</label>
+            <input type="text" id="meta-keywords" value="{{meta_keywords}}" placeholder="Page Keywords">
         </script>
 
         <!-- End Templates -->

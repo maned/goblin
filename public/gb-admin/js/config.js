@@ -9,7 +9,8 @@ require.config({
         'marionette': 'vendor/backbone.marionette',
         'mustache': 'vendor/mustache.min',
         'bootstrap': 'vendor/bootstrap.min',
-        'common': 'common'
+        'common': 'common',
+        'wysiwyg': 'vendor/wysihtml5/bootstrap-wysihtml5'
     },
 
     shim: {
@@ -33,6 +34,10 @@ require.config({
 
         'bootstrap': {
             deps: ['jquery']
+        },
+
+        'wysiwyg': {
+            deps: ['jquery', 'bootstrap', 'vendor/wysihtml5/wysihtml5-0.3.0.min']
         }
     }
 });

@@ -13,3 +13,12 @@ body {
     background:black;
     height: 100%;
 }
+
+#admin-navigation ul {
+	margin:10px 0 0;
+}
+
+#admin-navigation ul li {
+	padding:5px;
+	color:white;
+}

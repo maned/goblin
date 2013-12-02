@@ -11,7 +11,7 @@ define([
 
         GOB.Views.PagesToEditOptionView = Backbone.Marionette.ItemView.extend({
 
-            template: '#pages-to-edit-option-view',
+            template: '#pages_to_edit_option_view_template',
 
             tagName: 'option',
 

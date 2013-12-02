@@ -3,7 +3,8 @@ define([
         'common',
         'marionette',
         'collections/PagesToEditCollection',
-        'views/PagesToEditDropdownView'
+        'views/PagesToEditDropdownView',
+        'views/PageAdminAreaView'
     ],
     function (Backbone, Common) {
 
@@ -25,6 +26,7 @@ define([
             onRender: function () {
 
                 this.showPagesToEdit();
+                this.showAdminArea();
 
             },
 
@@ -53,6 +55,12 @@ define([
                     console.log('Error getting job: ' + xhr);
                 });
 
+            },
+
+            showAdminArea: function (model) {
+                this.adminArea.show(new GOB.Views.PageAdminAreaView({
+                    model: model
+                }));
             }
 
         });
