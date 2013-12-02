@@ -22,3 +22,8 @@ body {
 	padding:5px;
 	color:white;
 }
+
+#page-content {
+	width:100%;
+	height:500px;
+}
