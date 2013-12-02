@@ -3,9 +3,11 @@ define([
         'common',
         'marionette',
         'collections/PagesToEditCollection',
+        'collections/ThemesCollection',
         'models/PageModel',
         'views/PagesToEditDropdownView',
-        'views/PageAdminAreaView'
+        'views/PageAdminAreaView',
+        'views/ThemesDropdownView'
     ],
     function (Backbone, Common) {
 
@@ -21,19 +23,19 @@ define([
 
             regions: {
                 pagesToEdit: "#pages-to-edit",
-                adminArea: "#admin-area"
+                adminArea: "#admin-area",
+                themeOptions: "#theme-options"
             },
 
             onRender: function () {
 
-                var pageModel = new GOB.Models.PageModel();
-
-                this.showPagesToEdit(pageModel);
-                this.showAdminArea(pageModel);
+                this.showPagesToEdit();
+                this.showAdminArea();
+                this.showThemeOptions();
 
             },
 
-            showPagesToEdit: function (pageModel) {
+            showPagesToEdit: function () {
 
                 var that = this,
                     pageCollection = new GOB.Collections.PagesToEditCollection();
@@ -50,7 +52,7 @@ define([
 
                     var pagesToEditDropdown = new GOB.Views.PagesToEditDropdownView({
                         collection: pageCollection,
-                        pageModel: pageModel,
+                        pageModel: that.model,
                         pageLayout: that
                     });
 
@@ -62,11 +64,32 @@ define([
 
             },
 
-            showAdminArea: function (model) {
+            showAdminArea: function () {
+                var that = this;
 
                 this.adminArea.show(new GOB.Views.PageAdminAreaView({
-                    model: model
+                    model: that.model
                 }));
+            },
+
+            showThemeOptions: function () {
+
+                var themeCollection = new GOB.Collections.ThemesCollection(),
+                    that = this;
+
+                themeCollection.getThemes(function (data) {
+
+                    themeCollection.set(data);
+
+                    var themeDropdown = new GOB.Views.ThemesDropdownView({
+                        collection: themeCollection
+                    });
+
+                    that.themeOptions.show(themeDropdown);
+
+                }, function (xhr) {
+                    console.log('Failed to get theme files: ' + xhr);
+                });
             }
 
         });

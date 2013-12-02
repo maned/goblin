@@ -2,6 +2,7 @@ define([
         'backbone',
         'common',
         'marionette',
+        'models/PageModel',
         'views/NavView',
         'layouts/PageLayout'
     ],
@@ -28,7 +29,10 @@ define([
                 var navView = new GOB.Views.NavView({
                     overallAdminLayout: this
                 }),
-                    pageLayout = new GOB.Layouts.PageLayout();
+                    pageModel = new GOB.Models.PageModel(),
+                    pageLayout = new GOB.Layouts.PageLayout({
+                        model: pageModel
+                    });
 
                 this.nav.show(navView);
                 this.pages.show(pageLayout);

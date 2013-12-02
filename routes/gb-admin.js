@@ -225,13 +225,23 @@ module.exports = function() {
 	        })
 	})
 
-	app.post('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
+	app.get('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
 	    fs.readdir('theme', function getThemeFiles(err, files) {
+
+	    	// Set up variables
+	    	var arrayToReturn = [],
+	    		z
+
+	    	// Loop through array and make each value an object
+	    	files.forEach(function(entry) {
+			    z = {}
+			    z.fileName = entry
+			    arrayToReturn.push(z)
+			})
+
 	        //Send Response
 	        res.contentType('json')
-	        res.send({
-	            response: files
-	        })
+	        res.send(arrayToReturn)
 	    })
 	})
 

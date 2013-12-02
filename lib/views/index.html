@@ -61,12 +61,20 @@
             <div id="admin-area">Admin Area</div>
 
             <h3>Look & Feel</h3>
-            <div id="look-and-feel">Look and Feel Dropdown</div>
+            <div id="theme-options">Look and Feel Dropdown</div>
+
+            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-success">Save</button>
             
         </script>
 
         <script id="pages_to_edit_option_view_template" type="text/template">
             {{item_name}}
+        </script>
+
+
+        <script id="theme_option_view_template" type="text/template">
+            {{fileName}}
         </script>
 
         <script id="page_admin_area_view_template" type="text/template">
