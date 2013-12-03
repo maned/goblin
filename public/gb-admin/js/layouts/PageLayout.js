@@ -98,11 +98,19 @@ define([
             },
 
             savePage: function () {
+                var isNewPage = $('.page-to-edit-select').val() === "new_page" ? true : false;
+
                 this.model.savePage(function (data) {
+                    
                     alert('Page saved successfully');
+
+                    // Check to see newPage boolean.
+                    if (isNewPage) {
+                        window.location.reload(); // HACK: accounts for new page. Needs refactoring.
+                    }
+
                 }, function (xhr) {
-                    alert('Page update/creation has failed. Please try again.');
-                    console.log(xhr);
+                    console.log('Page update/creation has failed. Please try again. ' + xhr);
                 });
             },
 

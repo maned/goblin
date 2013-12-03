@@ -16,6 +16,8 @@ define([
 
             tagName: 'select',
 
+            className: 'page-to-edit-select',
+
             events: {
                 "change": "onChange"
             },
