@@ -4,7 +4,9 @@ define([
         'jquery',
         'marionette',
         'views/StandardVarsView',
-        'views/CustomVarsView'
+        'views/CustomVarsView',
+        'views/NavListView',
+        'collections/PagesToEditCollection'
     ],
     function (Backbone, Common, $) {
 
@@ -25,6 +27,7 @@ define([
             onRender: function () {
                 this.showStandard();
                 this.showCustom();
+                this.showNavigation();
             },
 
             showStandard: function () {
@@ -43,6 +46,24 @@ define([
             },
 
             showNavigation: function () {
+
+                var pageCollection = new GOB.Collections.PagesToEditCollection(),
+                    that = this;
+
+                pageCollection.getPagesToEdit(function (data) {
+
+                    // Set data on callback, then push new page option
+                    pageCollection.set(data);
+
+                    var navList = new GOB.Views.NavListView({
+                        collection: pageCollection
+                    });
+
+                    that.navigation.show(navList);
+
+                }, function (xhr) {
+                    console.log('Error getting pages: ' + xhr);
+                });
 
             },
 

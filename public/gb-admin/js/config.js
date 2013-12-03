@@ -10,7 +10,8 @@ require.config({
         'mustache': 'vendor/mustache.min',
         'bootstrap': 'vendor/bootstrap.min',
         'common': 'common',
-        'wysiwyg': 'vendor/wysihtml5/bootstrap-wysihtml5'
+        'wysiwyg': 'vendor/wysihtml5/bootstrap-wysihtml5',
+        'jquery-ui': 'vendor/jquery-ui.min'
     },
 
     shim: {
@@ -38,6 +39,10 @@ require.config({
 
         'wysiwyg': {
             deps: ['jquery', 'bootstrap', 'vendor/wysihtml5/wysihtml5-0.3.0.min']
+        },
+
+        'jquery-ui': {
+            deps: ['jquery']
         }
     }
 });
