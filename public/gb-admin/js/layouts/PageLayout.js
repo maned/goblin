@@ -1,6 +1,7 @@
 define([
         'backbone',
         'common',
+        'jquery',
         'marionette',
         'collections/PagesToEditCollection',
         'collections/ThemesCollection',
@@ -9,7 +10,7 @@ define([
         'views/PageAdminAreaView',
         'views/ThemesDropdownView'
     ],
-    function (Backbone, Common) {
+    function (Backbone, Common, $) {
 
         'use strict';
 
@@ -101,7 +102,7 @@ define([
                 var isNewPage = $('.page-to-edit-select').val() === "new_page" ? true : false,
                     that = this;
 
-                this.model.savePage(function (data) {
+                this.model.savePage(function () {
 
                     alert('Page saved successfully');
 
