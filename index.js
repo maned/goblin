@@ -36,7 +36,7 @@ var mu = require('mu2'),
 
     mu.root = __dirname + '/theme'
 
-    //Check for 'page routes', if undefined, then create a default route, if not, then set them
+//Check for 'page routes', if undefined, then create a default route, if not, then set them
 db.get('pages_routes', utils.checkAndSetPageRoutes)
 
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!

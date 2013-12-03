@@ -14,7 +14,9 @@ define([
 
             itemView: GOB.Views.ThemeOptionView,
 
-            tagName: 'select'
+            tagName: 'select',
+
+            className : 'theme'
 
         });
     }

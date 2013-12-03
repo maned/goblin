@@ -67,7 +67,7 @@ define([
 						page_content: $('#page-content').val(),
 						meta_description: $('#meta-description').val(),
 						meta_keywords: $('#meta-keywords').val(),
-						theme: $('#theme-files').val()
+						theme: $('.theme').val()
 					},
 					success: function (data) {
 						successCallback(data);
