@@ -24,11 +24,17 @@ define([
                 customVars: "#custom-vars"
             },
 
+            events: {
+                "click .config-save": "save"
+            },
+
             onRender: function () {
                 this.showStandard();
                 this.showCustom();
                 this.showNavigation();
             },
+
+            $navEl: null,
 
             showStandard: function () {
 
@@ -59,7 +65,10 @@ define([
                         collection: pageCollection
                     });
 
+                    that.$navEl = navList.exportEl();
+
                     that.navigation.show(navList);
+
 
                 }, function (xhr) {
                     console.log('Error getting pages: ' + xhr);
@@ -84,11 +93,20 @@ define([
             },
 
             save: function () {
+                var that = this;
+
+                this.model.save(that.createNavJSON(that.$navEl), function () {
+                    alert('Configuration data saved!');
+                    that.render();
+                }, function (xhr) {
+                    console.log('Error saving data. ' + xhr);
+                });
 
             },
 
-            createNavJSON: function () {
-                var idsInOrder = $('#nav_conf').sortable("toArray");
+            createNavJSON: function ($navEl) {
+
+                var idsInOrder = $navEl.sortable("toArray");
 
                 var nav_info = JSON.stringify(
                     idsInOrder.map(
@@ -100,14 +118,13 @@ define([
                                 'url': $(id).attr('data-url'),
                                 'theme': $(id).attr('data-theme'),
                                 'item_name': atob(e)
-                            }
+                            };
                         }
                     ),
                     0, 4);
 
                 return $.parseJSON(nav_info);
             }
-
         });
     }
 );

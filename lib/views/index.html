@@ -99,7 +99,7 @@
             <h2 class="form-signin-heading">goblin</h2>
             <input type="text" class="username" placeholder="Username" name="username">
             <input type="password" class="password" placeholder="Password" name="password">
-            <button class="btn btn-primary btn-login" type="submit">Sign in</button>
+            <button class="btn btn-primary btn-login">Sign in</button>
         </script>
 
         <script id="feedback_view_template" type="text/template">
@@ -123,14 +123,15 @@
             <h4> Custom Variables</h4>
             <div id="custom-vars"></div>
 
+            <button type="button" class="btn btn-success config-save">Save</button>
         </script>
 
         <script id="standard_vars_view_template" type="text/template">
             <label>Site Title :</label>
-            <input type="text" id="site_title" value="{{site_title}}" placeholder="Site Title">
+            <input type="text" id="site-title" value="{{site_title}}" placeholder="Site Title">
             <div class="clear"></div>
             <label>Site Description :</label>
-            <input type="text" id="site_description" value="{{site_description}}" placeholder="Site Description">
+            <input type="text" id="site-description" value="{{site_description}}" placeholder="Site Description">
             <div class="clear"></div>
         </script>
 
@@ -140,7 +141,7 @@
 
         <script id="custom_vars_view_template" type="text/template">
             <label>Google Analytics Id :</label>
-            <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">  
+            <input type="text" id="ga-id" value="{{ga_id}}" placeholder="Google Analytics Id">  
         </script>
 
 

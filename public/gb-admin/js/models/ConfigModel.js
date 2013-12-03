@@ -1,8 +1,9 @@
 define([
 		'backbone',
-		'common'
+		'common',
+		'jquery'
 	],
-	function (Backbone, Common) {
+	function (Backbone, Common, $) {
 
 		'use strict';
 
@@ -11,15 +12,16 @@ define([
 		GOB.Models.ConfigModel = Backbone.Model.extend({
 
 			save: function (nav, successCallback, failureCallback) {
+
 				$.ajax({
 					url: "/gb-admin/config-save.json",
 					type: "POST",
 					dataType: "json",
 					data: {
-						ga_id: $('#ga-id').val(),
-						nav: nav,
 						site_title: $('#site-title').val(),
-						site_description: $('#site-description').val()
+						site_description: $('#site-description').val(),
+						nav: nav,
+						ga_id: $('#ga-id').val()
 					},
 					success: function (data) {
 						successCallback(data);
@@ -56,8 +58,7 @@ define([
 						failureCallback(xhr);
 					}
 				});
-			},
-
+			}
 
 		});
 	}
