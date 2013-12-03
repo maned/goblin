@@ -98,9 +98,9 @@ define([
             },
 
             savePage: function () {
-                this.model.savePage(function(data) {
-                    alert('Page save successfully');
-                }, function(xhr) {
+                this.model.savePage(function (data) {
+                    alert('Page saved successfully');
+                }, function (xhr) {
                     console.log('Page update/creation has failed. Please try again.');
                     console.log(xhr);
                 });
