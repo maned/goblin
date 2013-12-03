@@ -66,19 +66,18 @@ require([
         $.ajaxSetup({
             statusCode: {
                 412: function () {
-                    if (GOB.Active_User.get("username") !== undefined) {
+                    if (GOB.CurrentUser.get("username") !== undefined) {
 
-                        GOB.Active_User.logout(function () {
+                        GOB.CurrentUser.logout(function () {
 
-                            // Clear user and then reload page (prevent use of 'Back' button)
-                            GOB.Active_User.clear();
+                                GOB.CurrentUser.clear();
 
-                            window.location.reload();
-                        },
-                        function (xhr) {
-                            console.log('Logout Failed:' + xhr);
-                        });
-                           
+                                window.location.reload();
+                            },
+                            function (xhr) {
+                                console.log('Logout Failed:' + xhr);
+                            });
+
                     }
                 }
             }
