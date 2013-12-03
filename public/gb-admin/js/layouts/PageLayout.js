@@ -65,7 +65,7 @@ define([
                     that.pagesToEdit.show(pagesToEditDropdown);
 
                 }, function (xhr) {
-                    console.log('Error getting job: ' + xhr);
+                    console.log('Error getting pages: ' + xhr);
                 });
 
             },
