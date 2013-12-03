@@ -5,10 +5,12 @@ define([
         'layouts/OverallAdminLayout',
         'models/PageModel',
         'models/UserModel',
+        'models/ConfigModel',
         'views/NavView',
         'views/LoginView',
         'views/FeedbackView',
-        'layouts/PageLayout'
+        'layouts/PageLayout',
+        'layouts/ConfigLayout'
     ],
     function (Marionette, Common) {
 
@@ -81,7 +83,19 @@ define([
             },
 
             config: function () {
-                console.log('config hit');
+                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+
+                GOB.Application.wrapper.show(overallAdminLayout);
+
+                // Create Navigation view and page layout, then show them.
+                var navView = new GOB.Views.NavView(),
+                    configModel = new GOB.Models.ConfigModel(),
+                    configLayout = new GOB.Layouts.ConfigLayout({
+                        model: configModel
+                    });
+
+                overallAdminLayout.nav.show(navView);
+                overallAdminLayout.pages.show(configLayout);
             }
 
         });

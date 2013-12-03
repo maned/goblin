@@ -110,8 +110,41 @@
             </ol>
 
             <p>Feedback content</p>
-            
+
         </script>
+
+        <script id="config_layout_template" type="text/template">
+            <h3>Standard Variables</h3>
+            <div id="standard-vars"></div>
+
+            <h4> Navigation (shift to order) :</h4>
+            <div id="nav-vars"></div>
+
+            <h4> Custom Variables</h4>
+            <div id="custom-vars"></div>
+
+        </script>
+
+        <script id="standard_vars_view_template" type="text/template">
+            <label>Site Title :</label>
+            <input type="text" id="site_title" value="{{site_title}}" placeholder="Site Title">
+            <div class="clear"></div>
+            <label>Site Description :</label>
+            <input type="text" id="site_description" value="{{site_description}}" placeholder="Site Description">
+            <div class="clear"></div>
+        </script>
+
+        <script id="nav_var" type="text/template">
+          {{#nav}}
+              <li id="{{id}}" data-url="{{url}}" class="ui-state-default nav_item_count">{{item_name}}</li>
+          {{/nav}}
+        </script>
+
+        <script id="custom_vars_view_template" type="text/template">
+            <label>Google Analytics Id :</label>
+            <input type="text" id="ga_id" value="{{ga_id}}" placeholder="Google Analytics Id">  
+        </script>
+
 
         <!-- End Templates -->
 
