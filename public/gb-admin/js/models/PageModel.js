@@ -81,6 +81,26 @@ define([
 						failureCallback(xhr);
 					}
 				});
+			},
+
+			deletePage: function (successCallback, failureCallback) {
+
+				$.ajax({
+					url: "/gb-admin/page-delete.json",
+					type: "POST",
+					dataType: "json",
+					data: {
+						page_id: $('#page-id').val(),
+						page_url: $('#page-url').val()
+					},
+					success: function (data) {
+						successCallback(data);
+
+					},
+					error: function (xhr) {
+						failureCallback(xhr);
+					}
+				});
 			}
 
 		});

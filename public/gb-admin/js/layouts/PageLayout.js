@@ -98,15 +98,16 @@ define([
             },
 
             savePage: function () {
-                var isNewPage = $('.page-to-edit-select').val() === "new_page" ? true : false;
+                var isNewPage = $('.page-to-edit-select').val() === "new_page" ? true : false,
+                    that = this;
 
                 this.model.savePage(function (data) {
-                    
+
                     alert('Page saved successfully');
 
                     // Check to see newPage boolean.
                     if (isNewPage) {
-                        window.location.reload(); // HACK: accounts for new page. Needs refactoring.
+                        that.render();
                     }
 
                 }, function (xhr) {
@@ -115,7 +116,18 @@ define([
             },
 
             deletePage: function () {
-                console.log("Delete has not yet been implemented");
+
+                var that = this;
+
+                this.model.deletePage(function () {
+
+                    alert('Page successfully deleted');
+
+                    that.render();
+
+                }, function (xhr) {
+                    console.log('Error deleting page. ' + xhr);
+                });
             }
 
         });
