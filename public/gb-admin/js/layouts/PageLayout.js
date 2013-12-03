@@ -101,7 +101,7 @@ define([
                 this.model.savePage(function (data) {
                     alert('Page saved successfully');
                 }, function (xhr) {
-                    console.log('Page update/creation has failed. Please try again.');
+                    alert('Page update/creation has failed. Please try again.');
                     console.log(xhr);
                 });
             },
