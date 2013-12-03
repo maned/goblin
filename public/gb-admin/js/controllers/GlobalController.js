@@ -18,19 +18,22 @@ define([
 
                     var activeSessionUser = sessionStorage.getItem("CurrentUser");
 
-                    if (activeSessionUser !== null && activeSessionUser !== undefined) {
+                    if (activeSessionUser !== null && activeSessionUser !== undefined && activeSessionUser !== "{}") {
 
                         GOB.CurrentUser = new GOB.Models.UserModel(JSON.parse(activeSessionUser));
 
                     } else {
 
                         window.location.hash = "#login";
+                        return;
 
                     }
 
                 }
 
-                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout({
+                    isLogin: false
+                });
 
                 GOB.Application.wrapper.show(overallAdminLayout);
 

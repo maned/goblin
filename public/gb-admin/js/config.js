@@ -72,7 +72,7 @@ require([
 
                                 GOB.CurrentUser.clear();
 
-                                window.location.reload();
+                                window.location.hash = '#login';
                             },
                             function (xhr) {
                                 console.log('Logout Failed:' + xhr);

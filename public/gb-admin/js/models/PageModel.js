@@ -11,6 +11,21 @@ define([
 
 		GOB.Models.PageModel = Backbone.Model.extend({
 
+			defaults: {
+				_id: "",
+				_rev: "",
+				ga_id: "",
+				meta_description: "",
+				meta_keywords: "",
+				nav: [],
+				page_content: "",
+				page_title: "",
+				page_url: "",
+				site_description: "",
+				site_title: "",
+				theme: ""
+			},
+
 			switchPage: function (id) {
 
 				var that = this;
@@ -34,7 +49,7 @@ define([
 						}
 					});
 				} else {
-					this.clear();
+					this.clear().set(this.defaults);
 				}
 
 

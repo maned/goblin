@@ -23,6 +23,12 @@ define([
                 this.$el.find('#page-content').wysihtml5({
                     "stylesheets": false
                 });
+
+                if (this.model.get("page_url") === "") {
+                    this.$el.find('#page-url').prop('disabled', false);
+                } else {
+                    this.$el.find('#page-url').prop('disabled', true);
+                }
             }
 
         });

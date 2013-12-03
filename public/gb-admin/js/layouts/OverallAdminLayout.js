@@ -29,7 +29,17 @@ define([
 
                 var isLogin = this.options.isLogin;
 
-                if (!isLogin) {
+                if (isLogin) {
+
+                    var loginView = new GOB.Views.LoginView({
+                        model: new GOB.Models.UserModel()
+                    });
+
+                    this.pages.show(loginView);
+
+
+                } else {
+
                     // Create Navigation view and page layat, then show them.
                     var navView = new GOB.Views.NavView({
                         overallAdminLayout: this
@@ -41,13 +51,7 @@ define([
 
                     this.nav.show(navView);
                     this.pages.show(pageLayout);
-                } else {
 
-                    var loginView = new GOB.Views.LoginView({
-                        model: new GOB.Models.UserModel()
-                    });
-
-                    this.pages.show(loginView);
                 }
 
 
