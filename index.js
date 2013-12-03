@@ -72,7 +72,7 @@ app.get('/:page_name', function(req, res) {
 
         if (page_info !== undefined) {
             db.get(page_info.id, function compileAndRender(err, doc) {
-                var stream = mu.compileAndRender(page_info.theme, doc)
+                var stream = mu.compileAndRender(doc.theme, doc)
                 stream.pipe(res)
             })
         } else {
