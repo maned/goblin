@@ -15,23 +15,29 @@ define([
 
 				var that = this;
 
-				$.ajax({
-					url: "/gb-admin/page-edit.json",
-					type: "POST",
-					dataType: "json",
-					data: {
-						page_id: id
-					},
-					success: function (data) {
-						//Set the model with the new data
-						that.set(data);
-					},
-					error: function (xhr) {
-						// Let the developer know what happened
-						console.log('Admin creation has failed. Please try again.');
-						console.log(xhr);
-					}
-				});
+				if (id !== "new_page") {
+					$.ajax({
+						url: "/gb-admin/page-edit.json",
+						type: "POST",
+						dataType: "json",
+						data: {
+							page_id: id
+						},
+						success: function (data) {
+							//Set the model with the new data
+							that.set(data);
+						},
+						error: function (xhr) {
+							// Let the developer know what happened
+							console.log('Admin creation has failed. Please try again.');
+							console.log(xhr);
+						}
+					});
+				} else {
+					this.clear();
+				}
+
+
 			},
 
 			savePage: function (successCallback, failureCallback) {

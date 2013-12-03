@@ -27,7 +27,7 @@ define([
                 //Persist the model to sessionStorage
                 //
 
-                sessionStorage.setItem("Active_User", JSON.stringify(this.toJSON()));
+                sessionStorage.setItem("CurrentUser", JSON.stringify(this.toJSON()));
             },
 
             setData: function (username) {
