@@ -56,6 +56,11 @@ define([
 			},
 
 			savePage: function (successCallback, failureCallback) {
+
+				if ($('#page-id').val() === "") {
+					$('#page-id').val(window.btoa(unescape(encodeURIComponent($('#page-title').val()))));
+				}
+
 				$.ajax({
 					url: "/gb-admin/page-save.json",
 					type: "POST",
