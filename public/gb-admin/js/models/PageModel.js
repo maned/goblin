@@ -32,8 +32,39 @@ define([
 						console.log(xhr);
 					}
 				});
+			},
+
+			savePage: function (successCallback, failureCallback) {
+				$.ajax({
+					url: "/gb-admin/page-save.json",
+					type: "POST",
+					dataType: "json",
+					data: {
+						page_id: $('#page-id').val(),
+						page_title: $('#page-title').val(),
+						page_url: $('#page-url').val(),
+						page_content: $('#page-content').val(),
+						meta_description: $('#meta-description').val(),
+						meta_keywords: $('#meta-keywords').val(),
+						theme: $('#theme-files').val()
+					},
+					success: function (data) {
+						console.log(data);
+
+						alert('something saved');
+
+
+						alert('Page has been updated.');
+
+
+					},
+
+					error: function (xhr) {
+						console.log(xhr);
+						console.log('Page update/creation has failed. Please try again.');
+					}
+				});
 			}
-			
+
 		});
-	}
-);
+	});

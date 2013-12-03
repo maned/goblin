@@ -12,7 +12,8 @@ define([
         GOB.Routers.GlobalRouter = Backbone.Marionette.AppRouter.extend({
 
             appRoutes: {
-                "": "index"
+                "": "index",
+                "login" : "login"
             }
 
         });

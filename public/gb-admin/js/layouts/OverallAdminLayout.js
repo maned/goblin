@@ -3,7 +3,9 @@ define([
         'common',
         'marionette',
         'models/PageModel',
+        'models/UserModel',
         'views/NavView',
+        'views/LoginView',
         'layouts/PageLayout'
     ],
     function (Backbone, Common) {
@@ -25,17 +27,30 @@ define([
 
             onRender: function () {
 
-                // Create Navigation view and page layat, then show them.
-                var navView = new GOB.Views.NavView({
-                    overallAdminLayout: this
-                }),
-                    pageModel = new GOB.Models.PageModel(),
-                    pageLayout = new GOB.Layouts.PageLayout({
-                        model: pageModel
+                var isLogin = this.options.isLogin;
+
+                if (!isLogin) {
+                    // Create Navigation view and page layat, then show them.
+                    var navView = new GOB.Views.NavView({
+                        overallAdminLayout: this
+                    }),
+                        pageModel = new GOB.Models.PageModel(),
+                        pageLayout = new GOB.Layouts.PageLayout({
+                            model: pageModel
+                        });
+
+                    this.nav.show(navView);
+                    this.pages.show(pageLayout);
+                } else {
+
+                    var loginView = new GOB.Views.LoginView({
+                        model: new GOB.Models.UserModel()
                     });
 
-                this.nav.show(navView);
-                this.pages.show(pageLayout);
+                    this.pages.show(loginView);
+                }
+
+
             }
 
         });

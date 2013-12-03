@@ -11,7 +11,8 @@ define([
         Collections: {},
         Routers: {},
         Controllers: {},
-        Views: {}
+        Views: {},
+        CurrentUser: {}
     };
 
     return {

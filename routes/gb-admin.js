@@ -245,6 +245,10 @@ module.exports = function() {
 	    })
 	})
 
+	app.post('/login', auth.login)
+	
+	app.get('/logout', auth.logout)
+
 	return app;
 
 }()

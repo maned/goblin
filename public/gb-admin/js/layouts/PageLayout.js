@@ -27,6 +27,11 @@ define([
                 themeOptions: "#theme-options"
             },
 
+            events: {
+                "click .page-save": "savePage",
+                "click .page-delete": "deletePage"
+            },
+
             onRender: function () {
 
                 this.showPagesToEdit();
@@ -90,6 +95,16 @@ define([
                 }, function (xhr) {
                     console.log('Failed to get theme files: ' + xhr);
                 });
+            },
+
+            savePage: function () {
+                alert('saving');
+
+                this.model.savePage();
+            },
+
+            deletePage: function () {
+                alert('delete');
             }
 
         });

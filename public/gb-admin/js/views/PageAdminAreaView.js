@@ -20,7 +20,9 @@ define([
             },
 
             onRender: function () {
-                this.$el.find('#page-content').wysihtml5();
+                this.$el.find('#page-content').wysihtml5({
+                    "stylesheets": false
+                });
             }
 
         });

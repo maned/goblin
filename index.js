@@ -60,7 +60,7 @@ app.get('/login', function (req, res) {
 })
 
 //SPA admin Page
-app.get('/gb-admin/spa', function (req, res) {
+app.get('/gb-admin/spa.html', function (req, res) {
     res.sendfile(html_dir + 'index.html')
 })
 
@@ -91,6 +91,4 @@ app.get('/', function (req, res) {
     res.redirect('/index.html')
 })
 
-app.post('/login', auth.login)
-app.get('/logout', auth.logout)
 app.listen(config.desiredPort, utils.listeningOn(config.desiredPort))

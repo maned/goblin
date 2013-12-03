@@ -15,7 +15,21 @@ define([
 
             className: "nav",
 
-            tagName: "ul"
+            tagName: "ul",
+
+            events: {
+                "click .logout": "logout"
+            },
+
+            logout: function () {
+
+                GOB.CurrentUser.logout(function (data) {
+                    if (data.success === true) {
+                        GOB.CurrentUser.clear();
+                        window.location.hash = "#login";
+                    }
+                });
+            }
 
         });
     }
