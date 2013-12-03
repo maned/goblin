@@ -49,19 +49,10 @@ define([
 						theme: $('#theme-files').val()
 					},
 					success: function (data) {
-						console.log(data);
-
-						alert('something saved');
-
-
-						alert('Page has been updated.');
-
-
+						successCallback(data);
 					},
-
 					error: function (xhr) {
-						console.log(xhr);
-						console.log('Page update/creation has failed. Please try again.');
+						failureCallback(xhr);
 					}
 				});
 			}

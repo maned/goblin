@@ -98,13 +98,16 @@ define([
             },
 
             savePage: function () {
-                alert('saving');
-
-                this.model.savePage();
+                this.model.savePage(function(data) {
+                    alert('Page save successfully');
+                }, function(xhr) {
+                    console.log('Page update/creation has failed. Please try again.');
+                    console.log(xhr);
+                });
             },
 
             deletePage: function () {
-                alert('delete');
+                console.log("Delete has not yet been implemented");
             }
 
         });
