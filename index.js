@@ -36,7 +36,7 @@ var mu = require('mu2'),
 
     mu.root = __dirname + '/theme'
 
-//Check for 'page routes', if undefined, then create a default route, if not, then set them
+    //Check for 'page routes', if undefined, then create a default route, if not, then set them
 db.get('pages_routes', utils.checkAndSetPageRoutes)
 
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
@@ -76,7 +76,7 @@ app.get('/:page_name', function (req, res) {
 
             if (page_info !== undefined) {
                 db.get(page_info.id, function compileAndRender(err, doc) {
-                    var stream = mu.compileAndRender(page_info.theme, doc)
+                    var stream = mu.compileAndRender(doc.theme, doc)
                     stream.pipe(res)
                 })
             } else {
