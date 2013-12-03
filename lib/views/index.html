@@ -43,11 +43,10 @@
         </script>
 
         <script id="nav_view_template" type="text/template">
-            <li class="dashboard">Dashboard</li>
-            <li class="pages">Pages</li>
-            <li class="configuration">Configuration</li>
-            <li class="feedback">Feedback</li>
-            <li class="logout">Logout</li>
+            <li class="pages"><a href="#">Pages</a></li>
+            <li class="config"><a href="#config">Configuration</a></li>
+            <li class="feedback"><a href="#feedback">Feedback</a></li>
+            <li class="logout"><a>Logout</a></li>
         </script>
 
         <script id="page_layout_template" type="text/template">
@@ -71,7 +70,6 @@
         <script id="pages_to_edit_option_view_template" type="text/template">
             {{item_name}}
         </script>
-
 
         <script id="theme_option_view_template" type="text/template">
             {{fileName}}
@@ -102,6 +100,17 @@
             <input type="text" class="username" placeholder="Username" name="username">
             <input type="password" class="password" placeholder="Password" name="password">
             <button class="btn btn-primary btn-login" type="submit">Sign in</button>
+        </script>
+
+        <script id="feedback_view_template" type="text/template">
+            <h1>Feedback > </h1>
+
+            <ol class="breadcrumb">
+                <li>Feedback / </li>
+            </ol>
+
+            <p>Feedback content</p>
+            
         </script>
 
         <!-- End Templates -->

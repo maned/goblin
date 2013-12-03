@@ -8,9 +8,6 @@ define([
 
         var GOB = Common.app_namespace || {};
 
-        GOB.Models.PageOptionModel = Backbone.Model.extend({
-
-
-        });
+        GOB.Models.PageOptionModel = Backbone.Model.extend({});
     }
 );

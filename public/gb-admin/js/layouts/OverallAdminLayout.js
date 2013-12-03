@@ -1,12 +1,7 @@
 define([
         'backbone',
         'common',
-        'marionette',
-        'models/PageModel',
-        'models/UserModel',
-        'views/NavView',
-        'views/LoginView',
-        'layouts/PageLayout'
+        'marionette'
     ],
     function (Backbone, Common) {
 
@@ -23,38 +18,6 @@ define([
             regions: {
                 nav: "#admin-navigation",
                 pages: "#admin-page"
-            },
-
-            onRender: function () {
-
-                var isLogin = this.options.isLogin;
-
-                if (isLogin) {
-
-                    var loginView = new GOB.Views.LoginView({
-                        model: new GOB.Models.UserModel()
-                    });
-
-                    this.pages.show(loginView);
-
-
-                } else {
-
-                    // Create Navigation view and page layat, then show them.
-                    var navView = new GOB.Views.NavView({
-                        overallAdminLayout: this
-                    }),
-                        pageModel = new GOB.Models.PageModel(),
-                        pageLayout = new GOB.Layouts.PageLayout({
-                            model: pageModel
-                        });
-
-                    this.nav.show(navView);
-                    this.pages.show(pageLayout);
-
-                }
-
-
             }
 
         });

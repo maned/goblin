@@ -13,7 +13,9 @@ define([
 
             appRoutes: {
                 "": "index",
-                "login" : "login"
+                "login": "login",
+                "feedback": "feedback",
+                "config": "config"
             }
 
         });
