@@ -24,7 +24,12 @@ define([
             },
 
             onRender: function () {
-                this.$el.val(this.model.get("theme"));
+                var theme = this.model.get("theme");
+
+                if (theme !== "") {
+                    this.$el.val(theme);
+                }
+
             }
 
         });
