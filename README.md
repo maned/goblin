@@ -115,13 +115,16 @@ you run into (no matter how small) and submit improvements if you can!
 goblin is currently in a development, alpha phase. We are looking for feedback to help build the product out based on some great user feedback. However, there are a few things we are looking to do sooner than later (and would love your help with!):
 
 1. ~~Break up 'index.js' into multiple modules for easier development.~~
-2. Move admin to Backbone/Marionette single-page app (IN PROGRESS by streetlight)
-3. Bootstrap new Admin area based on new designs (see '/design-files')
+2. ~~Move admin to Backbone/Marionette single-page app~~
+3. ~~Bootstrap new Admin area based on new designs (see '/design-files')~~
 4. ~~Multiple .gob file support~~
 5. ~~Better, bootstrapped default theme.~~
 6. Nested navigation support.
 7. Multiple users support.
 8. A script to make installing easier.
+9. Further CSS work to bring admin closer to designs.
+10. Implementation of node-unit, qunit and grunt to secure code quality and testing.
+11. Document API.
 
 ---
 ###Feedback
