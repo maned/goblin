@@ -88,7 +88,8 @@ define([
                     themeCollection.set(data);
 
                     var themeDropdown = new GOB.Views.ThemesDropdownView({
-                        collection: themeCollection
+                        collection: themeCollection,
+                        model: that.model
                     });
 
                     that.themeOptions.show(themeDropdown);

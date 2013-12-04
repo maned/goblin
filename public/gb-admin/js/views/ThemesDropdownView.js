@@ -16,7 +16,17 @@ define([
 
             tagName: 'select',
 
-            className : 'theme'
+            className: 'theme',
+
+            initialize: function () {
+                // Bind the view to the Model
+                this.listenTo(this.model, 'change', this.render, this);
+            },
+
+            onRender: function () {
+                console.log(this.model);
+                this.$el.val(this.model.get("theme"));
+            }
 
         });
     }
