@@ -22,22 +22,40 @@ define([
 
             index: function () {
 
-                if (this.checkForUser() !== false) {
+                if (!(GOB.CurrentUser instanceof GOB.Models.UserModel)) {
 
-                    var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+                    var activeSessionUser = sessionStorage.getItem("CurrentUser");
 
-                    GOB.Application.wrapper.show(overallAdminLayout);
+                    if (activeSessionUser !== null && activeSessionUser !== undefined && activeSessionUser !== "{}") {
 
-                    // Create Navigation view and page layout, then show them.
-                    var navView = new GOB.Views.NavView(),
-                        pageModel = new GOB.Models.PageModel(),
-                        pageLayout = new GOB.Layouts.PageLayout({
-                            model: pageModel
-                        });
+                        GOB.CurrentUser = new GOB.Models.UserModel(JSON.parse(activeSessionUser));
 
-                    overallAdminLayout.nav.show(navView);
-                    overallAdminLayout.pages.show(pageLayout);
+
+                    } else {
+
+                        window.location.hash = "#login";
+                        return;
+
+                    }
+
                 }
+
+
+
+                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+
+                GOB.Application.wrapper.show(overallAdminLayout);
+
+                // Create Navigation view and page layout, then show them.
+                var navView = new GOB.Views.NavView(),
+                    pageModel = new GOB.Models.PageModel(),
+                    pageLayout = new GOB.Layouts.PageLayout({
+                        model: pageModel
+                    });
+
+                overallAdminLayout.nav.show(navView);
+                overallAdminLayout.pages.show(pageLayout);
+
 
             },
 
@@ -57,38 +75,73 @@ define([
 
             feedback: function () {
 
-                if (this.checkForUser() !== false) {
+                if (!(GOB.CurrentUser instanceof GOB.Models.UserModel)) {
 
-                    var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+                    var activeSessionUser = sessionStorage.getItem("CurrentUser");
 
-                    GOB.Application.wrapper.show(overallAdminLayout);
+                    if (activeSessionUser !== null && activeSessionUser !== undefined && activeSessionUser !== "{}") {
 
-                    // Create Navigation view and page layout, then show them.
-                    var navView = new GOB.Views.NavView(),
-                        feedbackView = new GOB.Views.FeedbackView();
+                        GOB.CurrentUser = new GOB.Models.UserModel(JSON.parse(activeSessionUser));
 
-                    overallAdminLayout.nav.show(navView);
-                    overallAdminLayout.pages.show(feedbackView);
+
+                    } else {
+
+                        window.location.hash = "#login";
+                        return;
+
+                    }
+
                 }
+
+
+                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+
+                GOB.Application.wrapper.show(overallAdminLayout);
+
+                // Create Navigation view and page layout, then show them.
+                var navView = new GOB.Views.NavView(),
+                    feedbackView = new GOB.Views.FeedbackView();
+
+                overallAdminLayout.nav.show(navView);
+                overallAdminLayout.pages.show(feedbackView);
+
             },
 
             config: function () {
 
-                if (this.checkForUser() !== false) {
-                    var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+                if (!(GOB.CurrentUser instanceof GOB.Models.UserModel)) {
 
-                    GOB.Application.wrapper.show(overallAdminLayout);
+                    var activeSessionUser = sessionStorage.getItem("CurrentUser");
 
-                    // Create Navigation view and page layout, then show them.
-                    var navView = new GOB.Views.NavView(),
-                        configModel = new GOB.Models.ConfigModel(),
-                        configLayout = new GOB.Layouts.ConfigLayout({
-                            model: configModel
-                        });
+                    if (activeSessionUser !== null && activeSessionUser !== undefined && activeSessionUser !== "{}") {
 
-                    overallAdminLayout.nav.show(navView);
-                    overallAdminLayout.pages.show(configLayout);
+                        GOB.CurrentUser = new GOB.Models.UserModel(JSON.parse(activeSessionUser));
+
+
+                    } else {
+
+                        window.location.hash = "#login";
+                        return;
+
+                    }
+
                 }
+
+
+                var overallAdminLayout = new GOB.Layouts.OverallAdminLayout();
+
+                GOB.Application.wrapper.show(overallAdminLayout);
+
+                // Create Navigation view and page layout, then show them.
+                var navView = new GOB.Views.NavView(),
+                    configModel = new GOB.Models.ConfigModel(),
+                    configLayout = new GOB.Layouts.ConfigLayout({
+                        model: configModel
+                    });
+
+                overallAdminLayout.nav.show(navView);
+                overallAdminLayout.pages.show(configLayout);
+
 
 
             },
@@ -107,7 +160,7 @@ define([
                     } else {
 
                         window.location.hash = "#login";
-                        return false;
+                        return;
 
                     }
 

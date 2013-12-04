@@ -44,23 +44,8 @@ utils.checkAndSetConfig()
 
 var html_dir = './lib/views/'
 
-//Edit page
-app.get('/gb-admin/edit', auth.check, function (req, res) {
-    res.sendfile(html_dir + 'edit.html')
-})
-
-//Config Page
-app.get('/gb-admin/config', auth.check, function (req, res) {
-    res.sendfile(html_dir + 'config.html')
-})
-
-//Login Page
-app.get('/login', function (req, res) {
-    res.sendfile(html_dir + 'login.html')
-})
-
-//SPA admin Page
-app.get('/gb-admin/spa.html', function (req, res) {
+//Admin Page
+app.get('/gb-admin', function (req, res) {
     res.sendfile(html_dir + 'index.html')
 })
 

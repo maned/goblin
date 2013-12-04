@@ -101,7 +101,7 @@ module.exports = function() {
 	    })
 	})
 
-	app.post('/page-edit.json', function(req, res) {
+	app.post('/page-edit.json', auth.check, function(req, res) {
 	    db.get(req.body.page_id, function(err, doc) {
 	        res.contentType('json')
 	        res.send(doc)

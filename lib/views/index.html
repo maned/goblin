@@ -56,7 +56,9 @@
                 <li>Pages / </li>
             </ol>
 
+            <label>Edit:</label>
             <div id="pages-to-edit">Page Selection</div>
+
             <div id="admin-area">Admin Area</div>
 
             <h3>Look & Feel</h3>
@@ -78,11 +80,13 @@
         <script id="page_admin_area_view_template" type="text/template">
             <input type="hidden" id="page-id" value="{{_id}}" placeholder="Page Id" disabled="true">
 
-            <label>Page Title:</label>
-            <input type="text" id="page-title" value="{{page_title}}" placeholder="Page Title">
+            <div class="page-info">
+                <label>Page Title:</label>
+                <input type="text" id="page-title" value="{{page_title}}" placeholder="Page Title">
 
-            <label>Page Url:</label>
-            <input type="text" id="page-url" value="{{page_url}}" placeholder="Page Url">
+                <label>Page Url:</label>
+                <input type="text" id="page-url" value="{{page_url}}" placeholder="Page Url">
+            </div>
 
             <textarea id="page-content" placeholder="Page Content">{{page_content}}</textarea>
 
@@ -103,19 +107,25 @@
         </script>
 
         <script id="feedback_view_template" type="text/template">
-            <h1>Feedback > </h1>
+            <h1>Goblin > </h1>
 
             <ol class="breadcrumb">
                 <li>Feedback / </li>
             </ol>
 
-            <p>Feedback content</p>
+            <p>Thank you so much for using <em>goblin</em>. We are constantly improving, and would love to hear your feedback.</p>
+
+           <h3>Issues / Bugs</h3>
+           <p>If you run into and/or discover any issues while using <em>goblin</em>, please report them <a href="https://github.com/streetlight/goblin/issues" target="_blank">here</a>.
+
+            <h3>Contributing</h3>
+            <p>If you would like to contribute to <em>goblin</em>, we would love your help! Please visit <a href="https://github.com/streetlight/goblin" target="_blank">our official github page</a>, where you can look at the code, document issues, submit patches and pull requests.</p>
 
         </script>
 
         <script id="config_layout_template" type="text/template">
 
-            <h1>Configuration > </h1>
+            <h1>Goblin > </h1>
 
             <ol class="breadcrumb">
                 <li>Configuration / </li>
@@ -124,10 +134,10 @@
             <h3>Standard Variables</h3>
             <div id="standard-vars"></div>
 
-            <h4> Navigation (shift to order) :</h4>
+            <h3> Navigation (shift to order) :</h3>
             <div id="nav-vars"></div>
 
-            <h4> Custom Variables</h4>
+            <h3> Custom Variables</h3>
             <div id="custom-vars"></div>
 
             <button type="button" class="btn btn-success config-save">Save</button>
