@@ -42,13 +42,6 @@ db.get('pages_routes', utils.checkAndSetPageRoutes)
 //Check to see if key databases exist, and if not, build the necessary components so goblin can run!
 utils.checkAndSetConfig()
 
-var html_dir = './lib/views/'
-
-//Admin Page
-app.get('/gb-admin', function (req, res) {
-    res.sendfile(html_dir + 'index.html')
-})
-
 //Set up dynamic routes for all pages
 app.get('/:page_name', function (req, res) {
 

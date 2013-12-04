@@ -249,6 +249,17 @@ module.exports = function() {
 	
 	app.get('/logout', auth.logout)
 
+	var html_dir = './lib/views/'
+
+	//Admin Page
+	app.get('/index.html', function (req, res) {
+	    res.sendfile(html_dir + 'index.html')
+	})
+
+	app.get('/', function (req, res) {
+	    res.redirect('/gb-admin/index.html')
+	})
+
 	return app;
 
 }()
