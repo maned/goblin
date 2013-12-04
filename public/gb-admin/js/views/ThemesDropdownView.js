@@ -24,7 +24,6 @@ define([
             },
 
             onRender: function () {
-                console.log(this.model);
                 this.$el.val(this.model.get("theme"));
             }
 
