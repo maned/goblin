@@ -7,12 +7,14 @@ lib-cov
 *.pid
 *.gz
 
+.DS_Store
+.DS_Store?
+
 pids
 logs
 results
 
 npm-debug.log
 node_modules
-admin-in-progress
 cookbooks
 tmp

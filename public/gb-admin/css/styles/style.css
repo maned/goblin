@@ -1,0 +1,64 @@
+/* Overall styles */
+
+html, body, #wrapper, .main_container {
+    height: 100%;
+}
+
+body {
+    background-color: #f0f3ed;
+}
+
+/* Main Admin Styles */
+#admin-navigation {
+    background:black;
+    height: 100%;
+}
+
+#admin-navigation ul {
+	margin:10px 0 0;
+}
+
+#admin-navigation ul li {
+	padding:5px;
+	color:white;
+}
+
+/* Manage Pages Styles */
+
+#page-content {
+	width:100%;
+	height:300px;
+}
+
+.page-info {
+	margin:10px 0;
+}
+
+.page-info input {
+	margin-right:5px;
+}
+
+#theme-options {
+	margin:10px 0;
+}
+
+/* Configuration Page Styles */
+.ui-sortable {
+	list-style: none;
+}
+
+.ui-sortable li {
+	width:90%;
+	margin:5px 0;
+	padding:5px;
+	border:1px solid black;
+	background:lightgrey;
+}
+
+.ui-sortable li:hover {
+	background: lightgreen;
+}
+
+.config-save {
+	margin-top:10px;
+}

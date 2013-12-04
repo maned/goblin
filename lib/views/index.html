@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Goblin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Favicon and Touch Icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/gb-admin/img/ico/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/gb-admin/img/ico/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/gb-admin/img/ico/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/gb-admin/img/ico/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/gb-admin/img/ico/apple-touch-icon-precomposed.png">
+        <link rel="shortcut icon" href="/gb-admin/img/ico/favicon.ico">
+
+        <!-- Begin Stylesheets -->
+        <link rel="stylesheet" href="/gb-admin/css/styles/main.css">
+        <link rel="stylesheet" href="/gb-admin/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="/gb-admin/css/bootstrap/bootstrap-theme.min.css">
+
+        <link rel="stylesheet" href="/gb-admin/css/plugins/bootstrap-wysihtml5.css">
+
+        <!-- Custom CSS-->
+        <link rel="stylesheet" href="/gb-admin/css/styles/style.css">
+
+    </head>
+    <body>
+
+        <div id="wrapper"></div>
+
+        <!-- Start Templates -->
+
+        <!-- Layouts -->
+
+        <script id="overall_admin_layout_template" type="text/template">
+            <nav id="admin-navigation" class="col-md-2"></nav>
+            <section class="col-md-10" id="admin-page"></section>
+        </script>
+
+        <script id="nav_view_template" type="text/template">
+            <li class="pages"><a href="#">Pages</a></li>
+            <li class="config"><a href="#config">Configuration</a></li>
+            <li class="feedback"><a href="#feedback">Feedback</a></li>
+            <li class="logout"><a>Logout</a></li>
+        </script>
+
+        <script id="page_layout_template" type="text/template">
+            <h1>Goblin > </h1>
+
+            <ol class="breadcrumb">
+                <li>Pages / </li>
+            </ol>
+
+            <label>Edit:</label>
+            <div id="pages-to-edit">Page Selection</div>
+
+            <div id="admin-area">Admin Area</div>
+
+            <h3>Look & Feel</h3>
+            <div id="theme-options">Look and Feel Dropdown</div>
+
+            <button type="button" class="btn btn-danger page-delete">Delete</button>
+            <button type="button" class="btn btn-success page-save">Save</button>
+            
+        </script>
+
+        <script id="pages_to_edit_option_view_template" type="text/template">
+            {{item_name}}
+        </script>
+
+        <script id="theme_option_view_template" type="text/template">
+            {{fileName}}
+        </script>
+
+        <script id="page_admin_area_view_template" type="text/template">
+            <input type="hidden" id="page-id" value="{{_id}}" placeholder="Page Id" disabled="true">
+
+            <div class="page-info">
+                <label>Page Title:</label>
+                <input type="text" id="page-title" value="{{page_title}}" placeholder="Page Title">
+
+                <label>Page Url:</label>
+                <input type="text" id="page-url" value="{{page_url}}" placeholder="Page Url">
+            </div>
+
+            <textarea id="page-content" placeholder="Page Content">{{page_content}}</textarea>
+
+            <h3>Meta and SEO</h3>
+
+            <label>Description:</label>
+            <input type="text" id="meta-description" value="{{meta_description}}" placeholder="Page Description">
+
+            <label>Keywords:</label>
+            <input type="text" id="meta-keywords" value="{{meta_keywords}}" placeholder="Page Keywords">
+        </script>
+
+        <script id="login_view_template" type="text/template">
+            <h2 class="form-signin-heading">goblin</h2>
+            <input type="text" class="username" placeholder="Username" name="username">
+            <input type="password" class="password" placeholder="Password" name="password">
+            <button class="btn btn-primary btn-login">Sign in</button>
+        </script>
+
+        <script id="feedback_view_template" type="text/template">
+            <h1>Goblin > </h1>
+
+            <ol class="breadcrumb">
+                <li>Feedback / </li>
+            </ol>
+
+            <p>Thank you so much for using <em>goblin</em>. We are constantly improving, and would love to hear your feedback.</p>
+
+           <h3>Issues / Bugs</h3>
+           <p>If you run into and/or discover any issues while using <em>goblin</em>, please report them <a href="https://github.com/streetlight/goblin/issues" target="_blank">here</a>.
+
+            <h3>Contributing</h3>
+            <p>If you would like to contribute to <em>goblin</em>, we would love your help! Please visit <a href="https://github.com/streetlight/goblin" target="_blank">our official github page</a>, where you can look at the code, document issues, submit patches and pull requests.</p>
+
+        </script>
+
+        <script id="config_layout_template" type="text/template">
+
+            <h1>Goblin > </h1>
+
+            <ol class="breadcrumb">
+                <li>Configuration / </li>
+            </ol>
+
+            <h3>Standard Variables</h3>
+            <div id="standard-vars"></div>
+
+            <h3> Navigation (shift to order) :</h3>
+            <div id="nav-vars"></div>
+
+            <h3> Custom Variables</h3>
+            <div id="custom-vars"></div>
+
+            <button type="button" class="btn btn-success config-save">Save</button>
+        </script>
+
+        <script id="standard_vars_view_template" type="text/template">
+            <label>Site Title :</label>
+            <input type="text" id="site-title" value="{{site_title}}" placeholder="Site Title">
+            <div class="clear"></div>
+            <label>Site Description :</label>
+            <input type="text" id="site-description" value="{{site_description}}" placeholder="Site Description">
+            <div class="clear"></div>
+        </script>
+
+        <script id="nav_list_item_view_template" type="text/template">
+          {{item_name}}
+        </script>
+
+        <script id="custom_vars_view_template" type="text/template">
+            <label>Google Analytics Id :</label>
+            <input type="text" id="ga-id" value="{{ga_id}}" placeholder="Google Analytics Id">  
+        </script>
+
+
+        <!-- End Templates -->
+
+        <!-- Call the application files, AMD-style -->
+        <script data-main="js/config" src="js/vendor/require.js"></script>
+        
+    </body>
+</html>

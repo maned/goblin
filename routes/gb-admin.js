@@ -101,7 +101,7 @@ module.exports = function() {
 	    })
 	})
 
-	app.post('/page-edit.json', function(req, res) {
+	app.post('/page-edit.json', auth.check, function(req, res) {
 	    db.get(req.body.page_id, function(err, doc) {
 	        res.contentType('json')
 	        res.send(doc)
@@ -225,14 +225,39 @@ module.exports = function() {
 	        })
 	})
 
-	app.post('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
+	app.get('/admin-theme-files.json', function adminWantsThemeFiles(req, res) {
 	    fs.readdir('theme', function getThemeFiles(err, files) {
+
+	    	// Set up variables
+	    	var arrayToReturn = [],
+	    		z
+
+	    	// Loop through array and make each value an object
+	    	files.forEach(function(entry) {
+			    z = {}
+			    z.fileName = entry
+			    arrayToReturn.push(z)
+			})
+
 	        //Send Response
 	        res.contentType('json')
-	        res.send({
-	            response: files
-	        })
+	        res.send(arrayToReturn)
 	    })
+	})
+
+	app.post('/login', auth.login)
+	
+	app.get('/logout', auth.logout)
+
+	var html_dir = './lib/views/'
+
+	//Admin Page
+	app.get('/index.html', function (req, res) {
+	    res.sendfile(html_dir + 'index.html')
+	})
+
+	app.get('/', function (req, res) {
+	    res.redirect('/gb-admin/index.html')
 	})
 
 	return app;
