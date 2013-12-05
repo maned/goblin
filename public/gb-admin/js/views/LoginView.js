@@ -17,7 +17,8 @@ define([
             className: "container",
 
             events: {
-                "click .btn-login": "login"
+                "click .btn-login": "login",
+                "keypress": "submitIfEnter"
             },
 
             login: function () {
@@ -40,6 +41,13 @@ define([
                     window.location.hash = '#login';
                     console.log(xhr);
                 });
+            },
+
+            submitIfEnter: function (e) {
+
+                if (e.keyCode === 13) {
+                    this.login();
+                }
             }
 
         });
