@@ -29,9 +29,6 @@ module.exports = function() {
 			        	var gaId = doc.ga_id
 
 			        	//Then make a document and add the new info, bro.
-			        	console.log("this is the page title I'm saveing" + req.body.page_title);
-
-
 			            db.save(req.body.page_id, {
 			                page_title: req.body.page_title,
 			                page_content: req.body.page_content,
