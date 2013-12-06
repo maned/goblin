@@ -77,6 +77,7 @@ module.exports = function() {
 					_.each(page_routes_data, function (navObj) {
 						if (navObj.id === req.body.page_id) {
 							navObj.theme = req.body.theme;
+							navObj.item_name = req.body.page_title;
 						}
 					})
 
