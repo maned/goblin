@@ -7,12 +7,12 @@
     <meta charset="utf-8">
     <meta name="description" content="{{meta_description}}">
     <meta name="keywords" content="{{meta_keywords}}">
-    <link rel="stylesheet" href="/theme/css/bootstrap.css" media="screen">
-    <link rel="stylesheet" href="/theme/css/bootswatch.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/journal/bootstrap.min.css">
+    <link rel="stylesheet" href="/theme/css/style.css">
   </head>
   <body>
 
-    <div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
           <a href="boo/" class="navbar-brand">{{site_title}}</a>
@@ -75,7 +75,7 @@
         s.parentNode.insertBefore(g,s)}(document,'script'));
     </script>
 
-    <script src="/theme/js/vendor/jquery-2.0.3.min.js"></script>
-    <script src="/theme/js/vendor/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   </body>
 </html>
