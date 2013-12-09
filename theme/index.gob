@@ -8,6 +8,7 @@
     <meta name="description" content="{{meta_description}}">
     <meta name="keywords" content="{{meta_keywords}}">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/journal/bootstrap.min.css">
+    <link rel="stylesheet" href="/theme/css/style.css">
   </head>
   <body>
 
