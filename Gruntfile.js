@@ -30,6 +30,9 @@ module.exports = function (grunt) {
 		jslint: {
 			client: {
 				src: [
+					//'*.js',
+					//'lib/*.js',
+					//'routes/*.js',
 					'public/gb-admin/js/*.js',
 					'public/gb-admin/js/collections/*.js',
 					'public/gb-admin/js/config/*.js',
@@ -60,7 +63,7 @@ module.exports = function (grunt) {
 		replace: {
 			example: {
 				src: ['lib/views/index.html'],
-				dest: 'lib/views/public/index.html',
+				dest: 'lib/views/index.html',
 				replacements: [{
 					from: 'js/config',
 					to: 'js/optimized/webclient.min'
@@ -76,14 +79,17 @@ module.exports = function (grunt) {
 
 		watch: {
 			files: [
-				'public/js/*.js',
-				'public/js/collections/*.js',
-				'public/js/config/*.js',
-				'public/js/controllers/*.js',
-				'public/js/layouts/*.js',
-				'public/js/models/*.js',
-				'public/js/routers/*.js',
-				'public/js/views/*.js'
+				//'*.js',
+				//'lib/*.js',
+				//'routes/*.js',
+				'public/gb-admin/js/*.js',
+				'public/gb-admin/js/collections/*.js',
+				'public/gb-admin/js/config/*.js',
+				'public/gb-admin/js/controllers/*.js',
+				'public/gb-admin/js/layouts/*.js',
+				'public/gb-admin/js/models/*.js',
+				'public/gb-admin/js/routers/*.js',
+				'public/gb-admin/js/views/*.js'
 			],
 			tasks: ['test']
 		}
@@ -99,6 +105,6 @@ module.exports = function (grunt) {
 
 	// Default task(s)
 	grunt.registerTask('test', ['jslint']);
-	grunt.registerTask('default', ['jslint', 'cssmin', 'requirejs', 'replace']);
+	grunt.registerTask('default', ['cssmin', 'requirejs', 'replace']);
 
 };

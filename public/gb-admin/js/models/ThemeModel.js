@@ -1,9 +1,8 @@
 define([
 		'backbone',
-		'common',
-		'jquery'
+		'common'
 	],
-	function (Backbone, Common, $) {
+	function (Backbone, Common) {
 
 		'use strict';
 
