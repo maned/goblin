@@ -1,11 +1,12 @@
 define([
         'backbone',
         'common',
+        'jquery',
         'marionette',
         'jquery-ui',
         'views/NavListItemView'
     ],
-    function (Backbone, Common) {
+    function (Backbone, Common, $) {
 
         'use strict';
 
@@ -43,7 +44,7 @@ define([
                                 'url': $(id).attr('data-url'),
                                 'theme': $(id).attr('data-theme'),
                                 'item_name': atob(e)
-                            }
+                            };
                         }
                     ),
                     0, 4);
