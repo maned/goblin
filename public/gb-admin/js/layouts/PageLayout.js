@@ -122,6 +122,7 @@ define([
                 var that = this,
                     pageToDelete = $('.page-to-edit-select').val();
 
+                // Temporary fix to stop index deletion.
                 if (pageToDelete !== "SG9tZQ==") {
                     this.model.deletePage(function () {
 
