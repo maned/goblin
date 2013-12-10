@@ -27,37 +27,6 @@ module.exports = function (grunt) {
 			}
 		},
 
-		/* jshint: {
-			files: [
-				'*.js',
-				'lib/*.js',
-				'routes/*.js',
-				'public/gb-admin/js/*.js',
-				'public/gb-admin/js/collections/*.js',
-				'public/gb-admin/js/config/*.js',
-				'public/gb-admin/js/controllers/*.js',
-				'public/gb-admin/js/layouts/*.js',
-				'public/gb-admin/js/models/*.js',
-				'public/gb-admin/js/routers/*.js',
-				'public/gb-admin/js/views/*.js'
-			],
-			options: {
-				browser: true,
-				predef: [
-					'require',
-					'define'
-				],
-				white: true,
-				devel: true,
-				regexp: true,
-				plusplus: false,
-				forin: true,
-				nomen: false,
-				node: true,
-				asi: true
-			}
-		}, */
-
 		jslint: {
 			client: {
 				src: [
@@ -93,6 +62,37 @@ module.exports = function (grunt) {
 					node: true,
 					unparam: true
 				}
+			}
+		},
+
+		jshint: {
+			files: [
+				'*.js',
+				'lib/*.js',
+				'routes/*.js',
+				'public/gb-admin/js/*.js',
+				'public/gb-admin/js/collections/*.js',
+				'public/gb-admin/js/config/*.js',
+				'public/gb-admin/js/controllers/*.js',
+				'public/gb-admin/js/layouts/*.js',
+				'public/gb-admin/js/models/*.js',
+				'public/gb-admin/js/routers/*.js',
+				'public/gb-admin/js/views/*.js'
+			],
+			options: {
+				browser: true,
+				predef: [
+					'require',
+					'define'
+				],
+				white: true,
+				devel: true,
+				regexp: true,
+				plusplus: false,
+				forin: true,
+				nomen: false,
+				node: true,
+				asi: true
 			}
 		},
 
