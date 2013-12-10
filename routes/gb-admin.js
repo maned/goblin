@@ -223,12 +223,12 @@ module.exports = (function () {
 
 			// Set up variables
 			var arrayToReturn = [],
-				z;
+				temporaryObj;
 
 			// Loop through array and make each value an object
 			files.forEach(function (entry) {
-				z = {};
-				z.fileName = entry;
+				temporaryObj = {};
+				temporaryObj.fileName = entry;
 				arrayToReturn.push(z);
 			});
 
