@@ -30,9 +30,9 @@ module.exports = function (grunt) {
 		jslint: {
 			client: {
 				src: [
-					//'*.js',
-					//'lib/*.js',
-					//'routes/*.js',
+					'*.js',
+					'lib/*.js',
+					'routes/*.js',
 					'public/gb-admin/js/*.js',
 					'public/gb-admin/js/collections/*.js',
 					'public/gb-admin/js/config/*.js',
@@ -41,6 +41,9 @@ module.exports = function (grunt) {
 					'public/gb-admin/js/models/*.js',
 					'public/gb-admin/js/routers/*.js',
 					'public/gb-admin/js/views/*.js'
+				],
+				exclude: [
+					'lib/auth.js'
 				],
 				directives: {
 					browser: true,
@@ -55,7 +58,9 @@ module.exports = function (grunt) {
 					regexp: true,
 					plusplus: true,
 					forin: true,
-					nomen: true
+					nomen: true,
+					node: true,
+					unparam: true
 				}
 			}
 		},
@@ -79,9 +84,9 @@ module.exports = function (grunt) {
 
 		watch: {
 			files: [
-				//'*.js',
-				//'lib/*.js',
-				//'routes/*.js',
+			'*.js',
+				'lib/*.js',
+				'routes/*.js',
 				'public/gb-admin/js/*.js',
 				'public/gb-admin/js/collections/*.js',
 				'public/gb-admin/js/config/*.js',
