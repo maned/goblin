@@ -11,14 +11,14 @@
  */
 
 var mu = require('mu2'),
-    db = require('./couchdb.js'),
+    db = require('./lib/couchdb.js'),
     express = require('express'),
-    auth = require('./auth.js'),
+    auth = require('./lib/auth.js'),
     _ = require('underscore'),
     fs = require('fs'),
     app = express(),
-    utils = require('./utils.js'),
-    config = require('./config.js');
+    utils = require('./lib/utils.js'),
+    config = require('./lib/config.js');
 
 //Configure Body Parser
 app.configure(function () {
@@ -28,13 +28,12 @@ app.configure(function () {
         secret: 'asfyvhq987ertvyweiurytsdfgadekjr4yhtfsdfgt9jfwe3ht987234yh'
     }));
     app.use(express.bodyParser());
-    app.use('/gb-admin', require('./routes/gb-admin'));
+    app.use('/gb-admin', require('./lib/routes/gb-admin'));
     app.use(app.router);
     //Set up Static File for Components
     app.use(express.static(__dirname + '/public'));
 });
 
-console.log(__dirname);
 mu.root = __dirname + '/theme';
 
 //Check for 'page routes', if undefined, then create a default route, if not, then set them
