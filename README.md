@@ -123,7 +123,7 @@ goblin is currently in a development, alpha phase. We are looking for feedback t
 7. Multiple users support.
 8. A script to make installing easier.
 9. Further CSS work to bring admin closer to designs.
-10. Implementation of node-unit, qunit and grunt to secure code quality and testing.
+10. Implementation of node-unit, qunit, jslint and grunt to secure code quality and testing. (IN PROGRESS)
 11. Document API.
 
 ---
