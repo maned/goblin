@@ -5,7 +5,7 @@ define([
         'jquery-ui',
         'views/NavListItemView'
     ],
-    function(Backbone, Common) {
+    function (Backbone, Common) {
 
         'use strict';
 
@@ -17,7 +17,7 @@ define([
 
             tagName: 'ul',
 
-            onRender: function() {
+            onRender: function () {
                 this.$el.sortable({
                     revert: false
                 });
@@ -26,7 +26,7 @@ define([
 
             },
 
-            exportEl: function() {
+            exportEl: function () {
                 return this.$el;
             }
 

@@ -3,7 +3,7 @@ define([
 		'common',
 		'jquery'
 	],
-	function(Backbone, Common, $) {
+	function (Backbone, Common, $) {
 
 		'use strict';
 
@@ -26,7 +26,7 @@ define([
 				theme: ""
 			},
 
-			switchPage: function(id) {
+			switchPage: function (id) {
 
 				var that = this;
 
@@ -38,11 +38,11 @@ define([
 						data: {
 							page_id: id
 						},
-						success: function(data) {
+						success: function (data) {
 							//Set the model with the new data
 							that.set(data);
 						},
-						error: function(xhr) {
+						error: function (xhr) {
 							// Let the developer know what happened
 							console.log('Admin creation has failed. Please try again.');
 							console.log(xhr);
@@ -55,7 +55,7 @@ define([
 
 			},
 
-			savePage: function(successCallback, failureCallback) {
+			savePage: function (successCallback, failureCallback) {
 
 				if ($('#page-id').val() === "") {
 					$('#page-id').val(window.btoa(window.unescape(encodeURIComponent($('#page-title').val())))); // HACK: There is a better way to do this.
@@ -74,16 +74,16 @@ define([
 						meta_keywords: $('#meta-keywords').val(),
 						theme: $('.theme').val()
 					},
-					success: function(data) {
+					success: function (data) {
 						successCallback(data);
 					},
-					error: function(xhr) {
+					error: function (xhr) {
 						failureCallback(xhr);
 					}
 				});
 			},
 
-			deletePage: function(successCallback, failureCallback) {
+			deletePage: function (successCallback, failureCallback) {
 
 				$.ajax({
 					url: "/gb-admin/page-delete.json",
@@ -93,11 +93,11 @@ define([
 						page_id: $('#page-id').val(),
 						page_url: $('#page-url').val()
 					},
-					success: function(data) {
+					success: function (data) {
 						successCallback(data);
 
 					},
-					error: function(xhr) {
+					error: function (xhr) {
 						failureCallback(xhr);
 					}
 				});
