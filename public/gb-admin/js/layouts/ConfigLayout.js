@@ -117,7 +117,7 @@ define([
                                 'id': e,
                                 'url': $(id).attr('data-url'),
                                 'theme': $(id).attr('data-theme'),
-                                'item_name': atob(e)
+                                'item_name': window.atob(e)
                             };
                         }
                     ),

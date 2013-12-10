@@ -119,17 +119,25 @@ define([
 
             deletePage: function () {
 
-                var that = this;
+                var that = this,
+                    pageToDelete = $('.page-to-edit-select').val();
 
-                this.model.deletePage(function () {
+                // Temporary fix to stop index deletion.
+                if (pageToDelete !== "SG9tZQ==") {
+                    this.model.deletePage(function () {
 
-                    alert('Page successfully deleted');
+                        alert('Page successfully deleted');
 
-                    that.render();
+                        that.render();
 
-                }, function (xhr) {
-                    console.log('Error deleting page. ' + xhr);
-                });
+                    }, function (xhr) {
+                        console.log('Error deleting page. ' + xhr);
+                    });
+                } else {
+                    alert('You cannot delete the index page.');
+                }
+
+
             }
 
         });

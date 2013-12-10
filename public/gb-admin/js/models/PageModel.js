@@ -58,7 +58,7 @@ define([
 			savePage: function (successCallback, failureCallback) {
 
 				if ($('#page-id').val() === "") {
-					$('#page-id').val(window.btoa(unescape(encodeURIComponent($('#page-title').val()))));
+					$('#page-id').val(window.btoa(window.unescape(encodeURIComponent($('#page-title').val())))); // HACK: There is a better way to do this.
 				}
 
 				$.ajax({
