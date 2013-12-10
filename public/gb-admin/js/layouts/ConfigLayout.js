@@ -8,7 +8,7 @@ define([
         'views/NavListView',
         'collections/PagesToEditCollection'
     ],
-    function (Backbone, Common, $) {
+    function(Backbone, Common, $) {
 
         'use strict';
 
@@ -28,7 +28,7 @@ define([
                 "click .config-save": "save"
             },
 
-            onRender: function () {
+            onRender: function() {
                 this.showStandard();
                 this.showCustom();
                 this.showNavigation();
@@ -36,27 +36,27 @@ define([
 
             $navEl: null,
 
-            showStandard: function () {
+            showStandard: function() {
 
                 var that = this;
 
-                this.model.getStandard(function (data) {
+                this.model.getStandard(function(data) {
                     var model = new Backbone.Model();
                     model.set(data);
                     that.standardVars.show(new GOB.Views.StandardVarsView({
                         model: model
                     }));
-                }, function (xhr) {
+                }, function(xhr) {
                     console.log('Error fetching standard metadata. ' + xhr);
                 });
             },
 
-            showNavigation: function () {
+            showNavigation: function() {
 
                 var pageCollection = new GOB.Collections.PagesToEditCollection(),
                     that = this;
 
-                pageCollection.getPagesToEdit(function (data) {
+                pageCollection.getPagesToEdit(function(data) {
 
                     // Set data on callback, then push new page option
                     pageCollection.set(data);
@@ -70,16 +70,16 @@ define([
                     that.navigation.show(navList);
 
 
-                }, function (xhr) {
+                }, function(xhr) {
                     console.log('Error getting pages: ' + xhr);
                 });
 
             },
 
-            showCustom: function () {
+            showCustom: function() {
                 var that = this;
 
-                this.model.getCustom(function (data) {
+                this.model.getCustom(function(data) {
                     var model = new Backbone.Model();
                     model.set(data);
 
@@ -87,37 +87,37 @@ define([
                         model: model
                     }));
 
-                }, function (xhr) {
+                }, function(xhr) {
                     console.log('Error fetching custom metadata. ' + xhr);
                 });
             },
 
-            save: function () {
+            save: function() {
                 var that = this;
 
-                this.model.save(that.createNavJSON(that.$navEl), function () {
+                this.model.save(that.createNavJSON(that.$navEl), function() {
                     alert('Configuration data saved!');
                     that.render();
-                }, function (xhr) {
+                }, function(xhr) {
                     console.log('Error saving data. ' + xhr);
                 });
 
             },
 
-            createNavJSON: function ($navEl) {
+            createNavJSON: function($navEl) {
 
                 var idsInOrder = $navEl.sortable("toArray");
 
                 var nav_info = JSON.stringify(
                     idsInOrder.map(
-                        function (e) {
+                        function(e) {
                             var esc_e = e.replace(/[=]/g, "\\=");
                             var id = '#' + esc_e;
                             return {
                                 'id': e,
                                 'url': $(id).attr('data-url'),
                                 'theme': $(id).attr('data-theme'),
-                                'item_name': atob(e)
+                                'item_name': window.atob(e)
                             };
                         }
                     ),
