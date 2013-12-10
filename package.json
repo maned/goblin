@@ -1,7 +1,7 @@
 {
     "name": "goblin",
-    "version": "0.0.2",
-    "main": "goblin.js",
+    "version": "0.0.3",
+    "main": "index.js",
     "description": "Pure javascript content management system designed to serve static pages in the cloud.",
     "author": {
         "name": "Nick Weingartner - Managing Editor Inc",
