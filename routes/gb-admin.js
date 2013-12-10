@@ -93,9 +93,7 @@ module.exports = (function () {
 
 		res.contentType('json');
 		res.send({
-			some: JSON.stringify({
-				response: 'success'
-			})
+			success: true
 		});
 	});
 
@@ -146,9 +144,7 @@ module.exports = (function () {
 
 		res.contentType('json');
 		res.send({
-			some: JSON.stringify({
-				response: 'success'
-			})
+			success: true
 		});
 	});
 
@@ -217,9 +213,7 @@ module.exports = (function () {
 		//Send Response
 		res.contentType('json');
 		res.send({
-			some: JSON.stringify({
-				response: 'success'
-			})
+			success: true
 		});
 	});
 
