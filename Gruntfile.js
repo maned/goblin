@@ -65,37 +65,6 @@ module.exports = function (grunt) {
 			}
 		},
 
-		jshint: {
-			files: [
-				'*.js',
-				'lib/*.js',
-				'routes/*.js',
-				'public/gb-admin/js/*.js',
-				'public/gb-admin/js/collections/*.js',
-				'public/gb-admin/js/config/*.js',
-				'public/gb-admin/js/controllers/*.js',
-				'public/gb-admin/js/layouts/*.js',
-				'public/gb-admin/js/models/*.js',
-				'public/gb-admin/js/routers/*.js',
-				'public/gb-admin/js/views/*.js'
-			],
-			options: {
-				browser: true,
-				predef: [
-					'require',
-					'define'
-				],
-				white: true,
-				devel: true,
-				regexp: true,
-				plusplus: false,
-				forin: true,
-				nomen: false,
-				node: true,
-				asi: true
-			}
-		},
-
 		replace: {
 			example: {
 				src: ['lib/views/index.html'],
@@ -134,7 +103,6 @@ module.exports = function (grunt) {
 
 	// Load tasks
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	//grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-text-replace');
