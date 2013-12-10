@@ -34,7 +34,7 @@ Then, here are the steps:
 1. Download goblin and place it in a directory
 2. Install CouchDB. Write CouchDB's url, port and credientials (You will have to create a default user for your database; goblin now looks for 'admin', 'admin').
 3. Go to 'lib/config.js' and place in the information you just wrote down, as well as the admin username, password and port (defaults to 'admin', 'admin', and 8000, respectively).
-4. Navigate to the directory in the command line, run 'npm install' to install dependencies, and then run the 'index.js' file with node. ('nodejs index.js' in linux, 'node index.js' in OS X/Unix).
+4. Navigate to the directory in the command line, run 'npm install' to install dependencies, and then run the goblin! (type 'node .' and press enter).
 5. Go to 'localhost:8000/' in your browser, and 'localhost:8000/login', and you'll see goblin run!
 
 In addition, you can feel free to use an already hosted CouchDB instance -- like signing up for one for free at IrisCouch (http://iriscouch.com) if you don't want to install couch locally (see the next part for more details!). 
@@ -55,16 +55,16 @@ These steps explain how to do it with a hosted CouchDB on IrisCouch (for free)
 Here is an example (from 'lib/config.js'):
 
 	// Couch Admin user name
-	config.couchUsername = "username"
+	couchUsername : "username",
 	
 	// Couch Admin Password
-	config.couchPassword = "password"
+	couchPassword : "password",
 	
 	// URL of the CouchDB instance
-	config.couchURL = "https://subdomain.iriscouch.com"
+	couchURL : "https://subdomain.iriscouch.com",
 	
 	// Port of the CouchDB instance
-	config.couchPort = 443
+	couchPort : 443
 
 If you have any issues installing, please provide feedback on where these instructions are not illumintating enough! You can report an issue on GitHub for this to be fixed, or even email me directly (see: Feedback).
 
