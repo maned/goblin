@@ -11,14 +11,14 @@
  */
 
 var mu = require('mu2'),
-    db = require('./lib/couchdb.js'),
+    db = require('./couchdb.js'),
     express = require('express'),
-    auth = require('./lib/auth.js'),
+    auth = require('./auth.js'),
     _ = require('underscore'),
     fs = require('fs'),
     app = express(),
-    utils = require('./lib/utils.js'),
-    config = require('./lib/config.js');
+    utils = require('./utils.js'),
+    config = require('./config.js');
 
 //Configure Body Parser
 app.configure(function () {
@@ -34,6 +34,7 @@ app.configure(function () {
     app.use(express.static(__dirname + '/public'));
 });
 
+console.log(__dirname);
 mu.root = __dirname + '/theme';
 
 //Check for 'page routes', if undefined, then create a default route, if not, then set them
