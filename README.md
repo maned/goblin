@@ -1,7 +1,7 @@
 # goblin
 ## a pure content management system
 
-[![Build Status](https://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png)](https://travis-ci.org/streetlight/goblin)
+[![Build Status](https://travis-ci.org/streetlight/goblin.png)](https://travis-ci.org/streetlight/goblin)
 
 goblin in a Javascript-based Content Management System, built on Node.js and utilizing CouchDB as it's data store.
 It's focus is to be as easily templateable as possible, so that front-end developers can just hop in and do what
