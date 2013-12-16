@@ -2,7 +2,7 @@
     "name": "goblin",
     "version": "0.0.3",
     "main": "./lib/goblin.js",
-    "description": "Javascript-based content management system designed to serve static pages in the cloud.",
+    "description": "Pure javascript content management system designed to serve static pages in the cloud.",
     "author": {
         "name": "Nick Weingartner - Managing Editor Inc",
         "email": "nweingartner@maned.com",
