@@ -30,6 +30,9 @@
     "bugs": {
         "url": "https://github.com/maned/goblin/issues"
     },
+    "scripts": {
+        "test": "grunt test"
+    },
     "readmeFilename": "README.md",
     "license": "GPLv3",
     "dependencies": {
