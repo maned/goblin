@@ -1,6 +1,8 @@
 # goblin
 ## a pure content management system
 
+[![Build Status](https://travis-ci.org/maned/goblin.png)](https://travis-ci.org/maned/goblin)
+
 goblin in a Javascript-based Content Management System, built on Node.js and utilizing CouchDB as it's data store.
 It's focus is to be as easily templateable as possible, so that front-end developers can just hop in and do what
 they do best.
@@ -123,7 +125,7 @@ goblin is currently in a development, alpha phase. We are looking for feedback t
 7. Multiple users support.
 8. A script to make installing easier.
 9. Further CSS work to bring admin closer to designs.
-10. Implementation of node-unit, qunit, jslint and grunt to secure code quality and testing. (IN PROGRESS by streetlight)
+10. Implementation of node-unit, qunit, ~~jslint~~ and grunt to secure code quality and testing. (IN PROGRESS by streetlight)
 11. Document API.
 
 ---
