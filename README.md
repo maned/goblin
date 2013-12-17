@@ -99,8 +99,7 @@ directory in the browser.
 goblin adopts mustache's great templating language (https://github.com/janl/mustache.js/), so anything you can
 do with mustache you can use here (this information will come in handy when creating themes with custom variables).
 
-As of right now, goblin only supports one .gob file at a time (call it page.gob, to make it easy to implement
-out of the box). However, multiple .gob file support is forthcoming and will soon be implemented!
+Any .gob file you place in the '/theme' folder will be an option for your pages.
 
 ---
 
