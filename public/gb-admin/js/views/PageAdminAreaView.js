@@ -20,9 +20,10 @@ define([
             },
 
             onRender: function () {
-                
+
                 this.$el.find('#page-content').wysihtml5({
-                    "stylesheets": false
+                    "stylesheets": false,
+                    "html": true
                 });
 
                 if (this.model.get("page_url") === "") {
