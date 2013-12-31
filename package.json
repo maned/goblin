@@ -1,6 +1,6 @@
 {
     "name": "goblin",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "main": "./lib/goblin.js",
     "description": "Pure javascript content management system designed to serve static pages in the cloud.",
     "author": {
