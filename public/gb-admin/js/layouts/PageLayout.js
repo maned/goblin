@@ -101,20 +101,49 @@ define([
 
             savePage: function () {
                 var isNewPage = $('.page-to-edit-select').val() === "new_page" ? true : false,
-                    that = this;
+                    that = this,
+                    data = {
+                        page_id: $('#page-id').val(),
+                        page_title: $('#page-title').val(),
+                        page_url: $('#page-url').val(),
+                        page_content: $('#page-content').val(),
+                        meta_description: $('#meta-description').val(),
+                        meta_keywords: $('#meta-keywords').val(),
+                        theme: $('.theme').val()
+                    };
 
-                this.model.savePage(function () {
+                if (data.page_id === "") {
+                    data.page_id = window.btoa(window.unescape(encodeURIComponent(data.page_title))); // HACK: There is a better way to do this.
+                }
 
-                    alert('Page saved successfully');
-
-                    // Check to see newPage boolean.
-                    if (isNewPage) {
-                        that.render();
-                    }
-
-                }, function (xhr) {
-                    console.log('Page update/creation has failed. Please try again. ' + xhr);
+                this.model.set(data, {
+                    validate: true
                 });
+
+                var validationError = this.model.validationError;
+
+                if (validationError === null) {
+                    this.model.savePage(data, function () {
+
+                        alert('Page saved successfully');
+
+                        // Check to see newPage boolean.
+                        if (isNewPage) {
+                            that.render();
+                        }
+
+                    }, function (xhr) {
+                        console.log('Page update/creation has failed. Please try again. ' + xhr);
+                    });
+                } else {
+                    if (validationError === "INVALID") {
+                        alert("You have entered an invalid character ('/') in your page_url. Please try again.");
+                    } else {
+                        alert('There has been an error, please try again.');
+                    }
+                }
+
+
             },
 
             deletePage: function () {

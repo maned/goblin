@@ -26,6 +26,22 @@ define([
 				theme: ""
 			},
 
+			validate: function (attrs) {
+
+				var key = null,
+					value;
+
+				for (key in attrs) {
+					if (attrs.hasOwnProperty(key)) {
+						value = attrs[key];
+						if (key === "page_url" && value.indexOf("/") !== -1) {
+							return "INVALID";
+						}
+					}
+				}
+
+			},
+
 			switchPage: function (id) {
 
 				var that = this;
@@ -55,25 +71,13 @@ define([
 
 			},
 
-			savePage: function (successCallback, failureCallback) {
-
-				if ($('#page-id').val() === "") {
-					$('#page-id').val(window.btoa(window.unescape(encodeURIComponent($('#page-title').val())))); // HACK: There is a better way to do this.
-				}
+			savePage: function (data, successCallback, failureCallback) {
 
 				$.ajax({
 					url: "/gb-admin/page-save.json",
 					type: "POST",
 					dataType: "json",
-					data: {
-						page_id: $('#page-id').val(),
-						page_title: $('#page-title').val(),
-						page_url: $('#page-url').val(),
-						page_content: $('#page-content').val(),
-						meta_description: $('#meta-description').val(),
-						meta_keywords: $('#meta-keywords').val(),
-						theme: $('.theme').val()
-					},
+					data: data,
 					success: function (data) {
 						successCallback(data);
 					},

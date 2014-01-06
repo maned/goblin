@@ -11,18 +11,13 @@ define([
 
 		GOB.Models.ConfigModel = Backbone.Model.extend({
 
-			save: function (nav, successCallback, failureCallback) {
+			save: function (data, successCallback, failureCallback) {
 
 				$.ajax({
 					url: "/gb-admin/config-save.json",
 					type: "POST",
 					dataType: "json",
-					data: {
-						site_title: $('#site-title').val(),
-						site_description: $('#site-description').val(),
-						nav: nav,
-						ga_id: $('#ga-id').val()
-					},
+					data: data,
 					success: function (data) {
 						successCallback(data);
 					},
