@@ -93,14 +93,22 @@ define([
             },
 
             save: function () {
-                var that = this;
 
-                this.model.save(that.createNavJSON(that.$navEl), function () {
+            var that = this,
+                    data = {
+                        site_title: $('#site-title').val(),
+                        site_description: $('#site-description').val(),
+                        nav: this.createNavJSON(that.$navEl),
+                        ga_id: $('#ga-id').val()
+                    };
+
+                this.model.save(data, function () {
                     alert('Configuration data saved!');
                     that.render();
                 }, function (xhr) {
                     console.log('Error saving data. ' + xhr);
                 });
+
 
             },
 
