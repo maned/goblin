@@ -149,11 +149,13 @@ define([
             deletePage: function () {
 
                 var that = this,
-                    pageToDelete = $('.page-to-edit-select').val();
+                    pageToDelete = $('.page-to-edit-select').val(),
+                    pageId = $('#page-id').val(),
+                    pageUrl = $('#page-url').val();
 
                 // Temporary fix to stop index deletion.
                 if (pageToDelete !== "SG9tZQ==") {
-                    this.model.deletePage(function () {
+                    this.model.deletePage(pageId, pageUrl, function () {
 
                         alert('Page successfully deleted');
 

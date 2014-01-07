@@ -87,19 +87,18 @@ define([
 				});
 			},
 
-			deletePage: function (successCallback, failureCallback) {
+			deletePage: function (pageId, pageUrl, successCallback, failureCallback) {
 
 				$.ajax({
 					url: "/gb-admin/page-delete.json",
 					type: "POST",
 					dataType: "json",
 					data: {
-						page_id: $('#page-id').val(),
-						page_url: $('#page-url').val()
+						page_id: pageId,
+						page_url: pageUrl
 					},
 					success: function (data) {
 						successCallback(data);
-
 					},
 					error: function (xhr) {
 						failureCallback(xhr);
