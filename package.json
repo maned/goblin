@@ -4,9 +4,8 @@
     "main": "./lib/goblin.js",
     "description": "Pure javascript content management system designed to serve static pages in the cloud.",
     "author": {
-        "name": "Nick Weingartner - Managing Editor Inc",
-        "email": "nweingartner@maned.com",
-        "url": "http://www.maned.com"
+        "name": "Nick Weingartner",
+        "email": "nweingartner@gmail.com"
     },
     "contributors": [{
         "name": "Sotirios Vrachas",
