@@ -77,6 +77,7 @@ If you have any issues installing, please provide feedback on where these instru
 If you want to keep all your Goblin development work in the cloud, you can use the awesome Cloud9 IDE (which has both free and premium options).
 
 These steps explain how to setup your cloud9 IDE with a goblin workspace:
+
 1. Go to http://c9.io and create a new free account (you can even login using your github credentials).
 2. In your dashboard, go to the "Your Account" section and activate the github add-on. This will add your github projects to the dashboard.
 3. Follow the steps at http://support.cloud9ide.com/entries/20548092-Lesson-2-Creating-a-new-project to create a new project and clone the goblin project into a workspace.
