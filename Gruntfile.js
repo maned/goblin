@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 					baseUrl: "public/gb-admin/js",
 					mainConfigFile: "public/gb-admin/js/config.js",
 					name: 'config',
-					out: "public/gb-admin/js/optimized/webclient.min.js",
+					out: "public/gb-admin/js/optimized/goblin.min.js",
 					preserveLicenseComments: false
 				}
 			}
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
 				dest: 'lib/views/index.html',
 				replacements: [{
 					from: 'js/config',
-					to: 'js/optimized/webclient.min'
+					to: 'js/optimized/goblin.min'
 				}, {
 					from: '/gb-admin/css/styles/main.css',
 					to: '/gb-admin/css/optimized/main.min.css'
