@@ -162,6 +162,15 @@ by and/or help the goblin cause. Please consider getting involved in these great
 1. [Official goblin marketing website](http://www.github.com/maned/goblin-website)
 2. [CouchDB Puppet Module](https://github.com/jonbrouse/puppet-couchdb)
 
+--
+### Core Contributors
+
+goblin is developed, lead and maintained by a set of [core contributors](https://github.com/orgs/maned/teams/goblin-core-contributors).
+
+goblin was initially developed by [Nick Weingartner](https://github.com/streetlight) at [Managing Editor Inc](https://github.com/maned).
+
+Any entire list of contributors can be found in the AUTHORS.txt page.
+
 ---
 
 ###License
