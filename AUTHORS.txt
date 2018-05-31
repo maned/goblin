@@ -1,6 +1,6 @@
 Authors ordered by first contribution.
 
 Nick Weingartner (nweingartner@gmail.com)
-Sotirios Vrachas (sotitirios@vrachas.net)
+Sotirios Vrachas (sotirios@vrachas.net)
 Dave Mullen (upperdecker@gmail.com)
 Jan Mlcoch (jan@joshuatrii.com)
